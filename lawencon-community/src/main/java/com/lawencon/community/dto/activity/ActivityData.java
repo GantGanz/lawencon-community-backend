@@ -9,7 +9,7 @@ import lombok.Data;
 public class ActivityData {
 
 	private String id;
-	private String title;
+	private String activityTitle;
 	private Integer version;
 	private String activityLocation;
 	private LocalDateTime startAt;
