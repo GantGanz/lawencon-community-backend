@@ -4,6 +4,6 @@ import org.springframework.stereotype.Service;
 import com.lawencon.base.BaseCoreService;
 
 @Service
-public class AttachmentService extends BaseCoreService {
-	// nanti pengecekan bk manual di sini
+public class ArticleService extends BaseCoreService {
+// nanti pengecekan bk manual di sini
 }
