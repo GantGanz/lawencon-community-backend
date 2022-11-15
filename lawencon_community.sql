@@ -204,7 +204,7 @@ ALTER TABLE t_attachment_post ADD CONSTRAINT t_attachment_post_post_fk FOREIGN K
 CREATE TABLE t_attachment_article(
     id varchar(36),
     file_id varchar(36) NOT NULL,
-    post_id varchar(36) NOT NULL,
+    article_id varchar(36) NOT NULL,
     created_by varchar(36) NOT NULL,
     created_at timestamp WITHOUT time ZONE NOT NULL,
     updated_by varchar(36),
@@ -214,7 +214,7 @@ CREATE TABLE t_attachment_article(
 );
 ALTER TABLE t_attachment_article ADD CONSTRAINT t_attachment_article_pk PRIMARY KEY(id);
 ALTER TABLE t_attachment_article ADD CONSTRAINT t_attachment_article_file_fk FOREIGN KEY(file_id) REFERENCES t_file(id);
-ALTER TABLE t_attachment_article ADD CONSTRAINT t_attachment_article_post_fk FOREIGN KEY(post_id) REFERENCES t_post(id);
+ALTER TABLE t_attachment_article ADD CONSTRAINT t_attachment_article_article_fk FOREIGN KEY(article_id) REFERENCES t_article(id);
 
 CREATE TABLE t_poll (
     id varchar(36),
@@ -327,7 +327,7 @@ ALTER TABLE t_activity_member ADD CONSTRAINT t_activity_member_file_fk FOREIGN K
 ALTER TABLE t_activity_member ADD CONSTRAINT t_activity_member_post_fk FOREIGN KEY(activity_id) REFERENCES t_activity(id);
 ALTER TABLE t_activity_member ADD CONSTRAINT t_activity_member_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id); 
 
-CREATE TABLE t_income(
+CREATE TABLE t_payment(
     id varchar(36),
     nominal double precision NOT NULL,
     user_id varchar(36) NOT NULL,
@@ -339,6 +339,6 @@ CREATE TABLE t_income(
     ver int NOT NULL DEFAULT 0,
     is_active boolean NOT NULL DEFAULT TRUE
 );
-ALTER TABLE t_income ADD CONSTRAINT t_income_pk PRIMARY KEY(id);
-ALTER TABLE t_income ADD CONSTRAINT t_income_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
-ALTER TABLE t_income ADD CONSTRAINT t_income_event_fk FOREIGN KEY(activity_id) REFERENCES t_activity(id);
+ALTER TABLE t_payment ADD CONSTRAINT t_payment_pk PRIMARY KEY(id);
+ALTER TABLE t_payment ADD CONSTRAINT t_payment_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
+ALTER TABLE t_payment ADD CONSTRAINT t_payment_event_fk FOREIGN KEY(activity_id) REFERENCES t_activity(id);
