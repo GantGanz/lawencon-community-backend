@@ -6,23 +6,21 @@ import javax.persistence.Table;
 
 import com.lawencon.base.BaseEntity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "t_file")
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class File extends BaseEntity {
 
-	private static final long serialVersionUID = 8251053564074380636L;
+	private static final long serialVersionUID = 5637214128769408408L;
 
 	@Column(name = "file_codes", nullable = false)
-	@Setter
-	@Getter
 	private String fileCodes;
 
 	@Column(name = "extensions", nullable = false, length = 5)
-	@Setter
-	@Getter
 	private String extensions;
 
 }

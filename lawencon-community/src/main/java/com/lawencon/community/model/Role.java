@@ -7,6 +7,8 @@ import javax.persistence.UniqueConstraint;
 
 import com.lawencon.base.BaseEntity;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +16,8 @@ import lombok.Setter;
 @Table(name = "t_user_role", uniqueConstraints = {
 		@UniqueConstraint(name = "t_user_role_ck", columnNames = { "role_code", "role_name" }),
 		@UniqueConstraint(name = "t_user_role_bk", columnNames = { "role_code" }) })
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class Role extends BaseEntity {
 
 	private static final long serialVersionUID = -2773239898053697048L;
