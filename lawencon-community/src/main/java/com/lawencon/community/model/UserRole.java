@@ -18,7 +18,7 @@ import lombok.Setter;
 		@UniqueConstraint(name = "t_user_role_bk", columnNames = { "role_code" }) })
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Role extends BaseEntity {
+public class UserRole extends BaseEntity {
 
 	private static final long serialVersionUID = -2773239898053697048L;
 
