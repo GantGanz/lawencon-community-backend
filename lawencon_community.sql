@@ -272,8 +272,8 @@ CREATE TABLE t_activity_type(
     is_active boolean NOT NULL DEFAULT TRUE
 );
 ALTER TABLE t_activity_type ADD CONSTRAINT t_activity_type_pk PRIMARY KEY(id);
-ALTER TABLE t_activity_type ADD CONSTRAINT t_activity_type_bk UNIQUE(activity_code);
-ALTER TABLE t_activity_type ADD CONSTRAINT t_activity_type_ck UNIQUE(activity_code, activity_name);
+ALTER TABLE t_activity_type ADD CONSTRAINT t_activity_type_bk UNIQUE(activity_type_code);
+ALTER TABLE t_activity_type ADD CONSTRAINT t_activity_type_ck UNIQUE(activity_type_code, activity_type_name);
 
 CREATE TABLE t_activity(
     id varchar(36),
