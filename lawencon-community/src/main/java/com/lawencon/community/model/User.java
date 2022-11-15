@@ -43,7 +43,7 @@ public class User extends BaseEntity {
 
 	@OneToOne
 	@JoinColumn(name = "role_id", nullable = false)
-	private UserRole role;
+	private Role role;
 
 	@OneToOne
 	@JoinColumn(name = "industry_id", nullable = false)

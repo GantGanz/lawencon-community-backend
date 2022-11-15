@@ -4,6 +4,6 @@ import org.springframework.stereotype.Service;
 import com.lawencon.base.BaseCoreService;
 
 @Service
-public class UserRoleService extends BaseCoreService {
+public class RoleService extends BaseCoreService {
 // nanti pengecekan bk manual di sini
 }

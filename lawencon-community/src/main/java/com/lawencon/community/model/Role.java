@@ -13,12 +13,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "t_user_role", uniqueConstraints = {
-		@UniqueConstraint(name = "t_user_role_ck", columnNames = { "role_code", "role_name" }),
-		@UniqueConstraint(name = "t_user_role_bk", columnNames = { "role_code" }) })
+@Table(name = "t_role", uniqueConstraints = {
+		@UniqueConstraint(name = "t_role_ck", columnNames = { "role_code", "role_name" }),
+		@UniqueConstraint(name = "t_role_bk", columnNames = { "role_code" }) })
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class UserRole extends BaseEntity {
+public class Role extends BaseEntity {
 
 	private static final long serialVersionUID = -2773239898053697048L;
 
