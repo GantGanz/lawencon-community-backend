@@ -11,7 +11,7 @@ CREATE TABLE t_file(
 );
 ALTER TABLE t_file ADD CONSTRAINT t_file_pk PRIMARY KEY(id);
 
-CREATE TABLE t_user_role (
+CREATE TABLE t_role (
     id varchar(36),
     role_code varchar(5) NOT NULL,
     role_name varchar(20) NOT NULL,
@@ -22,9 +22,9 @@ CREATE TABLE t_user_role (
     ver int NOT NULL DEFAULT 0,
     is_active boolean NOT NULL DEFAULT TRUE
 );
-ALTER TABLE t_user_role ADD CONSTRAINT t_user_role_pk PRIMARY KEY(id);
-ALTER TABLE t_user_role ADD CONSTRAINT t_user_role_bk UNIQUE(role_code);
-ALTER TABLE t_user_role ADD CONSTRAINT t_user_role_ck UNIQUE(role_code, role_name);
+ALTER TABLE t_role ADD CONSTRAINT t_role_pk PRIMARY KEY(id);
+ALTER TABLE t_role ADD CONSTRAINT t_role_bk UNIQUE(role_code);
+ALTER TABLE t_role ADD CONSTRAINT t_role_ck UNIQUE(role_code, role_name);
 
 CREATE TABLE t_post_type(
     id varchar(36),
@@ -93,7 +93,7 @@ CREATE TABLE t_user(
 ALTER TABLE t_user ADD CONSTRAINT t_user_pk PRIMARY KEY(id);
 ALTER TABLE t_user ADD CONSTRAINT t_user_bk UNIQUE(email);
 ALTER TABLE t_user ADD CONSTRAINT t_user_ck UNIQUE(email, fullname);
-ALTER TABLE t_user ADD CONSTRAINT t_user_role_fk FOREIGN KEY (role_id) REFERENCES t_user_role(id);
+ALTER TABLE t_user ADD CONSTRAINT t_role_fk FOREIGN KEY (role_id) REFERENCES t_role(id);
 ALTER TABLE t_user ADD CONSTRAINT t_user_industry_fk FOREIGN KEY (industry_id) REFERENCES t_industry(id);
 ALTER TABLE t_user ADD CONSTRAINT t_user_position_fk FOREIGN KEY (position_id) REFERENCES t_position(id);
 ALTER TABLE t_user ADD CONSTRAINT t_user_file_fk FOREIGN KEY (file_id) REFERENCES t_file(id);

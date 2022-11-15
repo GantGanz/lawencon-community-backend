@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -14,6 +15,7 @@ import lombok.Data;
 public class ActivityInsertReq {
 
 	@NotEmpty(message = "Title can't be empty!")
+	@Size(max = 50, message = "Title is too long!")
 	private String title;
 	
 	@NotEmpty(message = "Activity Location can't be empty!")
