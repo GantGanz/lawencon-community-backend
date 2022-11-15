@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class ActivityInsertReq {
 
-	private String title;
+	private String activityTitle;
 	private String activityLocation;
 	private LocalDateTime startAt;
 	private LocalDateTime endAt;

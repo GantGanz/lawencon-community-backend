@@ -9,7 +9,7 @@ import lombok.Data;
 public class ActivityUpdateReq {
 
 	private String id;
-	private String title;
+	private String activityTitle;
 	private String activityLocation;
 	private LocalDateTime startAt;
 	private LocalDateTime endAt;

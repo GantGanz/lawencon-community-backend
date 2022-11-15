@@ -5,10 +5,7 @@ import lombok.Data;
 @Data
 public class UserVerificationData {
 
-	private String id;
-	private Integer version;
-	private String userId;
+	private String email;
 	private String verificationCode;
-	private Boolean isActive;
 	
 }

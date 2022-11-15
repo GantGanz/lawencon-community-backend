@@ -98,20 +98,6 @@ ALTER TABLE t_user ADD CONSTRAINT t_user_industry_fk FOREIGN KEY (industry_id) R
 ALTER TABLE t_user ADD CONSTRAINT t_user_position_fk FOREIGN KEY (position_id) REFERENCES t_position(id);
 ALTER TABLE t_user ADD CONSTRAINT t_user_file_fk FOREIGN KEY (file_id) REFERENCES t_file(id);
 
-CREATE TABLE t_user_verification(
-    id varchar(36),
-    verification_code varchar(5) NOT NULL,
-    user_id varchar(36) NOT NULL,
-    created_by varchar(36) NOT NULL,
-    created_at timestamp WITHOUT time ZONE NOT NULL,
-    updated_by varchar(36),
-    updated_at timestamp WITHOUT time ZONE,
-    ver int NOT NULL DEFAULT 0,
-    is_active boolean NOT NULL DEFAULT TRUE
-);
-ALTER TABLE t_user_verification ADD CONSTRAINT t_user_verification_pk PRIMARY KEY(id);
-ALTER TABLE t_user_verification ADD CONSTRAINT t_user_verification_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
-
 CREATE TABLE t_article(
     id varchar(36),
     article_title varchar(100) NOT NULL,
@@ -327,7 +313,7 @@ ALTER TABLE t_activity_member ADD CONSTRAINT t_activity_member_file_fk FOREIGN K
 ALTER TABLE t_activity_member ADD CONSTRAINT t_activity_member_post_fk FOREIGN KEY(activity_id) REFERENCES t_activity(id);
 ALTER TABLE t_activity_member ADD CONSTRAINT t_activity_member_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id); 
 
-CREATE TABLE t_payment(
+CREATE TABLE t_payment_activity(
     id varchar(36),
     nominal double precision NOT NULL,
     user_id varchar(36) NOT NULL,
@@ -339,6 +325,22 @@ CREATE TABLE t_payment(
     ver int NOT NULL DEFAULT 0,
     is_active boolean NOT NULL DEFAULT TRUE
 );
-ALTER TABLE t_payment ADD CONSTRAINT t_payment_pk PRIMARY KEY(id);
-ALTER TABLE t_payment ADD CONSTRAINT t_payment_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
-ALTER TABLE t_payment ADD CONSTRAINT t_payment_event_fk FOREIGN KEY(activity_id) REFERENCES t_activity(id);
+ALTER TABLE t_payment_activity ADD CONSTRAINT t_payment_activity_pk PRIMARY KEY(id);
+ALTER TABLE t_payment_activity ADD CONSTRAINT t_payment_activity_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
+ALTER TABLE t_payment_activity ADD CONSTRAINT t_payment_activity_event_fk FOREIGN KEY(activity_id) REFERENCES t_activity(id);
+
+CREATE TABLE t_payment_premium(
+    id varchar(36),
+    nominal double precision NOT NULL,
+    user_id varchar(36) NOT NULL,
+    activity_id varchar(36) NOT NULL,
+    created_by varchar(36) NOT NULL,
+    created_at timestamp WITHOUT time ZONE NOT NULL,
+    updated_by varchar(36),
+    updated_at timestamp WITHOUT time ZONE,
+    ver int NOT NULL DEFAULT 0,
+    is_active boolean NOT NULL DEFAULT TRUE
+);
+ALTER TABLE t_payment_premium ADD CONSTRAINT t_payment_premium_pk PRIMARY KEY(id);
+ALTER TABLE t_payment_premium ADD CONSTRAINT t_payment_premium_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
+ALTER TABLE t_payment_premium ADD CONSTRAINT t_payment_premium_event_fk FOREIGN KEY(activity_id) REFERENCES t_activity(id);
