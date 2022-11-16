@@ -30,11 +30,11 @@ public class User extends BaseEntity {
 	@Column(name = "pass", nullable = false)
 	private String pass;
 
-	@Column(name = "compant", nullable = false, length = 50)
+	@Column(name = "company", nullable = false, length = 50)
 	private String company;
 
 	@Column(name = "is_premium", nullable = false)
-	private String isPremium;
+	private Boolean isPremium;
 
 	@OneToOne
 	@JoinColumn(name = "role_id", nullable = false)
