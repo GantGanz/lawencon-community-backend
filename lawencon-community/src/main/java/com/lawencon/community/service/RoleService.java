@@ -26,6 +26,7 @@ public class RoleService extends BaseCoreService {
 			roleData.setId(role.getId());
 			roleData.setRoleName(role.getRoleName());
 			roleData.setRoleCode(role.getRoleCode());
+			roleData.setVersion(role.getVersion());
 
 			roleDatas.add(roleData);
 		}
