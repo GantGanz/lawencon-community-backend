@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.activity;
 
-public class ActivityFindByIdRes {
+public class ActivityRes {
 
 	private ActivityData data;
 

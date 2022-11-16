@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.post;
 
-public class PostFindByIdRes {
+public class PostRes {
 
 	private PostData data;
 

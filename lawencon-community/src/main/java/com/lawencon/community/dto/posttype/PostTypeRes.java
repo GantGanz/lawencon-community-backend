@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.posttype;
 
-public class PostTypeFindByIdRes {
+public class PostTypeRes {
 
 	private PostTypeData data;
 

@@ -220,7 +220,7 @@ ALTER TABLE t_poll ADD CONSTRAINT t_poll_post_fk FOREIGN KEY(post_id) REFERENCES
 CREATE TABLE t_poll_option(
     id text,
     poll_content text NOT NULL,
-    post_id text NOT NULL,
+    poll_id text NOT NULL,
     created_by text NOT NULL,
     created_at timestamp WITHOUT time ZONE NOT NULL,
     updated_by text,
@@ -229,7 +229,7 @@ CREATE TABLE t_poll_option(
     is_active boolean NOT NULL DEFAULT TRUE
 );
 ALTER TABLE t_poll_option ADD CONSTRAINT t_poll_option_pk PRIMARY KEY(id);
-ALTER TABLE t_poll_option ADD CONSTRAINT t_poll_option_post_fk FOREIGN KEY(post_id) REFERENCES t_post(id);
+ALTER TABLE t_poll_option ADD CONSTRAINT t_poll_option_poll_fk FOREIGN KEY(poll_id) REFERENCES t_poll(id);
 
 CREATE TABLE t_poll_vote (
     id text,
