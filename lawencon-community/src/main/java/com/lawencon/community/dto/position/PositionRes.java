@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.position;
 
-public class PositionFindByIdRes {
+public class PositionRes {
 
 	private PositionData data;
 

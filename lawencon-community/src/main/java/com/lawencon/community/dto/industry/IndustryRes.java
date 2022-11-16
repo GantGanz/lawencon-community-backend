@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.industry;
 
-public class IndustryFindByIdRes {
+public class IndustryRes {
 
 	private IndustryData data;
 

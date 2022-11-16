@@ -23,6 +23,6 @@ public class PollOption extends BaseEntity {
 	private String pollContent;
 
 	@ManyToOne
-	@JoinColumn(name = "post_id", nullable = false)
-	private Post post;
+	@JoinColumn(name = "poll_id", nullable = false)
+	private Post poll;
 }
