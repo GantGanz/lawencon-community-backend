@@ -11,11 +11,11 @@ public enum ActivityTypeConstant {
 		this.activityTypeCode = activityTypeCode;
 	}
 
-	String getActivityTypeName() {
+	public String getActivityTypeName() {
 		return activityTypeName;
 	}
 
-	String getActivityTypeCode() {
+	public String getActivityTypeCode() {
 		return activityTypeCode;
 	}
 

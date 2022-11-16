@@ -16,13 +16,11 @@ public class UserDao extends AbstractJpaDao {
 
 	public Optional<User> getByEmail(final String email) {
 		final StringBuilder str = new StringBuilder();
-		str.append(
-				"SELECT u.id, u.email, u.pass, u.fullname, ur.role_name, ur.role_code, u.file_id, u.company, u.is_premium, i.industry_name, p.position_name ");
-		str.append("FROM t_user u ");
-		str.append("INNER JOIN t_role ur ON ur.id = u.role_id ");
-		str.append("INNER JOIN t_industry i ON u.industry_id = i.id ");
-		str.append("INNER JOIN t_position p ON u.position_id = p.id ");
-		str.append("WHERE email = :username ");
+		str.append("SELECT u.id, u.email, u.pass, u.fullname, ur.role_name, ur.role_code, u.file_id, u.company,")
+				.append("u.is_premium, i.industry_name, p.position_name ").append("FROM t_user u ")
+				.append("INNER JOIN t_role ur ON ur.id = u.role_id ")
+				.append("INNER JOIN t_industry i ON u.industry_id = i.id ")
+				.append("INNER JOIN t_position p ON u.position_id = p.id ").append("WHERE email = :username ");
 
 		User user = null;
 		try {
@@ -67,10 +65,8 @@ public class UserDao extends AbstractJpaDao {
 
 	public String getSystemId() {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT u.id ");
-		str.append("FROM t_user u ");
-		str.append("INNER JOIN t_role ur ON ur.id = u.role_id ");
-		str.append("WHERE role_code = 'SYS' ");
+		str.append("SELECT u.id ").append("FROM t_user u ").append("INNER JOIN t_role ur ON ur.id = u.role_id ")
+				.append("WHERE role_code = 'SYS' ");
 
 		String userId = null;
 		try {
