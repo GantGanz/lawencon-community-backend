@@ -327,13 +327,12 @@ CREATE TABLE t_payment_activity(
 );
 ALTER TABLE t_payment_activity ADD CONSTRAINT t_payment_activity_pk PRIMARY KEY(id);
 ALTER TABLE t_payment_activity ADD CONSTRAINT t_payment_activity_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
-ALTER TABLE t_payment_activity ADD CONSTRAINT t_payment_activity_event_fk FOREIGN KEY(activity_id) REFERENCES t_activity(id);
+ALTER TABLE t_payment_activity ADD CONSTRAINT t_payment_activity_activity_fk FOREIGN KEY(activity_id) REFERENCES t_activity(id);
 
 CREATE TABLE t_payment_premium(
     id text,
     nominal double precision NOT NULL,
     user_id text NOT NULL,
-    activity_id text NOT NULL,
     created_by text NOT NULL,
     created_at timestamp WITHOUT time ZONE NOT NULL,
     updated_by text,
@@ -343,15 +342,13 @@ CREATE TABLE t_payment_premium(
 );
 ALTER TABLE t_payment_premium ADD CONSTRAINT t_payment_premium_pk PRIMARY KEY(id);
 ALTER TABLE t_payment_premium ADD CONSTRAINT t_payment_premium_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
-ALTER TABLE t_payment_premium ADD CONSTRAINT t_payment_premium_event_fk FOREIGN KEY(activity_id) REFERENCES t_activity(id);
 
-
+======= DML =======
 INSERT INTO t_role (id,role_code,role_name,created_by,created_at) VALUES
 ('883bd334-9dbc-4f13-aa3c-d4ab404ee735','SYS','System',1,now()),
 ('d58091c0-aade-4160-a97f-55ef77dc9682','SA','Super Admin',1,now()),
 ('9e4aac7a-e0d6-409b-8c55-a99decc5167a','ADM','Admin',1,now()),
 ('85b2bed6-104e-4f17-9f94-8aede7dd18cb','MMB','Member',1,now());
-
 
 INSERT INTO t_post_type (id,post_type_code,post_type_name,created_by,created_at) VALUES
 ('a572d04c-2da6-4703-8dc8-82b8384e3d60','REG','Regular',1,now()),

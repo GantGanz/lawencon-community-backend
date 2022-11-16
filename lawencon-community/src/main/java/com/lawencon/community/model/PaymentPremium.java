@@ -14,10 +14,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name = "t_payment")
+@Table(name = "t_payment_premium")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class Payment extends BaseEntity {
+public class PaymentPremium extends BaseEntity {
 
 	private static final long serialVersionUID = -6258941125653807864L;
 
@@ -28,7 +28,4 @@ public class Payment extends BaseEntity {
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
-	@OneToOne
-	@JoinColumn(name = "activity_id", nullable = false)
-	private Activity activity;
 }
