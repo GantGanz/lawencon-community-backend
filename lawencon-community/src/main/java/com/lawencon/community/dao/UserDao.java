@@ -68,16 +68,15 @@ public class UserDao extends AbstractJpaDao {
 	public String getSystemId() {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT u.id ");
-		str.append("FROM users u ");
-		str.append("INNER JOIN user_role ur ON ur.id = u.user_role_id ");
+		str.append("FROM t_user u ");
+		str.append("INNER JOIN t_role ur ON ur.id = u.role_id ");
 		str.append("WHERE role_code = 'SYS' ");
 		
 		String userId = null;
 		try {	
 			final Object userObj = createNativeQuery(str.toString()).getSingleResult();
 			if (userObj != null) {
-				final Object[] objArr = (Object[]) userObj;
-				userId = objArr[0].toString();
+				userId = userObj.toString();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
