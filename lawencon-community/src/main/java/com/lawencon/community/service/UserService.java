@@ -92,6 +92,7 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		} catch (final Exception e) {
 			e.printStackTrace();
 			rollback();
+			throw new RuntimeException("Registration failed");
 		}
 
 		final InsertDataRes dataRes = new InsertDataRes();
