@@ -114,6 +114,8 @@ CREATE TABLE t_post(
     id text,
     post_title text NOT NULL,
     post_content text NOT NULL,
+    post_type_id text NOT NULL,
+    user_id text NOT NULL,
     created_by text NOT NULL,
     created_at timestamp WITHOUT time ZONE NOT NULL,
     updated_by text,
@@ -122,6 +124,8 @@ CREATE TABLE t_post(
     is_active boolean NOT NULL DEFAULT TRUE
 );
 ALTER TABLE t_post ADD CONSTRAINT t_post_pk PRIMARY KEY(id);
+ALTER TABLE t_post ADD CONSTRAINT t_post_post_type_fk FOREIGN KEY(post_type_id) REFERENCES t_post_type(id);
+ALTER TABLE t_post ADD CONSTRAINT t_post_user_fk FOREIGN KEY(post_user_id) REFERENCES t_user(id);
 
 CREATE TABLE t_bookmark(
     id text,

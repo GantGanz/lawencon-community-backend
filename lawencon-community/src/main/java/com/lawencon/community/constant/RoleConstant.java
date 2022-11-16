@@ -11,11 +11,11 @@ public enum RoleConstant {
 		this.roleCode = roleCode;
 	}
 
-	String getRoleName() {
+	public String getRoleName() {
 		return roleName;
 	}
 
-	String getRoleCode() {
+	public String getRoleCode() {
 		return roleCode;
 	}
 }

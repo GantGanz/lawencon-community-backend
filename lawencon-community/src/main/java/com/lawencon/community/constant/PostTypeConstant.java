@@ -11,11 +11,11 @@ public enum PostTypeConstant {
 		this.postTypeCode = postTypeCode;
 	}
 
-	String getPostTypeName() {
+	public String getPostTypeName() {
 		return postTypeName;
 	}
 
-	String getPostTypeCode() {
+	public String getPostTypeCode() {
 		return postTypeCode;
 	}
 
