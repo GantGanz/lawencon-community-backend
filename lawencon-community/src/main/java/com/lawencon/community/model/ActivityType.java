@@ -7,10 +7,15 @@ import javax.persistence.UniqueConstraint;
 
 import com.lawencon.base.BaseEntity;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @Table(name = "t_activity_type", uniqueConstraints = {
 		@UniqueConstraint(name = "t_activity_type_bk", columnNames = { "activity_type_code" }),
 		@UniqueConstraint(name = "t_activity_type_ck", columnNames = { "activity_type_code", "activity_type_name" }) })
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class ActivityType extends BaseEntity {
 
 	private static final long serialVersionUID = 173643027340409022L;

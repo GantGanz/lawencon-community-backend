@@ -344,3 +344,20 @@ CREATE TABLE t_payment_premium(
 ALTER TABLE t_payment_premium ADD CONSTRAINT t_payment_premium_pk PRIMARY KEY(id);
 ALTER TABLE t_payment_premium ADD CONSTRAINT t_payment_premium_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
 ALTER TABLE t_payment_premium ADD CONSTRAINT t_payment_premium_event_fk FOREIGN KEY(activity_id) REFERENCES t_activity(id);
+
+
+INSERT INTO t_role (id,role_code,role_name,created_by,created_at) VALUES
+('883bd334-9dbc-4f13-aa3c-d4ab404ee735','SYS','System',1,now()),
+('d58091c0-aade-4160-a97f-55ef77dc9682','SA','Super Admin',1,now()),
+('9e4aac7a-e0d6-409b-8c55-a99decc5167a','ADM','Admin',1,now()),
+('85b2bed6-104e-4f17-9f94-8aede7dd18cb','MMB','Member',1,now());
+
+
+INSERT INTO t_post_type (id,post_type_code,post_type_name,created_by,created_at) VALUES
+('a572d04c-2da6-4703-8dc8-82b8384e3d60','REG','Regular',1,now()),
+('7d0a84c9-ede1-4733-a28f-9b286e59e9e3','POL','Polling',1,now()),
+('dbcd172a-7d8e-4852-9de2-41dc2f7fcfd3','PRE','Premium',1,now());
+
+INSERT INTO t_activity_type (id,activity_type_code,activity_type_name,created_by,created_at) VALUES
+('e4cd6ea9-2363-49c9-bc36-264359bf4e49','EVN','Event',1,now()),
+('9e8da04e-acc8-45a2-af5a-573a87fccfbd','CRS','Course',1,now());
