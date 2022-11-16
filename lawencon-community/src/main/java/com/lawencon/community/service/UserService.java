@@ -44,11 +44,19 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 	private PasswordEncoder passwordEncoder;
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+	public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
+		final Optional<User> userOptional = userDao.getByEmail(email);
+		
+		if(userOptional.isPresent()) {
+			return new org.springframework.security.core.userdetails.User(email, userOptional.get().getPass(), new ArrayList<>()); 
+		}
+		throw new UsernameNotFoundException("Email or Password is Incorrect");
 	}
-
+	
+	public Optional<User> getByEmail(final String email) {
+		return userDao.getByEmail(email);
+	}
+	
 	public InsertRes register(final UserInsertReq data) {
 		valInsert(data);
 
