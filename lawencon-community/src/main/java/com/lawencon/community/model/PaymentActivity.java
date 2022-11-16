@@ -1,5 +1,7 @@
 package com.lawencon.community.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -12,17 +14,21 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Entity
-@Table(name = "t_user_verification")
+@Table(name = "t_payment_activity")
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class UserVerification extends BaseEntity {
+public class PaymentActivity extends BaseEntity {
 
-	private static final long serialVersionUID = 4106206381476361596L;
+	private static final long serialVersionUID = -6258941125653807864L;
 
-	@Column(name = "verification_code", nullable = false, length = 5)
-	private String verificationCode;
+	@Column(name = "nominal", nullable = false)
+	private BigDecimal nominal;
 
 	@OneToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
+
+	@OneToOne
+	@JoinColumn(name = "activity_id", nullable = false)
+	private Activity activity;
 }

@@ -327,13 +327,12 @@ CREATE TABLE t_payment_activity(
 );
 ALTER TABLE t_payment_activity ADD CONSTRAINT t_payment_activity_pk PRIMARY KEY(id);
 ALTER TABLE t_payment_activity ADD CONSTRAINT t_payment_activity_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
-ALTER TABLE t_payment_activity ADD CONSTRAINT t_payment_activity_event_fk FOREIGN KEY(activity_id) REFERENCES t_activity(id);
+ALTER TABLE t_payment_activity ADD CONSTRAINT t_payment_activity_activity_fk FOREIGN KEY(activity_id) REFERENCES t_activity(id);
 
 CREATE TABLE t_payment_premium(
     id text,
     nominal double precision NOT NULL,
     user_id text NOT NULL,
-    activity_id text NOT NULL,
     created_by text NOT NULL,
     created_at timestamp WITHOUT time ZONE NOT NULL,
     updated_by text,
@@ -343,4 +342,3 @@ CREATE TABLE t_payment_premium(
 );
 ALTER TABLE t_payment_premium ADD CONSTRAINT t_payment_premium_pk PRIMARY KEY(id);
 ALTER TABLE t_payment_premium ADD CONSTRAINT t_payment_premium_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
-ALTER TABLE t_payment_premium ADD CONSTRAINT t_payment_premium_event_fk FOREIGN KEY(activity_id) REFERENCES t_activity(id);

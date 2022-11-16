@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.user;
 
-public class UserFindByIdRes {
+public class UserRes {
 
 	private UserData data;
 
