@@ -34,7 +34,7 @@ public class User extends BaseEntity {
 	private String company;
 
 	@Column(name = "is_premium", nullable = false)
-	private String isPremium;
+	private Boolean isPremium;
 
 	@OneToOne
 	@JoinColumn(name = "role_id", nullable = false)

@@ -15,5 +15,4 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-// nanti pengecekan bk manual di sini
 }
