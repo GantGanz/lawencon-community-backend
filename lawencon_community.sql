@@ -77,7 +77,6 @@ CREATE TABLE t_user(
     email text NOT NULL,
     pass text NOT NULL,
     company text NOT NULL,
-    wallet double precision NOT NULL DEFAULT 0,
     is_premium boolean NOT NULL DEFAULT FALSE,
     role_id text NOT NULL,
     industry_id text NOT NULL,
@@ -297,8 +296,6 @@ ALTER TABLE t_attachment_activity ADD CONSTRAINT t_attachment_activity_post_fk F
 
 CREATE TABLE t_activity_member (
     id text,
-    is_approved boolean NOT NULL DEFAULT FALSE,
-    file_id text NOT NULL,
     activity_id text NOT NULL,
     user_id text NOT NULL,
     created_by text NOT NULL,
@@ -309,13 +306,14 @@ CREATE TABLE t_activity_member (
     is_active boolean NOT NULL DEFAULT TRUE
 );
 ALTER TABLE t_activity_member ADD CONSTRAINT t_activity_member_pk PRIMARY KEY(id);
-ALTER TABLE t_activity_member ADD CONSTRAINT t_activity_member_file_fk FOREIGN KEY(file_id) REFERENCES t_file(id);
 ALTER TABLE t_activity_member ADD CONSTRAINT t_activity_member_post_fk FOREIGN KEY(activity_id) REFERENCES t_activity(id);
 ALTER TABLE t_activity_member ADD CONSTRAINT t_activity_member_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id); 
 
 CREATE TABLE t_payment_activity(
     id text,
     nominal double precision NOT NULL,
+    is_approved boolean NOT NULL DEFAULT FALSE,
+    file_id text NOT NULL,
     user_id text NOT NULL,
     activity_id text NOT NULL,
     created_by text NOT NULL,
@@ -326,12 +324,15 @@ CREATE TABLE t_payment_activity(
     is_active boolean NOT NULL DEFAULT TRUE
 );
 ALTER TABLE t_payment_activity ADD CONSTRAINT t_payment_activity_pk PRIMARY KEY(id);
+ALTER TABLE t_payment_activity ADD CONSTRAINT t_payment_activity_file_fk FOREIGN KEY(file_id) REFERENCES t_file(id);
 ALTER TABLE t_payment_activity ADD CONSTRAINT t_payment_activity_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
 ALTER TABLE t_payment_activity ADD CONSTRAINT t_payment_activity_activity_fk FOREIGN KEY(activity_id) REFERENCES t_activity(id);
 
 CREATE TABLE t_payment_premium(
     id text,
     nominal double precision NOT NULL,
+    is_approved boolean NOT NULL DEFAULT FALSE,
+    file_id text NOT NULL,
     user_id text NOT NULL,
     created_by text NOT NULL,
     created_at timestamp WITHOUT time ZONE NOT NULL,
@@ -341,6 +342,7 @@ CREATE TABLE t_payment_premium(
     is_active boolean NOT NULL DEFAULT TRUE
 );
 ALTER TABLE t_payment_premium ADD CONSTRAINT t_payment_premium_pk PRIMARY KEY(id);
+ALTER TABLE t_payment_premium ADD CONSTRAINT t_payment_premium_file_fk FOREIGN KEY(file_id) REFERENCES t_file(id);
 ALTER TABLE t_payment_premium ADD CONSTRAINT t_payment_premium_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
 
 ======= DML =======
