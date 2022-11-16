@@ -77,13 +77,11 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 
 		try {
 			begin();
-
 			final File fileInsert = fileDao.saveNoLogin(file, () -> userDao.getSystemId());
 			userInsert.setFile(fileInsert);
-
 			userInsert = userDao.saveNoLogin(userInsert, () -> userDao.getSystemId());
 			commit();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 			rollback();
 		}
