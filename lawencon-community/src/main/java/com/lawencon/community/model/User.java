@@ -1,7 +1,5 @@
 package com.lawencon.community.model;
 
-import java.math.BigDecimal;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -34,9 +32,6 @@ public class User extends BaseEntity {
 
 	@Column(name = "compant", nullable = false, length = 50)
 	private String company;
-
-	@Column(name = "wallet", nullable = false)
-	private BigDecimal wallet;
 
 	@Column(name = "is_premium", nullable = false)
 	private String isPremium;

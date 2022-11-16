@@ -24,8 +24,15 @@ public class PaymentPremium extends BaseEntity {
 	@Column(name = "nominal", nullable = false)
 	private BigDecimal nominal;
 
+	@Column(name = "is_approved", nullable = false)
+	private Boolean isApproved;
+	
+	@OneToOne
+	@JoinColumn(name = "file_id", nullable = false)
+	private File file;
+
 	@OneToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
-
+	
 }
