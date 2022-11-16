@@ -21,6 +21,7 @@ import com.lawencon.community.service.UserService;
 import com.lawencon.util.JwtUtil;
 import com.lawencon.util.JwtUtil.ClaimKey;
 
+
 @RestController
 @RequestMapping("login")
 public class LoginController {
