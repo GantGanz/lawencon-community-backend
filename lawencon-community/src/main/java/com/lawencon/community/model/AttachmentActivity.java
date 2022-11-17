@@ -7,8 +7,13 @@ import javax.persistence.Table;
 
 import com.lawencon.base.BaseEntity;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 @Entity
 @Table(name = "t_attachment_activity")
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class AttachmentActivity extends BaseEntity {
 
 	private static final long serialVersionUID = -8199311893889229151L;

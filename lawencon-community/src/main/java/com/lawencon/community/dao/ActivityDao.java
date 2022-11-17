@@ -20,7 +20,7 @@ public class ActivityDao extends AbstractJpaDao {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.activity_title, a.activity_location, a.startAt, a.endAt, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
-				.append("a.created_at, a.created_at, a.updated_at, a.is_active ").append("FROM t_activity a ")
+				.append("a.created_at, a.updated_at, a.is_active ").append("FROM t_activity a ")
 				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_user u ON u.id = a.created_by ")
 				.append("WHERE pt.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ")
@@ -71,7 +71,7 @@ public class ActivityDao extends AbstractJpaDao {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.activity_title, a.activity_location, a.startAt, a.endAt, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
-				.append("a.created_at, a.created_at, a.updated_at, a.is_active ").append("FROM t_activity a ")
+				.append("a.created_at, a.updated_at, a.is_active ").append("FROM t_activity a ")
 				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_user u ON u.id = a.created_by ")
 				.append("WHERE pt.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ").append("ORDER BY a.id DESC");
@@ -121,7 +121,7 @@ public class ActivityDao extends AbstractJpaDao {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.activity_title, a.activity_location, a.startAt, a.endAt, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
-				.append("a.created_at, a.created_at, a.updated_at, a.is_active ").append("FROM t_activity a ")
+				.append("a.created_at, a.updated_at, a.is_active ").append("FROM t_activity a ")
 				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_user u ON u.id = a.created_by ")
 				.append("WHERE pt.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ").append("AND a.createdBy = :userId ")
@@ -173,7 +173,7 @@ public class ActivityDao extends AbstractJpaDao {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.activity_title, a.activity_location, a.startAt, a.endAt, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
-				.append("a.created_at, a.created_at, a.updated_at, a.is_active ").append("FROM t_activity a ")
+				.append("a.created_at, a.updated_at, a.is_active ").append("FROM t_activity a ")
 				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_user u ON u.id = a.created_by ")
 				.append("WHERE pt.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ").append("AND a.createdBy = :userId ")
@@ -225,7 +225,7 @@ public class ActivityDao extends AbstractJpaDao {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.activity_title, a.activity_location, a.startAt, a.endAt, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
-				.append("a.created_at, a.created_at, a.updated_at, a.is_active ").append("FROM t_activity a ")
+				.append("a.created_at, a.updated_at, a.is_active ").append("FROM t_activity a ")
 				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_payment_activity pa ON pa.activity_id = a.id ")
 				.append("INNER JOIN t_user u ON u.id = pa.user_id ")
@@ -278,7 +278,7 @@ public class ActivityDao extends AbstractJpaDao {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.activity_title, a.activity_location, a.startAt, a.endAt, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
-				.append("a.created_at, a.created_at, a.updated_at, a.is_active ").append("FROM t_activity a ")
+				.append("a.created_at, a.updated_at, a.is_active ").append("FROM t_activity a ")
 				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_payment_activity pa ON pa.activity_id = a.id ")
 				.append("INNER JOIN t_user u ON u.id = pa.user_id ")

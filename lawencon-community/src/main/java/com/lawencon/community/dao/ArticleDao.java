@@ -16,7 +16,7 @@ public class ArticleDao extends AbstractJpaDao {
 	public List<Article> getAllById(final String userId) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.article_title, a.article_content, u.fullname, a.created_by, ")
-				.append("a.created_at, a.created_at, a.updated_at, a.is_active ").append("FROM t_article a ")
+				.append("a.created_at, a.updated_at, a.is_active ").append("FROM t_article a ")
 				.append("INNER JOIN t_user u ON u.id = a.created_by ").append("WHERE a.created_by = :userId")
 				.append("AND a.is_active = TRUE ").append("ORDER BY a.id DESC");
 
@@ -41,9 +41,9 @@ public class ArticleDao extends AbstractJpaDao {
 				article.setCreatedBy(objArr[5].toString());
 				article.setCreatedAt(Timestamp.valueOf(objArr[6].toString()).toLocalDateTime());
 				if (objArr[7] != null) {
-					article.setUpdatedAt(Timestamp.valueOf(objArr[8].toString()).toLocalDateTime());
+					article.setUpdatedAt(Timestamp.valueOf(objArr[7].toString()).toLocalDateTime());
 				}
-				article.setIsActive(Boolean.valueOf(objArr[9].toString()));
+				article.setIsActive(Boolean.valueOf(objArr[8].toString()));
 
 				activities.add(article);
 			});
