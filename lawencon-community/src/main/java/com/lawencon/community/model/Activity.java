@@ -43,4 +43,8 @@ public class Activity extends BaseEntity {
 	@OneToOne
 	@JoinColumn(name = "activity_type_id", nullable = false)
 	private ActivityType activityType;
+
+	@OneToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
 }

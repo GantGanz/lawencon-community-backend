@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.AbstractJpaDao;
+import com.lawencon.community.constant.RoleConstant;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.Industry;
 import com.lawencon.community.model.Position;
@@ -66,11 +67,11 @@ public class UserDao extends AbstractJpaDao {
 	public String getSystemId() {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT u.id ").append("FROM t_user u ").append("INNER JOIN t_role ur ON ur.id = u.role_id ")
-				.append("WHERE role_code = 'SYS' ");
+				.append("WHERE role_code = :roleCode ");
 
 		String userId = null;
 		try {
-			final Object userObj = createNativeQuery(str.toString()).getSingleResult();
+			final Object userObj = createNativeQuery(str.toString()).setParameter("roleCode", RoleConstant.SYSTEM.getRoleCode()).getSingleResult();
 			if (userObj != null) {
 				userId = userObj.toString();
 			}
