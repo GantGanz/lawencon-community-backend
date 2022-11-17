@@ -5,5 +5,5 @@ import com.lawencon.base.BaseCoreService;
 
 @Service
 public class FileService extends BaseCoreService {
-// nanti pengecekan bk manual di sini
+
 }
