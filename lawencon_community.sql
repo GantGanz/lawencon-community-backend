@@ -110,7 +110,7 @@ CREATE TABLE t_article(
     is_active boolean NOT NULL DEFAULT TRUE
 );
 ALTER TABLE t_article ADD CONSTRAINT t_article_pk PRIMARY KEY(id);
-ALTER TABLE t_activity ADD CONSTRAINT t_activity_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
+ALTER TABLE t_article ADD CONSTRAINT t_article_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
 
 CREATE TABLE t_post(
     id text,
@@ -127,7 +127,7 @@ CREATE TABLE t_post(
 );
 ALTER TABLE t_post ADD CONSTRAINT t_post_pk PRIMARY KEY(id);
 ALTER TABLE t_post ADD CONSTRAINT t_post_post_type_fk FOREIGN KEY(post_type_id) REFERENCES t_post_type(id);
-ALTER TABLE t_post ADD CONSTRAINT t_post_user_fk FOREIGN KEY(post_user_id) REFERENCES t_user(id);
+ALTER TABLE t_post ADD CONSTRAINT t_post_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
 
 CREATE TABLE t_bookmark(
     id text,
@@ -353,7 +353,7 @@ ALTER TABLE t_payment_premium ADD CONSTRAINT t_payment_premium_pk PRIMARY KEY(id
 ALTER TABLE t_payment_premium ADD CONSTRAINT t_payment_premium_file_fk FOREIGN KEY(file_id) REFERENCES t_file(id);
 ALTER TABLE t_payment_premium ADD CONSTRAINT t_payment_premium_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
 
-======= DML =======
+--======= DML =======--
 INSERT INTO t_role (id,role_code,role_name,created_by,created_at) VALUES
 ('883bd334-9dbc-4f13-aa3c-d4ab404ee735','SYS','System',1,now()),
 ('d58091c0-aade-4160-a97f-55ef77dc9682','SA','Super Admin',1,now()),

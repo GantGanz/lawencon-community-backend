@@ -21,7 +21,8 @@ public class PostDao extends AbstractJpaDao {
 				"SELECT p.id, p.ver, p.post_title, p.post_content, u.fullname, p.created_by, p.created_at, p.updated_at, p.is_active ")
 				.append("FROM t_post p ").append("INNER JOIN t_post_type pt ON pt.id = p.post_type_id ")
 				.append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE pt.post_type_code = :postTypeCode ").append("ORDER BY p.id DESC");
+				.append("WHERE pt.post_type_code = :postTypeCode ").append("AND p.is_active = TRUE ")
+				.append("ORDER BY p.id DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql)
@@ -62,7 +63,8 @@ public class PostDao extends AbstractJpaDao {
 				"SELECT p.id, p.ver, p.post_title, p.post_content, u.fullname, p.created_by, p.created_at, p.updated_at, p.is_active ")
 				.append("FROM t_post p ").append("INNER JOIN t_post_type pt ON pt.id = p.post_type_id ")
 				.append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE pt.post_type_code = :postTypeCode ").append("ORDER BY p.id DESC");
+				.append("WHERE pt.post_type_code = :postTypeCode ").append("AND p.is_active = TRUE ")
+				.append("ORDER BY p.id DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql)
@@ -103,7 +105,8 @@ public class PostDao extends AbstractJpaDao {
 				"SELECT p.id, p.ver, p.post_title, p.post_content, u.fullname, p.created_by, p.created_at, p.updated_at, p.is_active ")
 				.append("FROM t_post p ").append("INNER JOIN t_post_type pt ON pt.id = p.post_type_id ")
 				.append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE pt.post_type_code = :postTypeCode ").append("ORDER BY p.id DESC");
+				.append("WHERE pt.post_type_code = :postTypeCode ").append("AND p.is_active = TRUE ")
+				.append("ORDER BY p.id DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql)
@@ -144,8 +147,8 @@ public class PostDao extends AbstractJpaDao {
 				"SELECT p.id, p.ver, p.post_title, p.post_content, u.fullname, p.created_by, p.created_at, p.updated_at, p.is_active ")
 				.append("FROM t_post p ").append("INNER JOIN t_post_type pt ON pt.id = p.post_type_id ")
 				.append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE pt.post_type_code = :postTypeCode ").append("AND p.createdBy = :userId ")
-				.append("ORDER BY p.id DESC");
+				.append("WHERE pt.post_type_code = :postTypeCode ").append("AND p.is_active = TRUE ")
+				.append("AND p.createdBy = :userId ").append("ORDER BY p.id DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql)
@@ -187,8 +190,8 @@ public class PostDao extends AbstractJpaDao {
 				"SELECT p.id, p.ver, p.post_title, p.post_content, u.fullname, p.created_by, p.created_at, p.updated_at, p.is_active ")
 				.append("FROM t_post p ").append("INNER JOIN t_post_type pt ON pt.id = p.post_type_id ")
 				.append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE pt.post_type_code = :postTypeCode ").append("AND p.createdBy = :userId ")
-				.append("ORDER BY p.id DESC");
+				.append("WHERE pt.post_type_code = :postTypeCode ").append("AND p.is_active = TRUE ")
+				.append("AND p.createdBy = :userId ").append("ORDER BY p.id DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql)
@@ -230,8 +233,8 @@ public class PostDao extends AbstractJpaDao {
 				"SELECT p.id, p.ver, p.post_title, p.post_content, u.fullname, p.created_by, p.created_at, p.updated_at, p.is_active ")
 				.append("FROM t_post p ").append("INNER JOIN t_post_type pt ON pt.id = p.post_type_id ")
 				.append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE pt.post_type_code = :postTypeCode ").append("AND p.createdBy = :userId ")
-				.append("ORDER BY p.id DESC");
+				.append("WHERE pt.post_type_code = :postTypeCode ").append("AND p.is_active = TRUE ")
+				.append("AND p.createdBy = :userId ").append("ORDER BY p.id DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql)
@@ -274,7 +277,7 @@ public class PostDao extends AbstractJpaDao {
 				.append("FROM t_post p ").append("INNER JOIN t_post_type pt ON pt.id = p.post_type_id ")
 				.append("INNER JOIN t_user u ON u.id = p.created_by ")
 				.append("INNER JOIN t_bookmark b ON b.post_id = p.id ").append("WHERE b.user_id = :userId ")
-				.append("ORDER BY p.id DESC");
+				.append("AND p.is_active = TRUE ").append("ORDER BY p.id DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql).setParameter("userId", userId).getResultList();
@@ -311,7 +314,7 @@ public class PostDao extends AbstractJpaDao {
 
 		return posts;
 	}
-	
+
 	public List<Post> getAllLiked(final String userId) {
 		final StringBuilder str = new StringBuilder();
 		str.append(
@@ -319,7 +322,7 @@ public class PostDao extends AbstractJpaDao {
 				.append("FROM t_post p ").append("INNER JOIN t_post_type pt ON pt.id = p.post_type_id ")
 				.append("INNER JOIN t_user u ON u.id = p.created_by ")
 				.append("INNER JOIN t_like l ON l.post_id = p.id ").append("WHERE b.user_id = :userId ")
-				.append("ORDER BY p.id DESC");
+				.append("AND p.is_active = TRUE ").append("ORDER BY p.id DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql).setParameter("userId", userId).getResultList();
