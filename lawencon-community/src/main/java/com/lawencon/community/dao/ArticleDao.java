@@ -26,8 +26,8 @@ public class ArticleDao extends AbstractJpaDao {
 		final List<Article> activities = new ArrayList<>();
 
 		if (result != null && result.size() > 0) {
-			result.forEach(checkInObj -> {
-				final Object[] objArr = (Object[]) checkInObj;
+			result.forEach(resultObj -> {
+				final Object[] objArr = (Object[]) resultObj;
 				final Article article = new Article();
 				article.setId(objArr[0].toString());
 				article.setVersion(Integer.valueOf(objArr[1].toString()));

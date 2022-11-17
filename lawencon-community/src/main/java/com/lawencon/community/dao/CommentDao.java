@@ -28,8 +28,8 @@ public class CommentDao extends AbstractJpaDao {
 		final List<Comment> comments = new ArrayList<>();
 
 		if (result != null && result.size() > 0) {
-			result.forEach(checkInObj -> {
-				final Object[] objArr = (Object[]) checkInObj;
+			result.forEach(resultObj -> {
+				final Object[] objArr = (Object[]) resultObj;
 				final Comment comment = new Comment();
 				comment.setId(objArr[0].toString());
 				comment.setVersion(Integer.valueOf(objArr[1].toString()));
@@ -71,8 +71,8 @@ public class CommentDao extends AbstractJpaDao {
 		final List<Comment> comments = new ArrayList<>();
 
 		if (result != null && result.size() > 0) {
-			result.forEach(checkInObj -> {
-				final Object[] objArr = (Object[]) checkInObj;
+			result.forEach(resultObj -> {
+				final Object[] objArr = (Object[]) resultObj;
 				final Comment comment = new Comment();
 				comment.setId(objArr[0].toString());
 				comment.setVersion(Integer.valueOf(objArr[1].toString()));
