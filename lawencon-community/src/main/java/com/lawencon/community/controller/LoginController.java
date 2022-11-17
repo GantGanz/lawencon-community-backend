@@ -21,7 +21,9 @@ import com.lawencon.community.service.UserService;
 import com.lawencon.util.JwtUtil;
 import com.lawencon.util.JwtUtil.ClaimKey;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("login")
 public class LoginController {

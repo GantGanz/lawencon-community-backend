@@ -9,12 +9,12 @@ public class IndustryDao extends AbstractJpaDao {
 
 	public String getByCode(final String industryCode) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT id from industry where industry_code = :industryCode LIMIT 1");
+		str.append("SELECT id from t_industry where industry_code = :industryCode LIMIT 1");
 
 		String industryId = null;
 		try {
 			final Object userObj = createNativeQuery(str.toString())
-					.setParameter("roleCode", industryCode).getSingleResult();
+					.setParameter("industryCode", industryCode).getSingleResult();
 			if (userObj != null) {
 				industryId = userObj.toString();
 			}

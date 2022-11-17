@@ -7,12 +7,12 @@ import com.lawencon.base.AbstractJpaDao;
 public class PositionDao extends AbstractJpaDao {
 	public String getByCode(final String positionCode) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT id from position where position_code = :positionCode LIMIT 1");
+		str.append("SELECT id from t_position where position_code = :positionCode LIMIT 1");
 
 		String positionId = null;
 		try {
 			final Object userObj = createNativeQuery(str.toString())
-					.setParameter("roleCode", positionCode).getSingleResult();
+					.setParameter("positionCode", positionCode).getSingleResult();
 			if (userObj != null) {
 				positionId = userObj.toString();
 			}

@@ -46,17 +46,18 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
 		final Optional<User> userOptional = userDao.getByEmail(email);
-		
-		if(userOptional.isPresent()) {
-			return new org.springframework.security.core.userdetails.User(email, userOptional.get().getPass(), new ArrayList<>()); 
+
+		if (userOptional.isPresent()) {
+			return new org.springframework.security.core.userdetails.User(email, userOptional.get().getPass(),
+					new ArrayList<>());
 		}
 		throw new UsernameNotFoundException("Email or Password is Incorrect");
 	}
-	
+
 	public Optional<User> getByEmail(final String email) {
 		return userDao.getByEmail(email);
 	}
-	
+
 	public InsertRes register(final UserInsertReq data) {
 		valInsert(data);
 
@@ -107,11 +108,11 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 
 	private void valInsert(final UserInsertReq data) {
 		bkNotDuplicate(data);
-		idNull(data);
+		idNotNull(data);
 		fkFound(data);
 	}
 
-	private void idNull(final UserInsertReq data) {
+	private void idNotNull(final UserInsertReq data) {
 		if (data.getRoleId() == null) {
 			throw new RuntimeException("Role id must not null");
 		}

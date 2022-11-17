@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lawencon.community.dto.posttype.PostTypesRes;
 import com.lawencon.community.service.PostTypeService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("post-types")
 public class PostTypeController {
