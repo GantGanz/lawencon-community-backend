@@ -114,13 +114,13 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 
 	private void idNotNull(final UserInsertReq data) {
 		if (data.getRoleId() == null) {
-			throw new RuntimeException("Role id must not null");
+			throw new RuntimeException("Role id cannot be null");
 		}
 		if (data.getPositionId() == null) {
-			throw new RuntimeException("Position id must not null");
+			throw new RuntimeException("Position id cannot be null");
 		}
 		if (data.getIndustryId() == null) {
-			throw new RuntimeException("Industry id must not null");
+			throw new RuntimeException("Industry id cannot be null");
 		}
 	}
 
