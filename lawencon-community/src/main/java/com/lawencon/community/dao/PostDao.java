@@ -31,8 +31,8 @@ public class PostDao extends AbstractJpaDao {
 		final List<Post> posts = new ArrayList<>();
 
 		if (result != null && result.size() > 0) {
-			result.forEach(checkInObj -> {
-				final Object[] objArr = (Object[]) checkInObj;
+			result.forEach(resultObj -> {
+				final Object[] objArr = (Object[]) resultObj;
 				final Post post = new Post();
 				post.setId(objArr[0].toString());
 				post.setVersion(Integer.valueOf(objArr[1].toString()));
@@ -73,8 +73,8 @@ public class PostDao extends AbstractJpaDao {
 		final List<Post> posts = new ArrayList<>();
 
 		if (result != null && result.size() > 0) {
-			result.forEach(checkInObj -> {
-				final Object[] objArr = (Object[]) checkInObj;
+			result.forEach(resultObj -> {
+				final Object[] objArr = (Object[]) resultObj;
 				final Post post = new Post();
 				post.setId(objArr[0].toString());
 				post.setVersion(Integer.valueOf(objArr[1].toString()));
@@ -115,8 +115,8 @@ public class PostDao extends AbstractJpaDao {
 		final List<Post> posts = new ArrayList<>();
 
 		if (result != null && result.size() > 0) {
-			result.forEach(checkInObj -> {
-				final Object[] objArr = (Object[]) checkInObj;
+			result.forEach(resultObj -> {
+				final Object[] objArr = (Object[]) resultObj;
 				final Post post = new Post();
 				post.setId(objArr[0].toString());
 				post.setVersion(Integer.valueOf(objArr[1].toString()));
@@ -158,8 +158,8 @@ public class PostDao extends AbstractJpaDao {
 		final List<Post> posts = new ArrayList<>();
 
 		if (result != null && result.size() > 0) {
-			result.forEach(checkInObj -> {
-				final Object[] objArr = (Object[]) checkInObj;
+			result.forEach(resultObj -> {
+				final Object[] objArr = (Object[]) resultObj;
 				final Post post = new Post();
 				post.setId(objArr[0].toString());
 				post.setVersion(Integer.valueOf(objArr[1].toString()));
@@ -201,8 +201,8 @@ public class PostDao extends AbstractJpaDao {
 		final List<Post> posts = new ArrayList<>();
 
 		if (result != null && result.size() > 0) {
-			result.forEach(checkInObj -> {
-				final Object[] objArr = (Object[]) checkInObj;
+			result.forEach(resultObj -> {
+				final Object[] objArr = (Object[]) resultObj;
 				final Post post = new Post();
 				post.setId(objArr[0].toString());
 				post.setVersion(Integer.valueOf(objArr[1].toString()));
@@ -244,8 +244,8 @@ public class PostDao extends AbstractJpaDao {
 		final List<Post> posts = new ArrayList<>();
 
 		if (result != null && result.size() > 0) {
-			result.forEach(checkInObj -> {
-				final Object[] objArr = (Object[]) checkInObj;
+			result.forEach(resultObj -> {
+				final Object[] objArr = (Object[]) resultObj;
 				final Post post = new Post();
 				post.setId(objArr[0].toString());
 				post.setVersion(Integer.valueOf(objArr[1].toString()));
@@ -285,8 +285,8 @@ public class PostDao extends AbstractJpaDao {
 		final List<Post> posts = new ArrayList<>();
 
 		if (result != null && result.size() > 0) {
-			result.forEach(checkInObj -> {
-				final Object[] objArr = (Object[]) checkInObj;
+			result.forEach(resultObj -> {
+				final Object[] objArr = (Object[]) resultObj;
 				final Post post = new Post();
 				post.setId(objArr[0].toString());
 				post.setVersion(Integer.valueOf(objArr[1].toString()));
@@ -330,8 +330,8 @@ public class PostDao extends AbstractJpaDao {
 		final List<Post> posts = new ArrayList<>();
 
 		if (result != null && result.size() > 0) {
-			result.forEach(checkInObj -> {
-				final Object[] objArr = (Object[]) checkInObj;
+			result.forEach(resultObj -> {
+				final Object[] objArr = (Object[]) resultObj;
 				final Post post = new Post();
 				post.setId(objArr[0].toString());
 				post.setVersion(Integer.valueOf(objArr[1].toString()));

@@ -24,8 +24,8 @@ public class AttachmentActivityDao extends AbstractJpaDao {
 		final List<AttachmentActivity> attachmentActivities = new ArrayList<>();
 
 		if (result != null && result.size() > 0) {
-			result.forEach(checkInObj -> {
-				final Object[] objArr = (Object[]) checkInObj;
+			result.forEach(resultObj -> {
+				final Object[] objArr = (Object[]) resultObj;
 				final AttachmentActivity attachmentActivity = new AttachmentActivity();
 				attachmentActivity.setId(objArr[0].toString());
 

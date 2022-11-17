@@ -5,5 +5,5 @@ import com.lawencon.base.BaseCoreService;
 
 @Service
 public class PostService extends BaseCoreService {
-	
+
 }

@@ -23,8 +23,8 @@ public class PollOptionDao extends AbstractJpaDao {
 		final List<PollOption> pollOptions = new ArrayList<>();
 
 		if (result != null && result.size() > 0) {
-			result.forEach(checkInObj -> {
-				final Object[] objArr = (Object[]) checkInObj;
+			result.forEach(resultObj -> {
+				final Object[] objArr = (Object[]) resultObj;
 				final PollOption pollOption = new PollOption();
 				pollOption.setId(objArr[0].toString());
 				pollOption.setPollContent(objArr[1].toString());
