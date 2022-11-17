@@ -21,7 +21,8 @@ public class UserDao extends AbstractJpaDao {
 				.append("u.is_premium, i.industry_name, p.position_name ").append("FROM t_user u ")
 				.append("INNER JOIN t_role ur ON ur.id = u.role_id ")
 				.append("INNER JOIN t_industry i ON u.industry_id = i.id ")
-				.append("INNER JOIN t_position p ON u.position_id = p.id ").append("WHERE email = :username ");
+				.append("INNER JOIN t_position p ON u.position_id = p.id ").append("WHERE email = :username ")
+				.append("AND u.is_active = TRUE ");
 
 		User user = null;
 		try {
@@ -71,7 +72,8 @@ public class UserDao extends AbstractJpaDao {
 
 		String userId = null;
 		try {
-			final Object userObj = createNativeQuery(str.toString()).setParameter("roleCode", RoleConstant.SYSTEM.getRoleCode()).getSingleResult();
+			final Object userObj = createNativeQuery(str.toString())
+					.setParameter("roleCode", RoleConstant.SYSTEM.getRoleCode()).getSingleResult();
 			if (userObj != null) {
 				userId = userObj.toString();
 			}
