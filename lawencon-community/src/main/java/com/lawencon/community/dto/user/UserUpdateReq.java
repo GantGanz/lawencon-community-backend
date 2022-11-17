@@ -14,6 +14,7 @@ public class UserUpdateReq {
 	private String extension;
 	private String roleId;
 	private String positionId;
+	private String industryId;
 	private BigDecimal wallet;
 	private Boolean isPremium;
 	private Boolean isActive;

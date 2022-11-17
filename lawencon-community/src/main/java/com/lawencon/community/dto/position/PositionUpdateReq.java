@@ -6,7 +6,6 @@ import lombok.Data;
 public class PositionUpdateReq {
 
 	private String id;
-	private String positionCode;
 	private String positionName;
 	private Boolean isActive;
 	private Integer version;

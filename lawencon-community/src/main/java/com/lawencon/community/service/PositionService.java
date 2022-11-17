@@ -10,8 +10,11 @@ import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.dao.PositionDao;
 import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
+import com.lawencon.community.dto.UpdateDataRes;
+import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.position.PositionData;
 import com.lawencon.community.dto.position.PositionInsertReq;
+import com.lawencon.community.dto.position.PositionUpdateReq;
 import com.lawencon.community.dto.position.PositionsRes;
 import com.lawencon.community.model.Position;
 
@@ -55,6 +58,43 @@ public class PositionService extends BaseCoreService {
 		final String positionId = positionDao.getByCode(data.getPositionCode());
 		if (positionId != null) {
 			throw new RuntimeException("Code already used");
+		}
+	}
+
+	public UpdateRes update(final PositionUpdateReq data) {
+		valUpdate(data);
+		Position positionUpdate = positionDao.getByIdAndDetach(Position.class, data.getId());
+		positionUpdate.setPositionName(data.getPositionName());
+		positionUpdate.setIsActive(data.getIsActive());
+		positionUpdate.setVersion(data.getVersion());
+
+		try {
+			begin();
+			positionUpdate = positionDao.saveAndFlush(positionUpdate);
+			commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new RuntimeException("Update failed");
+		}
+		final UpdateDataRes dataRes = new UpdateDataRes();
+		dataRes.setVersion(positionUpdate.getVersion());
+
+		final UpdateRes res = new UpdateRes();
+		res.setData(dataRes);
+		res.setMessage("Update success");
+
+		return res;
+	}
+
+	private void valUpdate(final PositionUpdateReq data) {
+		idFound(data);
+	}
+
+	private void idFound(final PositionUpdateReq data) {
+		final Position position = positionDao.getById(Position.class, data.getId());
+		if (position == null) {
+			throw new RuntimeException("Position not found");
 		}
 	}
 

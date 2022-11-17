@@ -11,8 +11,11 @@ import com.lawencon.community.dao.ArticleDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
+import com.lawencon.community.dto.UpdateDataRes;
+import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.article.ArticleData;
 import com.lawencon.community.dto.article.ArticleInsertReq;
+import com.lawencon.community.dto.article.ArticleUpdateReq;
 import com.lawencon.community.dto.article.ArticlesRes;
 import com.lawencon.community.model.Article;
 import com.lawencon.community.model.User;
@@ -67,6 +70,43 @@ public class ArticleService extends BaseCoreService {
 		}
 		if (data.getArticleContent() == null) {
 			throw new RuntimeException("Content cannot be null");
+		}
+	}
+
+	public UpdateRes update(final ArticleUpdateReq data) {
+		valUpdate(data);
+		Article article = articleDao.getByIdAndDetach(Article.class, data.getId());
+		article.setArticleTitle(data.getArticleTitle());
+		article.setArticleContent(data.getArticleContent());
+		article.setIsActive(data.getIsActive());
+		article.setVersion(data.getVersion());
+
+		try {
+			begin();
+			article = articleDao.saveAndFlush(article);
+			commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new RuntimeException("Update failed");
+		}
+		final UpdateDataRes dataRes = new UpdateDataRes();
+		dataRes.setVersion(article.getVersion());
+
+		final UpdateRes res = new UpdateRes();
+		res.setData(dataRes);
+		res.setMessage("Update success");
+		return res;
+	}
+
+	private void valUpdate(final ArticleUpdateReq data) {
+		idFound(data);
+	}
+
+	private void idFound(final ArticleUpdateReq data) {
+		final Article article = articleDao.getById(Article.class, data.getId());
+		if (article == null) {
+			throw new RuntimeException("Article not found");
 		}
 	}
 
