@@ -16,6 +16,7 @@ import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.article.ArticleData;
 import com.lawencon.community.dto.article.ArticleInsertReq;
 import com.lawencon.community.dto.article.ArticleUpdateReq;
+
 import com.lawencon.community.dto.article.ArticlesRes;
 import com.lawencon.community.model.Article;
 import com.lawencon.community.model.User;
@@ -109,7 +110,7 @@ public class ArticleService extends BaseCoreService {
 			throw new RuntimeException("Article not found");
 		}
 	}
-
+  
 	public ArticlesRes getAll() {
 		final List<Article> articles = articleDao.getAll(Article.class);
 		final List<ArticleData> articleDatas = new ArrayList<>();
