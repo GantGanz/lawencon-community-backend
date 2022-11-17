@@ -50,17 +50,6 @@ public class PositionService extends BaseCoreService {
 		return insertRes;
 	}
 
-	private void valInsert(final PositionInsertReq data) {
-		bkNotDuplicate(data);
-	}
-
-	private void bkNotDuplicate(final PositionInsertReq data) {
-		final String positionId = positionDao.getByCode(data.getPositionCode());
-		if (positionId != null) {
-			throw new RuntimeException("Code already used");
-		}
-	}
-
 	public UpdateRes update(final PositionUpdateReq data) {
 		valUpdate(data);
 		Position positionUpdate = positionDao.getByIdAndDetach(Position.class, data.getId());
@@ -87,17 +76,6 @@ public class PositionService extends BaseCoreService {
 		return res;
 	}
 
-	private void valUpdate(final PositionUpdateReq data) {
-		idFound(data);
-	}
-
-	private void idFound(final PositionUpdateReq data) {
-		final Position position = positionDao.getById(Position.class, data.getId());
-		if (position == null) {
-			throw new RuntimeException("Position not found");
-		}
-	}
-
 	public PositionsRes getAll() {
 		final List<Position> positions = positionDao.getAll(Position.class);
 		final List<PositionData> positionDatas = new ArrayList<>();
@@ -115,5 +93,57 @@ public class PositionService extends BaseCoreService {
 		positionsRes.setData(positionDatas);
 
 		return positionsRes;
+	}
+
+	private void valInsert(final PositionInsertReq data) {
+		valContentNotNull(data);
+		valBkNotDuplicate(data);
+	}
+
+	private void valContentNotNull(final PositionInsertReq data) {
+		if (data.getPositionCode() == null) {
+			throw new RuntimeException("Position code cannot be empty");
+		}
+		if (data.getPositionName() == null) {
+			throw new RuntimeException("Position name cannot be empty");
+		}
+	}
+
+	private void valBkNotDuplicate(final PositionInsertReq data) {
+		final String positionId = positionDao.getByCode(data.getPositionCode());
+		if (positionId != null) {
+			throw new RuntimeException("Code already used");
+		}
+	}
+
+	private void valUpdate(final PositionUpdateReq data) {
+		valIdNotNull(data);
+		valIdFound(data);
+		valContentNotNull(data);
+	}
+
+	private void valContentNotNull(final PositionUpdateReq data) {
+		if (data.getPositionName() == null) {
+			throw new RuntimeException("Position name cannot be empty");
+		}
+		if (data.getIsActive() == null) {
+			throw new RuntimeException("Is Active cannot be empty");
+		}
+		if (data.getVersion() == null) {
+			throw new RuntimeException("Version cannot be empty");
+		}
+	}
+
+	private void valIdNotNull(final PositionUpdateReq data) {
+		if (data.getId() == null) {
+			throw new RuntimeException("Id cannot be empty");
+		}
+	}
+
+	private void valIdFound(final PositionUpdateReq data) {
+		final Position position = positionDao.getById(Position.class, data.getId());
+		if (position == null) {
+			throw new RuntimeException("Position not found");
+		}
 	}
 }

@@ -5,12 +5,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.InsertRes;
+import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.article.ArticleInsertReq;
+import com.lawencon.community.dto.article.ArticleUpdateReq;
 import com.lawencon.community.dto.article.ArticlesRes;
 import com.lawencon.community.service.ArticleService;
 
@@ -29,9 +32,22 @@ public class ArticleController {
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
+	@GetMapping("user")
+	public ResponseEntity<ArticlesRes> getAllById() {
+		final ArticlesRes res = articleService.getAllById();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+
 	@PostMapping
 	public ResponseEntity<InsertRes> insert(@RequestBody final ArticleInsertReq data) {
 		final InsertRes res = articleService.insert(data);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
+
+	@PutMapping
+	public ResponseEntity<UpdateRes> update(@RequestBody final ArticleUpdateReq data) {
+		final UpdateRes res = articleService.update(data);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+
 }

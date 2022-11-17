@@ -49,17 +49,6 @@ public class IndustryService extends BaseCoreService {
 		return insertRes;
 	}
 
-	private void valInsert(final IndustryInsertReq data) {
-		bkNotDuplicate(data);
-	}
-
-	private void bkNotDuplicate(final IndustryInsertReq data) {
-		final String industryId = industryDao.getByCode(data.getIndustryCode());
-		if (industryId != null) {
-			throw new RuntimeException("Code already used");
-		}
-	}
-
 	public UpdateRes update(final IndustryUpdateReq data) {
 		valUpdate(data);
 		Industry industryUpdate = industryDao.getById(Industry.class, data.getId());
@@ -86,17 +75,6 @@ public class IndustryService extends BaseCoreService {
 		return res;
 	}
 
-	private void valUpdate(final IndustryUpdateReq data) {
-		idFound(data);
-	}
-
-	private void idFound(final IndustryUpdateReq data) {
-		final Industry industry = industryDao.getById(Industry.class, data.getId());
-		if (industry == null) {
-			throw new RuntimeException("Industry not found");
-		}
-	}
-
 	public IndustriesRes getAll() {
 		final List<Industry> industries = industryDao.getAll(Industry.class);
 		final List<IndustryData> industryDatas = new ArrayList<>();
@@ -115,4 +93,57 @@ public class IndustryService extends BaseCoreService {
 
 		return industriesRes;
 	}
+
+	private void valUpdate(final IndustryUpdateReq data) {
+		valIdNotNull(data);
+		valIdFound(data);
+		valContentNotNull(data);
+	}
+
+	private void valContentNotNull(final IndustryUpdateReq data) {
+		if (data.getIndustryName() == null) {
+			throw new RuntimeException("Industry name cannot be empty");
+		}
+		if (data.getIsActive() == null) {
+			throw new RuntimeException("Is Active cannot be empty");
+		}
+		if (data.getVersion() == null) {
+			throw new RuntimeException("Version cannot be empty");
+		}
+	}
+
+	private void valIdNotNull(final IndustryUpdateReq data) {
+		if (data.getId() == null) {
+			throw new RuntimeException("Id cannot be empty");
+		}
+	}
+
+	private void valIdFound(final IndustryUpdateReq data) {
+		final Industry industry = industryDao.getById(Industry.class, data.getId());
+		if (industry == null) {
+			throw new RuntimeException("Industry not found");
+		}
+	}
+
+	private void valInsert(final IndustryInsertReq data) {
+		valContentNotNull(data);
+		valBkNotDuplicate(data);
+	}
+
+	private void valContentNotNull(final IndustryInsertReq data) {
+		if (data.getIndustryCode() == null) {
+			throw new RuntimeException("Industry code cannot be empty");
+		}
+		if (data.getIndustryName() == null) {
+			throw new RuntimeException("Industry name cannot be empty");
+		}
+	}
+
+	private void valBkNotDuplicate(final IndustryInsertReq data) {
+		final String industryId = industryDao.getByCode(data.getIndustryCode());
+		if (industryId != null) {
+			throw new RuntimeException("Code already used");
+		}
+	}
+
 }

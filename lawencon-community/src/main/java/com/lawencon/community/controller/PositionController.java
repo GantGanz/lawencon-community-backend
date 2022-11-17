@@ -5,12 +5,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.InsertRes;
+import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.position.PositionInsertReq;
+import com.lawencon.community.dto.position.PositionUpdateReq;
 import com.lawencon.community.dto.position.PositionsRes;
 import com.lawencon.community.service.PositionService;
 
@@ -32,6 +35,12 @@ public class PositionController {
 	@PostMapping
 	public ResponseEntity<InsertRes> insert(@RequestBody final PositionInsertReq data) {
 		final InsertRes res = positionService.insert(data);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+
+	@PutMapping
+	public ResponseEntity<UpdateRes> update(@RequestBody final PositionUpdateReq data) {
+		final UpdateRes res = positionService.update(data);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 }
