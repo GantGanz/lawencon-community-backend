@@ -2,6 +2,8 @@ package com.lawencon.community.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.lawencon.base.BaseEntity;
@@ -22,4 +24,8 @@ public class Article extends BaseEntity {
 
 	@Column(name = "article_content", nullable = false)
 	private String articleContent;
+
+	@OneToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user;
 }

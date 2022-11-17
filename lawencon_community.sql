@@ -101,6 +101,7 @@ CREATE TABLE t_article(
     id text,
     article_title text NOT NULL,
     article_content text NOT NULL,
+    user_id text NOT NULL,
     created_by text NOT NULL,
     created_at timestamp WITHOUT time ZONE NOT NULL,
     updated_by text,
@@ -109,6 +110,7 @@ CREATE TABLE t_article(
     is_active boolean NOT NULL DEFAULT TRUE
 );
 ALTER TABLE t_article ADD CONSTRAINT t_article_pk PRIMARY KEY(id);
+ALTER TABLE t_activity ADD CONSTRAINT t_activity_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
 
 CREATE TABLE t_post(
     id text,
@@ -272,6 +274,7 @@ CREATE TABLE t_activity(
     start_at timestamp WITHOUT time ZONE NOT NULL,
     end_at timestamp WITHOUT time ZONE NOT NULL,
     fee double precision NOT NULL,
+    user_id text NOT NULL,
     activity_type_id text NOT NULL,
     created_by text NOT NULL,
     created_at timestamp WITHOUT time ZONE NOT NULL,
@@ -282,6 +285,7 @@ CREATE TABLE t_activity(
 );
 ALTER TABLE t_activity ADD CONSTRAINT t_activity_pk PRIMARY KEY(id);
 ALTER TABLE t_activity ADD CONSTRAINT t_activity_activity_type_fk FOREIGN KEY(activity_type_id) REFERENCES t_activity_type(id);
+ALTER TABLE t_activity ADD CONSTRAINT t_activity_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
 
 CREATE TABLE t_attachment_activity(
     id text,

@@ -9,5 +9,7 @@ public class ArticleData {
 	private Integer version;
 	private String articleTitle;
 	private String articleCode;
+	private String creatorName;
+	private String createdBy;
 	
 }
