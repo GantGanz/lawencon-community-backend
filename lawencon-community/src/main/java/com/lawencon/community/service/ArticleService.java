@@ -16,7 +16,6 @@ import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.article.ArticleData;
 import com.lawencon.community.dto.article.ArticleInsertReq;
 import com.lawencon.community.dto.article.ArticleUpdateReq;
-
 import com.lawencon.community.dto.article.ArticlesRes;
 import com.lawencon.community.model.Article;
 import com.lawencon.community.model.User;
@@ -61,19 +60,6 @@ public class ArticleService extends BaseCoreService {
 		return insertRes;
 	}
 
-	private void valInsert(final ArticleInsertReq data) {
-		contentNotNull(data);
-	}
-
-	private void contentNotNull(final ArticleInsertReq data) {
-		if (data.getArticleTitle() == null) {
-			throw new RuntimeException("Title cannot be null");
-		}
-		if (data.getArticleContent() == null) {
-			throw new RuntimeException("Content cannot be null");
-		}
-	}
-
 	public UpdateRes update(final ArticleUpdateReq data) {
 		valUpdate(data);
 		Article article = articleDao.getByIdAndDetach(Article.class, data.getId());
@@ -100,17 +86,6 @@ public class ArticleService extends BaseCoreService {
 		return res;
 	}
 
-	private void valUpdate(final ArticleUpdateReq data) {
-		idFound(data);
-	}
-
-	private void idFound(final ArticleUpdateReq data) {
-		final Article article = articleDao.getById(Article.class, data.getId());
-		if (article == null) {
-			throw new RuntimeException("Article not found");
-		}
-	}
-  
 	public ArticlesRes getAll() {
 		final List<Article> articles = articleDao.getAll(Article.class);
 		final List<ArticleData> articleDatas = new ArrayList<>();
@@ -130,5 +105,73 @@ public class ArticleService extends BaseCoreService {
 		articlesRes.setData(articleDatas);
 
 		return articlesRes;
+	}
+
+	public ArticlesRes getAllById() {
+		final List<Article> articles = articleDao.getAllById(principalService.getAuthPrincipal());
+		final List<ArticleData> articleDatas = new ArrayList<>();
+		for (int i = 0; i < articles.size(); i++) {
+			final Article article = articles.get(i);
+			final ArticleData articleData = new ArticleData();
+			articleData.setId(article.getId());
+			articleData.setArticleTitle(article.getId());
+			articleData.setArticleContent(article.getArticleContent());
+			articleData.setCreatedAt(article.getCreatedAt());
+			articleData.setCreatedBy(article.getCreatedBy());
+			articleData.setVersion(article.getVersion());
+
+			articleDatas.add(articleData);
+		}
+		final ArticlesRes articlesRes = new ArticlesRes();
+		articlesRes.setData(articleDatas);
+
+		return articlesRes;
+	}
+
+	private void valInsert(final ArticleInsertReq data) {
+		valContentNotNull(data);
+	}
+
+	private void valContentNotNull(final ArticleInsertReq data) {
+		if (data.getArticleTitle() == null) {
+			throw new RuntimeException("Title cannot be empty");
+		}
+		if (data.getArticleContent() == null) {
+			throw new RuntimeException("Content cannot be empty");
+		}
+	}
+
+	private void valUpdate(final ArticleUpdateReq data) {
+		valIdNotNull(data);
+		valIdFound(data);
+		valContentNotNull(data);
+	}
+
+	private void valIdNotNull(final ArticleUpdateReq data) {
+		if (data.getId() == null) {
+			throw new RuntimeException("id cannot be empty");
+		}
+	}
+
+	private void valContentNotNull(final ArticleUpdateReq data) {
+		if (data.getArticleTitle() == null) {
+			throw new RuntimeException("Title cannot be empty");
+		}
+		if (data.getArticleContent() == null) {
+			throw new RuntimeException("Content cannot be empty");
+		}
+		if (data.getIsActive() == null) {
+			throw new RuntimeException("isActive cannot be empty");
+		}
+		if (data.getVersion() == null) {
+			throw new RuntimeException("Version cannot be empty");
+		}
+	}
+
+	private void valIdFound(final ArticleUpdateReq data) {
+		final Article article = articleDao.getById(Article.class, data.getId());
+		if (article == null) {
+			throw new RuntimeException("Article not found");
+		}
 	}
 }

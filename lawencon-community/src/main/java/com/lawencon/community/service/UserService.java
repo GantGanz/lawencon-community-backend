@@ -21,6 +21,7 @@ import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.UpdateDataRes;
 import com.lawencon.community.dto.UpdateRes;
+import com.lawencon.community.dto.user.UserChangePasswordReq;
 import com.lawencon.community.dto.user.UserData;
 import com.lawencon.community.dto.user.UserInsertReq;
 import com.lawencon.community.dto.user.UserUpdateReq;
@@ -30,6 +31,7 @@ import com.lawencon.community.model.Industry;
 import com.lawencon.community.model.Position;
 import com.lawencon.community.model.Role;
 import com.lawencon.community.model.User;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class UserService extends BaseCoreService implements UserDetailsService {
@@ -45,6 +47,8 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 	private FileDao fileDao;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PrincipalService principalService;
 
 	@Override
 	public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
@@ -109,46 +113,6 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		return insertRes;
 	}
 
-	private void valInsert(final UserInsertReq data) {
-		bkNotDuplicate(data);
-		idNotNull(data);
-		fkFound(data);
-	}
-
-	private void idNotNull(final UserInsertReq data) {
-		if (data.getRoleId() == null) {
-			throw new RuntimeException("Role id cannot be null");
-		}
-		if (data.getPositionId() == null) {
-			throw new RuntimeException("Position id cannot be null");
-		}
-		if (data.getIndustryId() == null) {
-			throw new RuntimeException("Industry id cannot be null");
-		}
-	}
-
-	private void fkFound(final UserInsertReq data) {
-		final Role role = roleDao.getByIdAndDetach(Role.class, data.getRoleId());
-		if (role == null) {
-			throw new RuntimeException("Role not found");
-		}
-		final Position position = positionDao.getByIdAndDetach(Position.class, data.getPositionId());
-		if (position == null) {
-			throw new RuntimeException("Position not found");
-		}
-		final Industry industry = industryDao.getByIdAndDetach(Industry.class, data.getIndustryId());
-		if (industry == null) {
-			throw new RuntimeException("Industry not found");
-		}
-	}
-
-	private void bkNotDuplicate(final UserInsertReq data) {
-		final Optional<User> userOptional = userDao.getByEmail(data.getEmail());
-		if (userOptional.isPresent()) {
-			throw new RuntimeException("Email already used");
-		}
-	}
-
 	public UpdateRes update(final UserUpdateReq data) {
 		valUpdate(data);
 		User userUpdate = userDao.getByIdAndDetach(User.class, data.getId());
@@ -198,36 +162,33 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		return res;
 	}
 
-	private void valUpdate(final UserUpdateReq data) {
-		idNotNull(data);
-		fkFound(data);
-	}
+	public UpdateRes changePassword(final UserChangePasswordReq data) {
+		valChangePassword(data);
+		User user = userDao.getByIdAndDetach(User.class, principalService.getAuthPrincipal());
+		if (passwordEncoder.matches(data.getOldPassword(), user.getPass())) {
+			final String hashPassword = passwordEncoder.encode(data.getNewPassword());
+			user.setPass(hashPassword);
+		} else {
+			throw new RuntimeException("Incorect Old Password");
+		}
+		user.setVersion(data.getVersion());
+		try {
+			begin();
+			user = userDao.saveAndFlush(user);
+			commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new RuntimeException("Failed to change password");
+		}
+		final UpdateDataRes dataRes = new UpdateDataRes();
+		dataRes.setVersion(user.getVersion());
 
-	private void fkFound(UserUpdateReq data) {
-		final Role role = roleDao.getByIdAndDetach(Role.class, data.getRoleId());
-		if (role == null) {
-			throw new RuntimeException("Role not found");
-		}
-		final Position position = positionDao.getByIdAndDetach(Position.class, data.getPositionId());
-		if (position == null) {
-			throw new RuntimeException("Position not found");
-		}
-		final Industry industry = industryDao.getByIdAndDetach(Industry.class, data.getIndustryId());
-		if (industry == null) {
-			throw new RuntimeException("Industry not found");
-		}
-	}
+		final UpdateRes res = new UpdateRes();
+		res.setData(dataRes);
+		res.setMessage("Password changed");
 
-	private void idNotNull(final UserUpdateReq data) {
-		if (data.getRoleId() == null) {
-			throw new RuntimeException("Role id cannot be null");
-		}
-		if (data.getPositionId() == null) {
-			throw new RuntimeException("Position id cannot be null");
-		}
-		if (data.getIndustryId() == null) {
-			throw new RuntimeException("Industry id cannot be null");
-		}
+		return res;
 	}
 
 	public UsersRes getAll() {
@@ -258,4 +219,112 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 
 		return usersRes;
 	}
+
+	private void valInsert(final UserInsertReq data) {
+		valContentNotNull(data);
+		valBkNotDuplicate(data);
+		valIdFkNotNull(data);
+		valFkFound(data);
+	}
+
+	private void valContentNotNull(final UserInsertReq data) {
+		if (data.getFullname() == null) {
+			throw new RuntimeException("Fullname cannot be empty");
+		}
+		if (data.getEmail() == null) {
+			throw new RuntimeException("Email cannot be empty");
+		}
+		if (data.getPassword() == null) {
+			throw new RuntimeException("Password cannot be empty");
+		}
+		if (data.getCompany() == null) {
+			throw new RuntimeException("Company cannot be empty");
+		}
+		if (data.getFileCodes() == null || data.getExtension() == null) {
+			throw new RuntimeException("File cannot be empty");
+		}
+		if (data.getIsPremium() == null) {
+			throw new RuntimeException("Is Premium cannot be empty");
+		}
+	}
+
+	private void valIdFkNotNull(final UserInsertReq data) {
+		if (data.getRoleId() == null) {
+			throw new RuntimeException("Role id cannot be empty");
+		}
+		if (data.getPositionId() == null) {
+			throw new RuntimeException("Position id cannot be empty");
+		}
+		if (data.getIndustryId() == null) {
+			throw new RuntimeException("Industry id cannot be empty");
+		}
+	}
+
+	private void valFkFound(final UserInsertReq data) {
+		final Role role = roleDao.getByIdAndDetach(Role.class, data.getRoleId());
+		if (role == null) {
+			throw new RuntimeException("Role not found");
+		}
+		final Position position = positionDao.getByIdAndDetach(Position.class, data.getPositionId());
+		if (position == null) {
+			throw new RuntimeException("Position not found");
+		}
+		final Industry industry = industryDao.getByIdAndDetach(Industry.class, data.getIndustryId());
+		if (industry == null) {
+			throw new RuntimeException("Industry not found");
+		}
+	}
+
+	private void valBkNotDuplicate(final UserInsertReq data) {
+		final Optional<User> userOptional = userDao.getByEmail(data.getEmail());
+		if (userOptional.isPresent()) {
+			throw new RuntimeException("Email already used");
+		}
+	}
+
+	private void valUpdate(final UserUpdateReq data) {
+		valIdFkNotNull(data);
+		valFkFound(data);
+	}
+
+	private void valFkFound(final UserUpdateReq data) {
+		final Role role = roleDao.getByIdAndDetach(Role.class, data.getRoleId());
+		if (role == null) {
+			throw new RuntimeException("Role not found");
+		}
+		final Position position = positionDao.getByIdAndDetach(Position.class, data.getPositionId());
+		if (position == null) {
+			throw new RuntimeException("Position not found");
+		}
+		final Industry industry = industryDao.getByIdAndDetach(Industry.class, data.getIndustryId());
+		if (industry == null) {
+			throw new RuntimeException("Industry not found");
+		}
+	}
+
+	private void valIdFkNotNull(final UserUpdateReq data) {
+		if (data.getRoleId() == null) {
+			throw new RuntimeException("Role id cannot be empty");
+		}
+		if (data.getPositionId() == null) {
+			throw new RuntimeException("Position id cannot be empty");
+		}
+		if (data.getIndustryId() == null) {
+			throw new RuntimeException("Industry id cannot be empty");
+		}
+	}
+
+	private void valChangePassword(final UserChangePasswordReq data) {
+		contentNotNull(data);
+	}
+
+	private void contentNotNull(final UserChangePasswordReq data) {
+		if (data.getOldPassword() == null) {
+			throw new RuntimeException("Old password cannot be empty");
+		}
+		if (data.getNewPassword() == null) {
+			throw new RuntimeException("New password cannot be empty");
+		}
+	}
+
 }
