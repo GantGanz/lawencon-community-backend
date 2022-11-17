@@ -19,8 +19,11 @@ import com.lawencon.community.dao.RoleDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
+import com.lawencon.community.dto.UpdateDataRes;
+import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.user.UserData;
 import com.lawencon.community.dto.user.UserInsertReq;
+import com.lawencon.community.dto.user.UserUpdateReq;
 import com.lawencon.community.dto.user.UsersRes;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.Industry;
@@ -143,6 +146,87 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		final Optional<User> userOptional = userDao.getByEmail(data.getEmail());
 		if (userOptional.isPresent()) {
 			throw new RuntimeException("Email already used");
+		}
+	}
+
+	public UpdateRes update(final UserUpdateReq data) {
+		valUpdate(data);
+		User userUpdate = userDao.getByIdAndDetach(User.class, data.getId());
+		try {
+			begin();
+
+			userUpdate.setFullname(data.getFullname());
+			userUpdate.setCompany(data.getCompany());
+
+			if (data.getFileCodes() != null) {
+				File fileUpdate = new File();
+				fileUpdate.setFileCodes(data.getFileCodes());
+				fileUpdate.setExtensions(data.getExtension());
+
+				fileUpdate = fileDao.save(fileUpdate);
+				userUpdate.setFile(fileUpdate);
+			}
+
+			final Role role = roleDao.getById(Role.class, data.getRoleId());
+			userUpdate.setRole(role);
+
+			final Position position = positionDao.getById(Position.class, data.getPositionId());
+			userUpdate.setPosition(position);
+
+			final Industry industry = industryDao.getById(Industry.class, data.getIndustryId());
+			userUpdate.setIndustry(industry);
+
+			userUpdate.setIsPremium(data.getIsPremium());
+			userUpdate.setIsActive(data.getIsActive());
+			userUpdate.setVersion(data.getVersion());
+
+			userUpdate = userDao.saveAndFlush(userUpdate);
+
+			commit();
+		} catch (final Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new RuntimeException("Update failed");
+		}
+		final UpdateDataRes dataRes = new UpdateDataRes();
+		dataRes.setVersion(userUpdate.getVersion());
+
+		final UpdateRes res = new UpdateRes();
+		res.setData(dataRes);
+		res.setMessage("Update success");
+
+		return res;
+	}
+
+	private void valUpdate(final UserUpdateReq data) {
+		idNotNull(data);
+		fkFound(data);
+	}
+
+	private void fkFound(UserUpdateReq data) {
+		final Role role = roleDao.getByIdAndDetach(Role.class, data.getRoleId());
+		if (role == null) {
+			throw new RuntimeException("Role not found");
+		}
+		final Position position = positionDao.getByIdAndDetach(Position.class, data.getPositionId());
+		if (position == null) {
+			throw new RuntimeException("Position not found");
+		}
+		final Industry industry = industryDao.getByIdAndDetach(Industry.class, data.getIndustryId());
+		if (industry == null) {
+			throw new RuntimeException("Industry not found");
+		}
+	}
+
+	private void idNotNull(final UserUpdateReq data) {
+		if (data.getRoleId() == null) {
+			throw new RuntimeException("Role id cannot be null");
+		}
+		if (data.getPositionId() == null) {
+			throw new RuntimeException("Position id cannot be null");
+		}
+		if (data.getIndustryId() == null) {
+			throw new RuntimeException("Industry id cannot be null");
 		}
 	}
 
