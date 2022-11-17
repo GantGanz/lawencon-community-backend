@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lawencon.community.dto.activitytype.ActivityTypesRes;
 import com.lawencon.community.service.ActivityTypeService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("activity-types")
 public class ActivityTypeController {

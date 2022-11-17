@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lawencon.community.dto.role.RolesRes;
 import com.lawencon.community.service.RoleService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("roles")
 public class RoleController {

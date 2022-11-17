@@ -14,6 +14,9 @@ import com.lawencon.community.dto.user.UserInsertReq;
 import com.lawencon.community.dto.user.UsersRes;
 import com.lawencon.community.service.UserService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("users")
 public class UserController {

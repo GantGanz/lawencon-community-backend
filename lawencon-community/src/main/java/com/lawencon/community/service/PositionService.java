@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.dao.PositionDao;
+import com.lawencon.community.dto.InsertDataRes;
+import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.position.PositionData;
+import com.lawencon.community.dto.position.PositionInsertReq;
 import com.lawencon.community.dto.position.PositionsRes;
 import com.lawencon.community.model.Position;
 
@@ -16,6 +19,44 @@ import com.lawencon.community.model.Position;
 public class PositionService extends BaseCoreService {
 	@Autowired
 	private PositionDao positionDao;
+
+	public InsertRes insert(final PositionInsertReq data) {
+		valInsert(data);
+
+		Position positionInsert = new Position();
+		positionInsert.setPositionCode(data.getPositionCode());
+		positionInsert.setPositionName(data.getPositionName());
+
+		try {
+			begin();
+			positionInsert = positionDao.save(positionInsert);
+			commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new RuntimeException("Failed to insert position");
+		}
+
+		final InsertDataRes dataRes = new InsertDataRes();
+		dataRes.setId(positionInsert.getId());
+
+		final InsertRes insertRes = new InsertRes();
+		insertRes.setData(dataRes);
+		insertRes.setMessage("Position successfully inserted");
+
+		return insertRes;
+	}
+
+	private void valInsert(final PositionInsertReq data) {
+		bkNotDuplicate(data);
+	}
+
+	private void bkNotDuplicate(final PositionInsertReq data) {
+		final String positionId = positionDao.getByCode(data.getPositionCode());
+		if (positionId != null) {
+			throw new RuntimeException("Code already used");
+		}
+	}
 
 	public PositionsRes getAll() {
 		final List<Position> positions = positionDao.getAll(Position.class);
