@@ -13,14 +13,16 @@ import com.lawencon.community.model.User;
 @Repository
 public class ArticleDao extends AbstractJpaDao {
 
-	public List<Article> getAllArticle() {
+	public List<Article> getAllById(final String userId) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.article_title, a.article_content, u.fullname, a.created_by, ")
 				.append("a.created_at, a.created_at, a.updated_at, a.is_active ").append("FROM t_article a ")
-				.append("INNER JOIN t_user u ON u.id = a.created_by ");
+				.append("INNER JOIN t_user u ON u.id = a.created_by ")
+				.append("WHERE a.created_by = :userId ORDER BY a.id DESC");
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql).getResultList();
+		final List<?> result = createNativeQuery(sql)
+				.setParameter(":userId", userId).getResultList();
 
 		final List<Article> activities = new ArrayList<>();
 
