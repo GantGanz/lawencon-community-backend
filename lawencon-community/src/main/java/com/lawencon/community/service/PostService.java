@@ -159,28 +159,7 @@ public class PostService extends BaseCoreService {
 		return res;
 	}
 
-	public PostsRes getAll() {
-		final List<Post> posts = postDao.getAll(Post.class);
-		final List<PostData> postDatas = new ArrayList<>();
-		for (int i = 0; i < posts.size(); i++) {
-			final Post post = posts.get(i);
-			final PostData postData = new PostData();
-			postData.setId(post.getId());
-			postData.setPostTitle(post.getPostTitle());
-			postData.setPostContent(post.getPostContent());
-			postData.setPostTypeId(post.getPostType().getId());
-			postData.setCreatedBy(post.getCreatedBy());
-			postData.setCreatedAt(post.getCreatedAt());
-			postData.setVersion(post.getVersion());
-
-			postDatas.add(postData);
-		}
-		final PostsRes postsRes = new PostsRes();
-		postsRes.setData(postDatas);
-
-		return postsRes;
-	}
-
+//	TO DO : Gan-Gan
 	public PostsRes getAllRegular() {
 		final List<Post> posts = postDao.getAllRegular();
 		final List<PostData> postDatas = new ArrayList<>();
