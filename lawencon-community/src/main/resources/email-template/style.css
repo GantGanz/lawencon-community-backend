@@ -1,0 +1,41 @@
+body {
+    background-color: #ebf4fa;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.container-parent {
+    width: 500px;
+    text-align: center;
+    border-radius: 40px;
+}
+
+.logo {
+    width: 70px;
+}
+
+.body-email {
+    background-color: white;
+    text-align: left;
+    padding: 20px 20px;
+    border-top: 1px solid #d3d1cc;
+}
+
+.title {
+    background-color: white;
+    padding-top: 5px;
+    padding-bottom: 2px;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+.footer {
+    height: 30px;
+    text-align: center;
+    padding-top: 8px;
+    font-size: 15px;
+    color: white;
+    background-color: #1089FF;
+}
