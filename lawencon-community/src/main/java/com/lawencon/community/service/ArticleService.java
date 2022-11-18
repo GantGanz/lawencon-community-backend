@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.dao.ArticleDao;
+import com.lawencon.community.dao.AttachmentArticleDao;
+import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
@@ -17,7 +19,11 @@ import com.lawencon.community.dto.article.ArticleData;
 import com.lawencon.community.dto.article.ArticleInsertReq;
 import com.lawencon.community.dto.article.ArticleUpdateReq;
 import com.lawencon.community.dto.article.ArticlesRes;
+import com.lawencon.community.dto.attachmentarticle.AttachmentArticleData;
+import com.lawencon.community.dto.attachmentarticle.AttachmentArticleInsertReq;
 import com.lawencon.community.model.Article;
+import com.lawencon.community.model.AttachmentArticle;
+import com.lawencon.community.model.File;
 import com.lawencon.community.model.User;
 import com.lawencon.security.principal.PrincipalService;
 
@@ -27,6 +33,10 @@ public class ArticleService extends BaseCoreService {
 	private ArticleDao articleDao;
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private AttachmentArticleDao attachmentArticleDao;
+	@Autowired
+	private FileDao fileDao;
 	@Autowired
 	private PrincipalService principalService;
 
@@ -40,12 +50,24 @@ public class ArticleService extends BaseCoreService {
 		final String userId = principalService.getAuthPrincipal();
 		final User user = userDao.getById(User.class, userId);
 		articleInsert.setUser(user);
-
+		
+		final int attachmentSize = data.getAttachmentArticleInsertReqs().size();
 		try {
 			begin();
 			articleInsert = articleDao.save(articleInsert);
+			for(int i = 0; i < attachmentSize; i++) {
+				final AttachmentArticleInsertReq attachmentArticleInsertReq = data.getAttachmentArticleInsertReqs().get(i);
+				final AttachmentArticle attachmentArticle = new AttachmentArticle();
+
+				attachmentArticle.setArticle(articleInsert);
+				
+				final File file = fileDao.getById(File.class, attachmentArticleInsertReq.getFileId());
+				attachmentArticle.setFile(file);
+				
+				attachmentArticleDao.save(attachmentArticle);
+			}
 			commit();
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			e.printStackTrace();
 			rollback();
 			throw new RuntimeException("Article failed to create");
@@ -99,6 +121,20 @@ public class ArticleService extends BaseCoreService {
 			articleData.setCreatedAt(article.getCreatedAt());
 			articleData.setVersion(article.getVersion());
 
+			final List<AttachmentArticle> attachmentArticles = attachmentArticleDao.getAllById(article.getId());
+			final int articleAttachmentSize = attachmentArticles.size();
+			final List<AttachmentArticleData> attachmentArticleDatas = new ArrayList<>();
+			for(int x = 0; x < articleAttachmentSize; x++) {
+				final AttachmentArticle attachmentArticle = attachmentArticles.get(x);
+				final AttachmentArticleData attachmentArticleData = new AttachmentArticleData();
+				attachmentArticleData.setId(attachmentArticle.getId());
+				attachmentArticleData.setArticleId(attachmentArticle.getArticle().getId());
+				attachmentArticleData.setFileId(attachmentArticle.getFile().getId());
+				
+				attachmentArticleDatas.add(attachmentArticleData);
+			}
+
+			articleData.setAttachmentArticleDatas(attachmentArticleDatas);
 			articleDatas.add(articleData);
 		}
 		final ArticlesRes articlesRes = new ArticlesRes();
@@ -120,6 +156,20 @@ public class ArticleService extends BaseCoreService {
 			articleData.setCreatedBy(article.getCreatedBy());
 			articleData.setVersion(article.getVersion());
 
+			final List<AttachmentArticle> attachmentArticles = attachmentArticleDao.getAllById(article.getId());
+			final int articleAttachmentSize = attachmentArticles.size();
+			final List<AttachmentArticleData> attachmentArticleDatas = new ArrayList<>();
+			for(int x = 0; x < articleAttachmentSize; x++) {
+				final AttachmentArticle attachmentArticle = attachmentArticles.get(x);
+				final AttachmentArticleData attachmentArticleData = new AttachmentArticleData();
+				attachmentArticleData.setId(attachmentArticle.getId());
+				attachmentArticleData.setArticleId(attachmentArticle.getArticle().getId());
+				attachmentArticleData.setFileId(attachmentArticle.getFile().getId());
+				
+				attachmentArticleDatas.add(attachmentArticleData);
+			}
+
+			articleData.setAttachmentArticleDatas(attachmentArticleDatas);
 			articleDatas.add(articleData);
 		}
 		final ArticlesRes articlesRes = new ArticlesRes();

@@ -1,6 +1,9 @@
 package com.lawencon.community.dto.article;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.lawencon.community.dto.attachmentarticle.AttachmentArticleData;
 
 import lombok.Data;
 
@@ -13,5 +16,6 @@ public class ArticleData {
 	private String articleContent;
 	private String createdBy;
 	private LocalDateTime createdAt;
+	private List<AttachmentArticleData> attachmentArticleDatas;
 
 }
