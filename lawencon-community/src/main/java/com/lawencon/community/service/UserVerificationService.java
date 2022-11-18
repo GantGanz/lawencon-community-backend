@@ -36,7 +36,7 @@ public class UserVerificationService extends BaseCoreService {
 		verificationCodeUtil.addVerificationCode(email, code);
 
 		final InsertRes insertRes = new InsertRes();
-		insertRes.setMessage("Send Code Success");
+		insertRes.setMessage("Code sent successfully");
 		return insertRes;
 	}
 
