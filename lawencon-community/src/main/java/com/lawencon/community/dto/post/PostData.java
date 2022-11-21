@@ -16,6 +16,7 @@ public class PostData {
 	private String postTitle;
 	private String postContent;
 	private String postTypeId;
+	private String postTypeCode;
 	private String userId;
 	private String creatorName;
 	private String createdBy;

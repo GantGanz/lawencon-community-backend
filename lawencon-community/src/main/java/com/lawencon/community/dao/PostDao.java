@@ -41,6 +41,7 @@ public class PostDao extends AbstractJpaDao {
 
 				final User user = new User();
 				user.setFullname(objArr[4].toString());
+				user.setId(objArr[5].toString());
 				post.setUser(user);
 
 				post.setCreatedBy(objArr[5].toString());
@@ -83,6 +84,7 @@ public class PostDao extends AbstractJpaDao {
 
 				final User user = new User();
 				user.setFullname(objArr[4].toString());
+				user.setId(objArr[5].toString());
 				post.setUser(user);
 
 				post.setCreatedBy(objArr[5].toString());
@@ -125,6 +127,7 @@ public class PostDao extends AbstractJpaDao {
 
 				final User user = new User();
 				user.setFullname(objArr[4].toString());
+				user.setId(objArr[5].toString());
 				post.setUser(user);
 
 				post.setCreatedBy(objArr[5].toString());
@@ -168,6 +171,7 @@ public class PostDao extends AbstractJpaDao {
 
 				final User user = new User();
 				user.setFullname(objArr[4].toString());
+				user.setId(objArr[5].toString());
 				post.setUser(user);
 
 				post.setCreatedBy(objArr[5].toString());
@@ -211,6 +215,7 @@ public class PostDao extends AbstractJpaDao {
 
 				final User user = new User();
 				user.setFullname(objArr[4].toString());
+				user.setId(objArr[5].toString());
 				post.setUser(user);
 
 				post.setCreatedBy(objArr[5].toString());
@@ -254,6 +259,7 @@ public class PostDao extends AbstractJpaDao {
 
 				final User user = new User();
 				user.setFullname(objArr[4].toString());
+				user.setId(objArr[5].toString());
 				post.setUser(user);
 
 				post.setCreatedBy(objArr[5].toString());
@@ -295,6 +301,7 @@ public class PostDao extends AbstractJpaDao {
 
 				final User user = new User();
 				user.setFullname(objArr[4].toString());
+				user.setId(objArr[5].toString());
 				post.setUser(user);
 
 				post.setCreatedBy(objArr[5].toString());
@@ -318,7 +325,7 @@ public class PostDao extends AbstractJpaDao {
 	public List<Post> getAllLiked(final String userId) {
 		final StringBuilder str = new StringBuilder();
 		str.append(
-				"SELECT p.id, p.ver, p.post_title, p.post_content, u.fullname, p.created_by, p.created_at, p.updated_at, p.is_active, pt.post_type_code ")
+				"SELECT p.id, p.ver, p.post_title, p.post_content, u.fullname, p.created_by, p.created_at, p.updated_at, p.is_active, pt.post_type_code, pt.id as ptid ")
 				.append("FROM t_post p ").append("INNER JOIN t_post_type pt ON pt.id = p.post_type_id ")
 				.append("INNER JOIN t_user u ON u.id = p.created_by ")
 				.append("INNER JOIN t_like l ON l.post_id = p.id ").append("WHERE b.user_id = :userId ")
@@ -340,6 +347,7 @@ public class PostDao extends AbstractJpaDao {
 
 				final User user = new User();
 				user.setFullname(objArr[4].toString());
+				user.setId(objArr[5].toString());
 				post.setUser(user);
 
 				post.setCreatedBy(objArr[5].toString());
@@ -351,6 +359,7 @@ public class PostDao extends AbstractJpaDao {
 
 				final PostType postType = new PostType();
 				postType.setPostTypeCode(objArr[9].toString());
+				postType.setId(objArr[10].toString());
 				post.setPostType(postType);
 
 				posts.add(post);
