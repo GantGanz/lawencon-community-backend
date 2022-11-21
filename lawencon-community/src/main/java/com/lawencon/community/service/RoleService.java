@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.dao.RoleDao;
 import com.lawencon.community.dto.role.RoleData;
+import com.lawencon.community.dto.role.RoleRes;
 import com.lawencon.community.dto.role.RolesRes;
 import com.lawencon.community.model.Role;
 
@@ -33,5 +34,17 @@ public class RoleService extends BaseCoreService {
 		final RolesRes rolesRes = new RolesRes();
 		rolesRes.setData(roleDatas);
 		return rolesRes;
+	}
+
+	public RoleRes getById(final String id) {
+		final Role role = roleDao.getById(Role.class, id);
+		final RoleData roleData = new RoleData();
+		roleData.setId(role.getId());
+		roleData.setRoleName(role.getRoleName());
+		roleData.setRoleCode(role.getRoleCode());
+		roleData.setVersion(role.getVersion());
+		final RoleRes roleRes = new RoleRes();
+		roleRes.setData(roleData);
+		return roleRes;
 	}
 }

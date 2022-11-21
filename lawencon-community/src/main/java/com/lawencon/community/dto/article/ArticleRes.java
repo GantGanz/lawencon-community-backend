@@ -1,6 +1,6 @@
 package com.lawencon.community.dto.article;
 
-public class ArticleFindByIdRes {
+public class ArticleRes {
 
 	private ArticleData data;
 

@@ -25,6 +25,7 @@ import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.user.UserChangePasswordReq;
 import com.lawencon.community.dto.user.UserData;
 import com.lawencon.community.dto.user.UserInsertReq;
+import com.lawencon.community.dto.user.UserRes;
 import com.lawencon.community.dto.user.UserUpdateReq;
 import com.lawencon.community.dto.user.UsersRes;
 import com.lawencon.community.model.File;
@@ -111,7 +112,7 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 
 		return insertRes;
 	}
-	
+
 	public InsertRes registerAdmin(final UserInsertReq data) {
 		valInsert(data);
 
@@ -263,6 +264,30 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		usersRes.setData(userDatas);
 
 		return usersRes;
+	}
+
+	public UserRes getById(final String userId) {
+		final User user = userDao.getById(User.class, userId);
+		final UserData userData = new UserData();
+		userData.setId(user.getId());
+		userData.setFullname(user.getFullname());
+		userData.setEmail(user.getEmail());
+		userData.setCompany(user.getCompany());
+		userData.setRoleId(user.getRole().getId());
+		userData.setRoleName(user.getRole().getRoleName());
+		userData.setIndustryId(user.getIndustry().getId());
+		userData.setIndustryName(user.getIndustry().getIndustryName());
+		userData.setPositionId(user.getPosition().getId());
+		userData.setPositionName(user.getPosition().getPositionName());
+		userData.setFileId(user.getFile().getId());
+		userData.setIsPremium(user.getIsPremium());
+		userData.setVersion(user.getVersion());
+		userData.setIsActive(user.getIsActive());
+
+		final UserRes userRes = new UserRes();
+		userRes.setData(userData);
+
+		return userRes;
 	}
 
 	private void valInsert(final UserInsertReq data) {

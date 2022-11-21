@@ -15,6 +15,7 @@ import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.industry.IndustriesRes;
 import com.lawencon.community.dto.industry.IndustryData;
 import com.lawencon.community.dto.industry.IndustryInsertReq;
+import com.lawencon.community.dto.industry.IndustryRes;
 import com.lawencon.community.dto.industry.IndustryUpdateReq;
 import com.lawencon.community.model.Industry;
 
@@ -92,6 +93,20 @@ public class IndustryService extends BaseCoreService {
 		industriesRes.setData(industryDatas);
 
 		return industriesRes;
+	}
+
+	public IndustryRes getById(final String id) {
+		final Industry industry = industryDao.getById(Industry.class, id);
+		final IndustryData industryData = new IndustryData();
+		industryData.setId(industry.getId());
+		industryData.setIndustryCode(industry.getIndustryCode());
+		industryData.setIndustryName(industry.getIndustryName());
+		industryData.setVersion(industry.getVersion());
+
+		final IndustryRes industryRes = new IndustryRes();
+		industryRes.setData(industryData);
+
+		return industryRes;
 	}
 
 	private void valUpdate(final IndustryUpdateReq data) {
