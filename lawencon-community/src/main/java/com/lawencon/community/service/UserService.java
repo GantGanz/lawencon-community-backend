@@ -289,6 +289,14 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 
 		return userRes;
 	}
+	
+	public Long countAllMember() {
+		return userDao.countAllUser(RoleConstant.MEMBER.getRoleCode());
+	}
+	
+	public Long countAllAdmin() {
+		return userDao.countAllUser(RoleConstant.ADMIN.getRoleCode());
+	}
 
 	private void valInsert(final UserInsertReq data) {
 		valContentNotNull(data);

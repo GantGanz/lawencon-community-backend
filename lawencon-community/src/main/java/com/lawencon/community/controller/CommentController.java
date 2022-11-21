@@ -52,7 +52,7 @@ public class CommentController {
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
-	@PutMapping
+	@PutMapping("soft-delete")
 	public ResponseEntity<UpdateRes> softDelete(@RequestBody final CommentUpdateReq data) {
 		final UpdateRes res = commentService.softDelete(data);
 		return new ResponseEntity<>(res, HttpStatus.OK);

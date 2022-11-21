@@ -64,4 +64,16 @@ public class UserController {
 		final UserRes result = userService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("count-member")
+	public ResponseEntity<Long> countAllArticle() {
+		final Long res = userService.countAllMember();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("count-admin")
+	public ResponseEntity<Long> countAllAdmin() {
+		final Long res = userService.countAllMember();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
 }
