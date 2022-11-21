@@ -73,7 +73,13 @@ public class UserController {
 	
 	@GetMapping("count-admin")
 	public ResponseEntity<Long> countAllAdmin() {
-		final Long res = userService.countAllMember();
+		final Long res = userService.countAllAdmin();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("count-premium")
+	public ResponseEntity<Long> countAllPremium() {
+		final Long res = userService.countAllPremium();
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 }

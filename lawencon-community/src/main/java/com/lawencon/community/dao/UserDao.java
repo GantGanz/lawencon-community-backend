@@ -86,11 +86,28 @@ public class UserDao extends AbstractJpaDao {
 	public Long countAllUser(final String roleCode) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT COUNT(u.id) ").append("FROM t_user u ").append("INNER JOIN t_role ur ON ur.id = u.role_id ")
-		.append("WHERE role_code = :roleCode ");
+				.append("WHERE role_code = :roleCode ");
 
 		Long total = null;
 		try {
-			final Object userObj = createNativeQuery(str.toString()).setParameter("roleCode", roleCode).getSingleResult();
+			final Object userObj = createNativeQuery(str.toString()).setParameter("roleCode", roleCode)
+					.getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
+
+	public Long countAllPremium() {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT COUNT(u.id) ").append("FROM t_user u ").append("WHERE is_premium = TRUE ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).getSingleResult();
 			if (userObj != null) {
 				total = Long.valueOf(userObj.toString());
 			}
