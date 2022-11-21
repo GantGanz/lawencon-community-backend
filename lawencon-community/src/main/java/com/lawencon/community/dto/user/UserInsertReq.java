@@ -10,5 +10,4 @@ public class UserInsertReq {
 	private String company;
 	private String positionId;
 	private String industryId;
-
 }
