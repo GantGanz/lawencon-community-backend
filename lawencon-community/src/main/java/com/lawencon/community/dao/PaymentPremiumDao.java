@@ -1,4 +1,5 @@
 package com.lawencon.community.dao;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -17,10 +18,8 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 	public List<PaymentPremium> getAllApproved() {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, p.created_at ")
-				.append("FROM t_payment_premium p ")
-				.append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE p.is_approved = TRUE ")
-				.append("ORDER BY a.id DESC");
+				.append("FROM t_payment_premium p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
+				.append("WHERE p.is_approved = TRUE ").append("ORDER BY a.id DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql).getResultList();
@@ -51,14 +50,12 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 
 		return paymentPremiums;
 	}
-	
+
 	public List<PaymentPremium> getAllUnapproved() {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, p.created_at ")
-				.append("FROM t_payment_premium p ")
-				.append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE p.is_approved = FALSE ")
-				.append("ORDER BY a.id DESC");
+				.append("FROM t_payment_premium p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
+				.append("WHERE p.is_approved = FALSE ").append("ORDER BY a.id DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql).getResultList();
@@ -89,4 +86,22 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 
 		return paymentPremiums;
 	}
+
+	public Long countAllUnapproved() {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ")
+				.append("WHERE p.is_approved = FALSE ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
+
 }

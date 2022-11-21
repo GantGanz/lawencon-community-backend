@@ -51,4 +51,21 @@ public class ArticleDao extends AbstractJpaDao {
 
 		return activities;
 	}
+	
+	public Long countAllArticle(final String userId) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT count(a.id) ").append("FROM t_article a ")
+				.append("WHERE a.created_by = :userId ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
 }

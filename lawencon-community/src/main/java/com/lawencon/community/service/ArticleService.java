@@ -256,4 +256,8 @@ public class ArticleService extends BaseCoreService {
 
 		return articleRes;
 	}
+	
+	public Long countAllArticle() {
+		return articleDao.countAllArticle(principalService.getAuthPrincipal());
+	}
 }
