@@ -27,6 +27,7 @@ import com.lawencon.community.dto.polloption.PollOptionData;
 import com.lawencon.community.dto.polloption.PollOptionInsertReq;
 import com.lawencon.community.dto.post.PostData;
 import com.lawencon.community.dto.post.PostInsertReq;
+import com.lawencon.community.dto.post.PostRes;
 import com.lawencon.community.dto.post.PostUpdateReq;
 import com.lawencon.community.dto.post.PostsRes;
 import com.lawencon.community.model.AttachmentPost;
@@ -225,7 +226,7 @@ public class PostService extends BaseCoreService {
 			pollData.setEndAt(poll.getEndAt());
 			pollData.setPostId(poll.getPost().getId());
 			pollData.setIsActive(poll.getIsActive());
-							
+
 			final List<PollOption> pollOptions = pollOptionDao.getAllByPostId(post.getId());
 			final int pollOptionSize = pollOptions.size();
 			final List<PollOptionData> pollOptionDatas = new ArrayList<>();
@@ -241,7 +242,7 @@ public class PostService extends BaseCoreService {
 				pollOptionDatas.add(pollOptionData);
 			}
 			pollData.setPollOptionDatas(pollOptionDatas);
-			
+
 			postData.setPollData(pollData);
 
 			postDatas.add(postData);
@@ -251,7 +252,7 @@ public class PostService extends BaseCoreService {
 
 		return postsRes;
 	}
-	
+
 	public PostsRes getAllPremium() {
 		final List<Post> posts = postDao.getAllPremium();
 		final List<PostData> postDatas = new ArrayList<>();
@@ -354,7 +355,7 @@ public class PostService extends BaseCoreService {
 			pollData.setEndAt(poll.getEndAt());
 			pollData.setPostId(poll.getPost().getId());
 			pollData.setIsActive(poll.getIsActive());
-							
+
 			final List<PollOption> pollOptions = pollOptionDao.getAllByPostId(post.getId());
 			final int pollOptionSize = pollOptions.size();
 			final List<PollOptionData> pollOptionDatas = new ArrayList<>();
@@ -370,7 +371,7 @@ public class PostService extends BaseCoreService {
 				pollOptionDatas.add(pollOptionData);
 			}
 			pollData.setPollOptionDatas(pollOptionDatas);
-			
+
 			postData.setPollData(pollData);
 
 			postDatas.add(postData);
@@ -380,7 +381,7 @@ public class PostService extends BaseCoreService {
 
 		return postsRes;
 	}
-	
+
 	public PostsRes getAllPremiumById() {
 		final List<Post> posts = postDao.getAllPremiumById(principalService.getAuthPrincipal());
 		final List<PostData> postDatas = new ArrayList<>();
@@ -443,13 +444,13 @@ public class PostService extends BaseCoreService {
 			if (PostTypeConstant.POLLING.getPostTypeCode() == postTypeCode) {
 				final Poll poll = pollDao.getByPostId(post.getId()).get();
 				final PollData pollData = new PollData();
-				
+
 				pollData.setId(poll.getId());
 				pollData.setPollTitle(poll.getPollTitle());
 				pollData.setEndAt(poll.getEndAt());
 				pollData.setPostId(poll.getPost().getId());
 				pollData.setIsActive(poll.getIsActive());
-								
+
 				final List<PollOption> pollOptions = pollOptionDao.getAllByPostId(post.getId());
 				final int pollOptionSize = pollOptions.size();
 				final List<PollOptionData> pollOptionDatas = new ArrayList<>();
@@ -465,7 +466,7 @@ public class PostService extends BaseCoreService {
 					pollOptionDatas.add(pollOptionData);
 				}
 				pollData.setPollOptionDatas(pollOptionDatas);
-				
+
 				postData.setPollData(pollData);
 			} else {
 				final List<AttachmentPost> attachmentPosts = attachmentPostDao.getAllById(post.getId());
@@ -490,7 +491,7 @@ public class PostService extends BaseCoreService {
 
 		return postsRes;
 	}
-	
+
 	public PostsRes getAllLiked() {
 		final List<Post> posts = postDao.getAllLiked(principalService.getAuthPrincipal());
 		final List<PostData> postDatas = new ArrayList<>();
@@ -514,13 +515,13 @@ public class PostService extends BaseCoreService {
 			if (PostTypeConstant.POLLING.getPostTypeCode() == postTypeCode) {
 				final Poll poll = pollDao.getByPostId(post.getId()).get();
 				final PollData pollData = new PollData();
-				
+
 				pollData.setId(poll.getId());
 				pollData.setPollTitle(poll.getPollTitle());
 				pollData.setEndAt(poll.getEndAt());
 				pollData.setPostId(poll.getPost().getId());
 				pollData.setIsActive(poll.getIsActive());
-								
+
 				final List<PollOption> pollOptions = pollOptionDao.getAllByPostId(post.getId());
 				final int pollOptionSize = pollOptions.size();
 				final List<PollOptionData> pollOptionDatas = new ArrayList<>();
@@ -536,7 +537,7 @@ public class PostService extends BaseCoreService {
 					pollOptionDatas.add(pollOptionData);
 				}
 				pollData.setPollOptionDatas(pollOptionDatas);
-				
+
 				postData.setPollData(pollData);
 			} else {
 				final List<AttachmentPost> attachmentPosts = attachmentPostDao.getAllById(post.getId());
@@ -560,6 +561,71 @@ public class PostService extends BaseCoreService {
 		postsRes.setData(postDatas);
 
 		return postsRes;
+	}
+
+	public PostRes getById(final String id) {
+		final Post post = postDao.getById(Post.class, id);
+		final PostData postData = new PostData();
+		postData.setId(post.getId());
+		postData.setVersion(post.getVersion());
+		postData.setPostTitle(post.getId());
+		postData.setPostContent(post.getPostContent());
+		postData.setPostTypeId(post.getPostType().getId());
+		postData.setUserId(post.getUser().getId());
+		postData.setCreatorName(post.getUser().getFullname());
+		postData.setCreatedBy(post.getCreatedBy());
+		postData.setCreatedAt(post.getCreatedAt());
+		postData.setUpdatedAt(post.getUpdatedAt());
+		postData.setPostTypeId(post.getPostType().getId());
+		final String postTypeCode = post.getPostType().getPostTypeCode();
+		postData.setPostTypeCode(postTypeCode);
+
+		if (PostTypeConstant.POLLING.getPostTypeCode() == postTypeCode) {
+			final Poll poll = pollDao.getByPostId(post.getId()).get();
+			final PollData pollData = new PollData();
+
+			pollData.setId(poll.getId());
+			pollData.setPollTitle(poll.getPollTitle());
+			pollData.setEndAt(poll.getEndAt());
+			pollData.setPostId(poll.getPost().getId());
+			pollData.setIsActive(poll.getIsActive());
+
+			final List<PollOption> pollOptions = pollOptionDao.getAllByPostId(post.getId());
+			final int pollOptionSize = pollOptions.size();
+			final List<PollOptionData> pollOptionDatas = new ArrayList<>();
+			for (int x = 0; x < pollOptionSize; x++) {
+				final PollOption pollOption = pollOptions.get(x);
+				final PollOptionData pollOptionData = new PollOptionData();
+				pollOptionData.setId(pollOption.getId());
+				pollOptionData.setPollId(pollOption.getPoll().getId());
+				pollOptionData.setPollContent(pollOption.getPollContent());
+				pollOptionData.setVersion(pollOption.getVersion());
+				pollOptionData.setIsActive(pollOption.getIsActive());
+
+				pollOptionDatas.add(pollOptionData);
+			}
+			pollData.setPollOptionDatas(pollOptionDatas);
+
+			postData.setPollData(pollData);
+		} else {
+			final List<AttachmentPost> attachmentPosts = attachmentPostDao.getAllById(post.getId());
+			final int attachmentPostSize = attachmentPosts.size();
+			final List<AttachmentPostData> attachmentPostDatas = new ArrayList<>();
+			for (int x = 0; x < attachmentPostSize; x++) {
+				final AttachmentPost attachmentPost = attachmentPosts.get(x);
+				final AttachmentPostData attachmentPostData = new AttachmentPostData();
+				attachmentPostData.setId(attachmentPost.getId());
+				attachmentPostData.setPostId(attachmentPost.getPost().getId());
+				attachmentPostData.setFileId(attachmentPost.getFile().getId());
+
+				attachmentPostDatas.add(attachmentPostData);
+			}
+			postData.setAttachmentPostDatas(attachmentPostDatas);
+		}
+		final PostRes postRes = new PostRes();
+		postRes.setData(postData);
+
+		return postRes;
 	}
 
 	private void valInsert(final PostInsertReq data) {

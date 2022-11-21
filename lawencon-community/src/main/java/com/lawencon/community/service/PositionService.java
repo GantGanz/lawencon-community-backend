@@ -14,6 +14,7 @@ import com.lawencon.community.dto.UpdateDataRes;
 import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.position.PositionData;
 import com.lawencon.community.dto.position.PositionInsertReq;
+import com.lawencon.community.dto.position.PositionRes;
 import com.lawencon.community.dto.position.PositionUpdateReq;
 import com.lawencon.community.dto.position.PositionsRes;
 import com.lawencon.community.model.Position;
@@ -93,6 +94,20 @@ public class PositionService extends BaseCoreService {
 		positionsRes.setData(positionDatas);
 
 		return positionsRes;
+	}
+
+	public PositionRes getById(final String id) {
+		final Position position = positionDao.getById(Position.class, id);
+		final PositionData positionData = new PositionData();
+		positionData.setId(position.getId());
+		positionData.setIndustryCode(position.getPositionCode());
+		positionData.setIndustryName(position.getPositionName());
+		positionData.setVersion(position.getVersion());
+
+		final PositionRes positionRes = new PositionRes();
+		positionRes.setData(positionData);
+
+		return positionRes;
 	}
 
 	private void valInsert(final PositionInsertReq data) {

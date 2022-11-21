@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,7 @@ import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.user.UserChangePasswordReq;
 import com.lawencon.community.dto.user.UserInsertReq;
+import com.lawencon.community.dto.user.UserRes;
 import com.lawencon.community.dto.user.UserUpdateReq;
 import com.lawencon.community.dto.user.UsersRes;
 import com.lawencon.community.service.UserService;
@@ -55,5 +57,11 @@ public class UserController {
 	public ResponseEntity<UpdateRes> changePassword(@RequestBody final UserChangePasswordReq data) {
 		final UpdateRes res = userService.changePassword(data);
 		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("{id}")
+	public ResponseEntity<UserRes> getById(@PathVariable("id") final String id) {
+		final UserRes result = userService.getById(id);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }
