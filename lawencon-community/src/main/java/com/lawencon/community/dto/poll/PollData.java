@@ -1,6 +1,9 @@
 package com.lawencon.community.dto.poll;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.lawencon.community.dto.polloption.PollOptionData;
 
 import lombok.Data;
 
@@ -12,5 +15,6 @@ public class PollData {
 	private LocalDateTime endAt;
 	private String postId;
 	private Boolean isActive;
+	private List<PollOptionData> pollOptionDatas;
 	
 }
