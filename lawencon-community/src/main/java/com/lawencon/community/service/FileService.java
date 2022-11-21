@@ -11,7 +11,7 @@ public class FileService extends BaseCoreService {
 	@Autowired
 	private FileDao fileDao;
 
-	public File getById(final Long id) {
+	public File getById(final String id) {
 		return fileDao.getById(File.class, id);
 	}
 }

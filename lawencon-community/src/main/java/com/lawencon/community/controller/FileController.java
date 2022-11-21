@@ -20,7 +20,7 @@ public class FileController {
 	private FileService fileService;
 	
 	@GetMapping("download/{id}")
-    public ResponseEntity<?> download(@PathVariable("id") final Long id) {
+    public ResponseEntity<?> download(@PathVariable("id") final String id) {
         final File file = fileService.getById(id);
         byte[] fileBytes = Base64.getDecoder().decode(file.getFileCodes());
         return ResponseEntity.ok()
