@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
+import com.lawencon.community.constant.RoleConstant;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.IndustryDao;
 import com.lawencon.community.dao.PositionDao;
@@ -76,9 +77,10 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		userInsert.setPass(hashPassword);
 
 		userInsert.setCompany(data.getCompany());
-		userInsert.setIsPremium(data.getIsPremium());
+		userInsert.setIsPremium(false);
 
-		final Role role = roleDao.getById(Role.class, data.getRoleId());
+		final String roleId = roleDao.getByRoleCode(RoleConstant.MEMBER.getRoleCode());
+		final Role role = roleDao.getById(Role.class, roleId);
 		userInsert.setRole(role);
 
 		final Industry industry = industryDao.getById(Industry.class, data.getIndustryId());
@@ -87,14 +89,57 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		final Position position = positionDao.getById(Position.class, data.getPositionId());
 		userInsert.setPosition(position);
 
-		final File file = new File();
-		file.setFileCodes(data.getFileCodes());
-		file.setExtensions(data.getExtension());
+		final File file = fileDao.getById(File.class, "d45027a8-a2e2-46a9-b2c2-4f4fd2310d7c");
+		userInsert.setFile(file);
 
 		try {
 			begin();
-			final File fileInsert = fileDao.saveNoLogin(file, () -> userDao.getSystemId());
-			userInsert.setFile(fileInsert);
+			userInsert = userDao.saveNoLogin(userInsert, () -> userDao.getSystemId());
+			commit();
+		} catch (final Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new RuntimeException("Registration failed");
+		}
+
+		final InsertDataRes dataRes = new InsertDataRes();
+		dataRes.setId(userInsert.getId());
+
+		final InsertRes insertRes = new InsertRes();
+		insertRes.setData(dataRes);
+		insertRes.setMessage("Registration Success");
+
+		return insertRes;
+	}
+	
+	public InsertRes registerAdmin(final UserInsertReq data) {
+		valInsert(data);
+
+		User userInsert = new User();
+		userInsert.setFullname(data.getFullname());
+		userInsert.setEmail(data.getEmail());
+
+		final String hashPassword = passwordEncoder.encode(data.getPassword());
+		userInsert.setPass(hashPassword);
+
+		userInsert.setCompany(data.getCompany());
+		userInsert.setIsPremium(false);
+
+		final String roleId = roleDao.getByRoleCode(RoleConstant.ADMIN.getRoleCode());
+		final Role role = roleDao.getById(Role.class, roleId);
+		userInsert.setRole(role);
+
+		final Industry industry = industryDao.getById(Industry.class, data.getIndustryId());
+		userInsert.setIndustry(industry);
+
+		final Position position = positionDao.getById(Position.class, data.getPositionId());
+		userInsert.setPosition(position);
+
+		final File file = fileDao.getById(File.class, "d45027a8-a2e2-46a9-b2c2-4f4fd2310d7c");
+		userInsert.setFile(file);
+
+		try {
+			begin();
 			userInsert = userDao.saveNoLogin(userInsert, () -> userDao.getSystemId());
 			commit();
 		} catch (final Exception e) {
@@ -240,18 +285,9 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		if (data.getCompany() == null) {
 			throw new RuntimeException("Company cannot be empty");
 		}
-		if (data.getFileCodes() == null || data.getExtension() == null) {
-			throw new RuntimeException("File cannot be empty");
-		}
-		if (data.getIsPremium() == null) {
-			throw new RuntimeException("Is Premium cannot be empty");
-		}
 	}
 
 	private void valIdFkNotNull(final UserInsertReq data) {
-		if (data.getRoleId() == null) {
-			throw new RuntimeException("Role id cannot be empty");
-		}
 		if (data.getPositionId() == null) {
 			throw new RuntimeException("Position id cannot be empty");
 		}
@@ -261,10 +297,6 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 	}
 
 	private void valFkFound(final UserInsertReq data) {
-		final Role role = roleDao.getByIdAndDetach(Role.class, data.getRoleId());
-		if (role == null) {
-			throw new RuntimeException("Role not found");
-		}
 		final Position position = positionDao.getByIdAndDetach(Position.class, data.getPositionId());
 		if (position == null) {
 			throw new RuntimeException("Position not found");

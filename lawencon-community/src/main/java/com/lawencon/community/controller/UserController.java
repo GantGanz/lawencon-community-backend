@@ -38,6 +38,12 @@ public class UserController {
 		final InsertRes res = userService.register(data);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
+	
+	@PostMapping
+	public ResponseEntity<InsertRes> registerAdmin(@RequestBody final UserInsertReq data) {
+		final InsertRes res = userService.registerAdmin(data);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
 
 	@PutMapping
 	public ResponseEntity<UpdateRes> update(@RequestBody final UserUpdateReq data) {

@@ -8,11 +8,7 @@ public class UserInsertReq {
 	private String email;
 	private String password;
 	private String company;
-	private String fileCodes;
-	private String extension;
-	private String roleId;
 	private String positionId;
 	private String industryId;
-	private Boolean isPremium;
 
 }
