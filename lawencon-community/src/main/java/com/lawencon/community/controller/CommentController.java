@@ -63,4 +63,10 @@ public class CommentController {
 		final CommentRes result = commentService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("count-comment/{id}")
+	public ResponseEntity<Long> countComment(@PathVariable("id") final String postId) {
+		final Long res = commentService.countComment(postId);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
 }

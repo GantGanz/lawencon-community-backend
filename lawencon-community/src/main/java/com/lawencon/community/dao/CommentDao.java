@@ -100,4 +100,20 @@ public class CommentDao extends AbstractJpaDao {
 		return comments;
 	}
 
+	public Long countComment(final String postId) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT COUNT(c.id) ").append("FROM t_comment c ").append("INNER JOIN t_post p ON c.post_id = p.id ")
+				.append("WHERE c.is_active = TRUE ").append("AND p.id = :postId ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("postId", postId).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
 }

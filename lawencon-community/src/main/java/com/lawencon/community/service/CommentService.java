@@ -174,6 +174,10 @@ public class CommentService extends BaseCoreService {
 		return commentRes;
 	}
 	
+	public Long countComment(final String postId) {
+		return commentDao.countComment(postId);
+	}
+	
 	private void valInsert(final CommentInsertReq data) {
 		valContentNotNull(data);
 	}

@@ -1,5 +1,7 @@
 package com.lawencon.community.dao;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
@@ -115,5 +117,58 @@ public class UserDao extends AbstractJpaDao {
 			e.printStackTrace();
 		}
 		return total;
+	}
+
+	public List<User> getAll() {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT u.id, u.fullname, u.email, u.company, u.role_id, r.role_name, ")
+				.append("u.industry_id, i.industry_name, u.position_id, p.position_name, ")
+				.append("u.is_premium, u.file_id, u.ver, u.is_active ").append("FROM t_user u ")
+				.append("INNER JOIN t_role ur ON ur.id = u.role_id ")
+				.append("INNER JOIN t_industry i ON u.industry_id = i.id ")
+				.append("INNER JOIN t_position p ON u.position_id = p.id ").append("WHERE u.is_active = TRUE ");
+
+		final List<?> result = createNativeQuery(str.toString()).getResultList();
+
+		final List<User> users = new ArrayList<>();
+
+		if (result != null && result.size() > 0) {
+			result.forEach(userObj -> {
+				final Object[] objArr = (Object[]) userObj;
+				User user = new User();
+				user.setId(objArr[0].toString());
+				user.setFullname(objArr[1].toString());
+				user.setEmail(objArr[2].toString());
+				user.setCompany(objArr[3].toString());
+
+				final Role role = new Role();
+				role.setId(objArr[4].toString());
+				role.setRoleName(objArr[5].toString());
+
+				final Industry industry = new Industry();
+				industry.setId(objArr[6].toString());
+				industry.setIndustryName(objArr[7].toString());
+
+				final Position position = new Position();
+				position.setId(objArr[8].toString());
+				position.setPositionName(objArr[9].toString());
+				
+				user.setIsPremium(Boolean.valueOf(objArr[10].toString()));
+				
+				final File file = new File();
+				file.setId(objArr[11].toString());
+
+				user.setVersion(Integer.valueOf(objArr[12].toString()));
+				user.setIsActive(Boolean.valueOf(objArr[13].toString()));
+				
+				user.setFile(file);
+				user.setRole(role);
+				user.setIndustry(industry);
+				user.setPosition(position);
+				users.add(user);
+			});
+		}
+
+		return users;
 	}
 }
