@@ -59,10 +59,10 @@ public class PaymentActivityService extends BaseCoreService {
 			File fileInsert = new File();
 			fileInsert.setFileCodes(data.getFileCodes());
 			fileInsert.setExtensions(data.getExtensions());
-			
+
 			fileInsert = fileDao.save(fileInsert);
 			paymentActivityInsert.setFile(fileInsert);
-			
+
 			paymentActivityInsert = paymentActivityDao.save(paymentActivityInsert);
 			commit();
 		} catch (final Exception e) {
@@ -117,6 +117,7 @@ public class PaymentActivityService extends BaseCoreService {
 			paymentActivityData.setFileId(paymentActivity.getFile().getId());
 			paymentActivityData.setUserId(paymentActivity.getUser().getId());
 			paymentActivityData.setFullname(paymentActivity.getUser().getFullname());
+			paymentActivityData.setEmail(paymentActivity.getUser().getEmail());
 			paymentActivityData.setActivityId(paymentActivity.getActivity().getId());
 			paymentActivityData.setActivityTitle(paymentActivity.getActivity().getActivityTitle());
 			paymentActivityData.setCreatedAt(paymentActivity.getCreatedAt());
@@ -129,7 +130,7 @@ public class PaymentActivityService extends BaseCoreService {
 
 		return paymentActivitiesRes;
 	}
-	
+
 	public PaymentActivitiesRes getAllUnapproved() {
 		final List<PaymentActivity> paymentActivities = paymentActivityDao.getAllUnapproved();
 		final List<PaymentActivityData> paymentActivityDatas = new ArrayList<>();
@@ -143,6 +144,7 @@ public class PaymentActivityService extends BaseCoreService {
 			paymentActivityData.setFileId(paymentActivity.getFile().getId());
 			paymentActivityData.setUserId(paymentActivity.getUser().getId());
 			paymentActivityData.setFullname(paymentActivity.getUser().getFullname());
+			paymentActivityData.setEmail(paymentActivity.getUser().getEmail());
 			paymentActivityData.setActivityId(paymentActivity.getActivity().getId());
 			paymentActivityData.setActivityTitle(paymentActivity.getActivity().getActivityTitle());
 			paymentActivityData.setCreatedAt(paymentActivity.getCreatedAt());
@@ -155,7 +157,7 @@ public class PaymentActivityService extends BaseCoreService {
 
 		return paymentActivitiesRes;
 	}
-	
+
 	public PaymentActivitiesRes getAllByCreatorId() {
 		final String userId = principalService.getAuthPrincipal();
 		final List<PaymentActivity> paymentActivities = paymentActivityDao.getAllByCreatorId(userId);
@@ -170,6 +172,7 @@ public class PaymentActivityService extends BaseCoreService {
 			paymentActivityData.setFileId(paymentActivity.getFile().getId());
 			paymentActivityData.setUserId(paymentActivity.getUser().getId());
 			paymentActivityData.setFullname(paymentActivity.getUser().getFullname());
+			paymentActivityData.setEmail(paymentActivity.getUser().getEmail());
 			paymentActivityData.setActivityId(paymentActivity.getActivity().getId());
 			paymentActivityData.setActivityTitle(paymentActivity.getActivity().getActivityTitle());
 			paymentActivityData.setCreatedAt(paymentActivity.getCreatedAt());
@@ -193,6 +196,7 @@ public class PaymentActivityService extends BaseCoreService {
 		paymentActivityData.setFileId(paymentActivity.getFile().getId());
 		paymentActivityData.setUserId(paymentActivity.getUser().getId());
 		paymentActivityData.setFullname(paymentActivity.getUser().getFullname());
+		paymentActivityData.setEmail(paymentActivity.getUser().getEmail());
 		paymentActivityData.setActivityId(paymentActivity.getActivity().getId());
 		paymentActivityData.setActivityTitle(paymentActivity.getActivity().getActivityTitle());
 		paymentActivityData.setCreatedAt(paymentActivity.getCreatedAt());
@@ -207,19 +211,19 @@ public class PaymentActivityService extends BaseCoreService {
 	public Long countAllUnapproved() {
 		return paymentActivityDao.countAllUnapproved();
 	}
-	
+
 	public BigDecimal getCreatorIncome() {
 		final String userId = principalService.getAuthPrincipal();
 		final BigDecimal multiplier = new BigDecimal("0.9");
 		return paymentActivityDao.getCreatorIncome(userId).multiply(multiplier);
 	}
-	
+
 	public BigDecimal getSystemIncome() {
 		final String userId = principalService.getAuthPrincipal();
 		final BigDecimal multiplier = new BigDecimal("0.1");
 		return paymentActivityDao.getCreatorIncome(userId).multiply(multiplier);
 	}
-	
+
 	private void valInsert(final PaymentActivityInsertReq data) {
 		valContentNotNull(data);
 	}

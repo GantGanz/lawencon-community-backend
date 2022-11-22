@@ -15,6 +15,7 @@ public class PaymentPremiumData {
 	private String fileId;
 	private String userId;
 	private String fullname;
+	private String email;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	
