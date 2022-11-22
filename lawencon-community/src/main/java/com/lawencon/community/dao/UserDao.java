@@ -126,7 +126,7 @@ public class UserDao extends AbstractJpaDao {
 				.append("u.is_premium, u.file_id, u.ver, u.is_active ").append("FROM t_user u ")
 				.append("INNER JOIN t_role ur ON ur.id = u.role_id ")
 				.append("INNER JOIN t_industry i ON u.industry_id = i.id ")
-				.append("INNER JOIN t_position p ON u.position_id = p.id ").append("WHERE u.is_active = TRUE ");
+				.append("INNER JOIN t_position p ON u.position_id = p.id ").append("WHERE u.is_active = TRUE ").append("ORDER BY u.id DESC");
 
 		final List<?> result = createNativeQuery(str.toString()).getResultList();
 

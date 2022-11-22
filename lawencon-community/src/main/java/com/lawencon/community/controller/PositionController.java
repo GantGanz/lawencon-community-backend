@@ -33,6 +33,12 @@ public class PositionController {
 		final PositionsRes res = positionService.getAll();
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
+	
+	@GetMapping("active")
+	public ResponseEntity<PositionsRes> getAllActive() {
+		final PositionsRes res = positionService.getAllActive();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
 
 	@PostMapping
 	public ResponseEntity<InsertRes> insert(@RequestBody final PositionInsertReq data) {

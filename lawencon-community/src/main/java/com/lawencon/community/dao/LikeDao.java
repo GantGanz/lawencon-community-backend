@@ -15,8 +15,8 @@ public class LikeDao extends AbstractJpaDao {
 
 	public Long countLike(final String postId) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT COUNT(l.id) ").append("FROM t_like l ").append("INNER JOIN t_post p ON l.post_id = p.id ")
-				.append("WHERE l.is_active = TRUE ").append("AND p.id = :postId ");
+		str.append("SELECT COUNT(l.id) ").append("FROM t_like l ")
+				.append("WHERE l.is_active = TRUE ").append("AND l.post_id = :postId ");
 
 		Long total = null;
 		try {

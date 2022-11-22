@@ -28,10 +28,10 @@ public class IndustryDao extends AbstractJpaDao {
 		return industryId;
 	}
 
-	public List<Industry> getAll() {
+	public List<Industry> getAllActive() {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT i.id, i.industry_name, i.industry_code, i.ver, i.is_active ").append("FROM t_industry i ")
-				.append("WHERE i.is_active = TRUE ");
+				.append("WHERE i.is_active = TRUE ").append("ORDER BY p.id DESC");
 
 		final List<?> result = createNativeQuery(str.toString()).getResultList();
 
