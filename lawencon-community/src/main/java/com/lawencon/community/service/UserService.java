@@ -162,8 +162,8 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		final InsertRes insertRes = new InsertRes();
 		insertRes.setData(dataRes);
 		insertRes.setMessage("Registration Success");
-		
-		final Map<String,Object> template = new HashMap<>();
+
+		final Map<String, Object> template = new HashMap<>();
 		template.put("email", userInsert.getEmail());
 		template.put("code", plainPassword);
 		final String subject = "Zenith Admin Registration";
@@ -194,14 +194,13 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 				userUpdate.setFile(fileUpdate);
 			}
 
-
 			final Position position = positionDao.getById(Position.class, data.getPositionId());
 			userUpdate.setPosition(position);
 
 			final Industry industry = industryDao.getById(Industry.class, data.getIndustryId());
 			userUpdate.setIndustry(industry);
 
-			if (data.getIsPremium()!=null) {				
+			if (data.getIsPremium() != null) {
 				userUpdate.setIsPremium(data.getIsPremium());
 			}
 			userUpdate.setIsActive(data.getIsActive());
@@ -255,7 +254,7 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 	}
 
 	public UsersRes getAll() {
-		final List<User> users = userDao.getAll();
+		final List<User> users = userDao.getAll(User.class);
 		final List<UserData> userDatas = new ArrayList<>();
 		for (int i = 0; i < users.size(); i++) {
 			final User user = users.get(i);
@@ -306,15 +305,15 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 
 		return userRes;
 	}
-	
+
 	public Long countAllMember() {
 		return userDao.countAllUser(RoleConstant.MEMBER.getRoleCode());
 	}
-	
+
 	public Long countAllAdmin() {
 		return userDao.countAllUser(RoleConstant.ADMIN.getRoleCode());
 	}
-	
+
 	public Long countAllPremium() {
 		return userDao.countAllPremium();
 	}
