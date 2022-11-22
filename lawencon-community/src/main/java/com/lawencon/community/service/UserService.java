@@ -177,8 +177,6 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 				userUpdate.setFile(fileUpdate);
 			}
 
-			final Role role = roleDao.getById(Role.class, data.getRoleId());
-			userUpdate.setRole(role);
 
 			final Position position = positionDao.getById(Position.class, data.getPositionId());
 			userUpdate.setPosition(position);
@@ -237,8 +235,8 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		return res;
 	}
 
-	public UsersRes getAll(final Integer offset, final Integer limit) {
-		final List<User> users = userDao.getAll(User.class, offset, limit);
+	public UsersRes getAll() {
+		final List<User> users = userDao.getAll();
 		final List<UserData> userDatas = new ArrayList<>();
 		for (int i = 0; i < users.size(); i++) {
 			final User user = users.get(i);
@@ -357,10 +355,6 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 	}
 
 	private void valFkFound(final UserUpdateReq data) {
-		final Role role = roleDao.getByIdAndDetach(Role.class, data.getRoleId());
-		if (role == null) {
-			throw new RuntimeException("Role not found");
-		}
 		final Position position = positionDao.getByIdAndDetach(Position.class, data.getPositionId());
 		if (position == null) {
 			throw new RuntimeException("Position not found");
@@ -372,9 +366,6 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 	}
 
 	private void valIdFkNotNull(final UserUpdateReq data) {
-		if (data.getRoleId() == null) {
-			throw new RuntimeException("Role id cannot be empty");
-		}
 		if (data.getPositionId() == null) {
 			throw new RuntimeException("Position id cannot be empty");
 		}

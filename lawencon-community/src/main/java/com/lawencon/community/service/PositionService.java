@@ -77,8 +77,8 @@ public class PositionService extends BaseCoreService {
 		return res;
 	}
 
-	public PositionsRes getAll(final Integer offset, final Integer limit) {
-		final List<Position> positions = positionDao.getAll(Position.class, offset, limit);
+	public PositionsRes getAll() {
+		final List<Position> positions = positionDao.getAll();
 		final List<PositionData> positionDatas = new ArrayList<>();
 		for (int i = 0; i < positions.size(); i++) {
 			final Position position = positions.get(i);
