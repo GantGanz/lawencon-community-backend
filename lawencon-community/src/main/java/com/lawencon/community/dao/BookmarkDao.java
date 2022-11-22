@@ -1,4 +1,5 @@
 package com.lawencon.community.dao;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,5 +44,23 @@ public class BookmarkDao extends AbstractJpaDao {
 		}
 
 		return bookmarks;
+	}
+
+	public Long isBookmarked(final String postId, final String userId) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT COUNT(b.id) ").append("FROM t_bookmark b ").append("WHERE b.is_active = TRUE ")
+				.append("AND b.post_id = :postId ").append(" AND b.user_id = :userId ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("postId", postId)
+					.setParameter("userId", userId).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
 	}
 }

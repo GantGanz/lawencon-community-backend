@@ -51,4 +51,10 @@ public class BookmarkController {
 		final BookmarkRes result = bookmarkService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("bookmarked/{id}")
+	public ResponseEntity<Long> isBookmarked(@PathVariable("id") final String postId) {
+		final Long res = bookmarkService.isBookmarked(postId);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
 }

@@ -64,4 +64,21 @@ public class LikeDao extends AbstractJpaDao {
 		return likes;
 	}
 
+	public Long isLiked(final String postId, final String userId) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT COUNT(l.id) ").append("FROM t_like l ").append("WHERE l.is_active = TRUE ")
+				.append("AND l.post_id = :postId ").append(" AND l.user_id = :userId ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("postId", postId)
+					.setParameter("userId", userId).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
 }
