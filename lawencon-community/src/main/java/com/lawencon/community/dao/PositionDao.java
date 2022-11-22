@@ -26,10 +26,10 @@ public class PositionDao extends AbstractJpaDao {
 		return positionId;
 	}
 	
-	public List<Position> getAll() {
+	public List<Position> getAllActive() {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT i.id, i.position_name, i.position_code, i.ver, i.is_active ").append("FROM t_position i ")
-				.append("WHERE i.is_active = TRUE ");
+		str.append("SELECT p.id, p.position_name, p.position_code, p.ver, p.is_active ").append("FROM t_position p ")
+				.append("WHERE p.is_active = TRUE ").append("ORDER BY p.id DESC");
 
 		final List<?> result = createNativeQuery(str.toString()).getResultList();
 

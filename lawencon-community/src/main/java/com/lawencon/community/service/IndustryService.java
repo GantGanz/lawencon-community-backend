@@ -77,7 +77,26 @@ public class IndustryService extends BaseCoreService {
 	}
 
 	public IndustriesRes getAll() {
-		final List<Industry> industries = industryDao.getAll();
+		final List<Industry> industries = industryDao.getAll(Industry.class);
+		final List<IndustryData> industryDatas = new ArrayList<>();
+		for (int i = 0; i < industries.size(); i++) {
+			final Industry industry = industries.get(i);
+			final IndustryData industryData = new IndustryData();
+			industryData.setId(industry.getId());
+			industryData.setIndustryCode(industry.getIndustryCode());
+			industryData.setIndustryName(industry.getIndustryName());
+			industryData.setVersion(industry.getVersion());
+
+			industryDatas.add(industryData);
+		}
+		final IndustriesRes industriesRes = new IndustriesRes();
+		industriesRes.setData(industryDatas);
+
+		return industriesRes;
+	}
+	
+	public IndustriesRes getAllActive() {
+		final List<Industry> industries = industryDao.getAllActive();
 		final List<IndustryData> industryDatas = new ArrayList<>();
 		for (int i = 0; i < industries.size(); i++) {
 			final Industry industry = industries.get(i);

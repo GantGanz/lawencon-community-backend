@@ -168,7 +168,7 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		template.put("code", plainPassword);
 		final String subject = "Zenith Admin Registration";
 		try {
-			mailUtil.sendMessageFreeMarker(userInsert.getEmail(), subject, template, "index2.ftl");
+			mailUtil.sendMessageFreeMarker(userInsert.getEmail(), subject, template, "AdminRegistration.ftl");
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}

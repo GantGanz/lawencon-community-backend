@@ -34,6 +34,12 @@ public class IndustryController {
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
+	@GetMapping("active")
+	public ResponseEntity<IndustriesRes> getAllActive() {
+		final IndustriesRes res = industryService.getAll();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+
 	@PostMapping
 	public ResponseEntity<InsertRes> insert(@RequestBody final IndustryInsertReq data) {
 		final InsertRes res = industryService.insert(data);

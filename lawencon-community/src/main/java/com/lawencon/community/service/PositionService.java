@@ -78,7 +78,26 @@ public class PositionService extends BaseCoreService {
 	}
 
 	public PositionsRes getAll() {
-		final List<Position> positions = positionDao.getAll();
+		final List<Position> positions = positionDao.getAll(Position.class);
+		final List<PositionData> positionDatas = new ArrayList<>();
+		for (int i = 0; i < positions.size(); i++) {
+			final Position position = positions.get(i);
+			final PositionData positionData = new PositionData();
+			positionData.setId(position.getId());
+			positionData.setPositionCode(position.getPositionCode());
+			positionData.setPositionName(position.getPositionName());
+			positionData.setVersion(position.getVersion());
+
+			positionDatas.add(positionData);
+		}
+		final PositionsRes positionsRes = new PositionsRes();
+		positionsRes.setData(positionDatas);
+
+		return positionsRes;
+	}
+	
+	public PositionsRes getAllActive() {
+		final List<Position> positions = positionDao.getAllActive();
 		final List<PositionData> positionDatas = new ArrayList<>();
 		for (int i = 0; i < positions.size(); i++) {
 			final Position position = positions.get(i);
