@@ -13,48 +13,42 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.UpdateRes;
-import com.lawencon.community.dto.industry.IndustriesRes;
-import com.lawencon.community.dto.industry.IndustryInsertReq;
-import com.lawencon.community.dto.industry.IndustryRes;
-import com.lawencon.community.dto.industry.IndustryUpdateReq;
-import com.lawencon.community.service.IndustryService;
+import com.lawencon.community.dto.bookmark.BookmarkInsertReq;
+import com.lawencon.community.dto.bookmark.BookmarkRes;
+import com.lawencon.community.dto.bookmark.BookmarkUpdateReq;
+import com.lawencon.community.dto.bookmark.BookmarksRes;
+import com.lawencon.community.service.BookmarkService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @SecurityRequirement(name = "bearerAuth")
 @RestController
-@RequestMapping("industries")
-public class IndustryController {
+@RequestMapping("bookmarks")
+public class BookmarkController {
 	@Autowired
-	private IndustryService industryService;
+	private BookmarkService bookmarkService;
 
 	@GetMapping
-	public ResponseEntity<IndustriesRes> getAll() {
-		final IndustriesRes res = industryService.getAll();
-		return new ResponseEntity<>(res, HttpStatus.OK);
-	}
-
-	@GetMapping("active")
-	public ResponseEntity<IndustriesRes> getAllActive() {
-		final IndustriesRes res = industryService.getAll();
+	public ResponseEntity<BookmarksRes> getAllByUserId() {
+		final BookmarksRes res = bookmarkService.getAllByUserId();
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
 	@PostMapping
-	public ResponseEntity<InsertRes> insert(@RequestBody final IndustryInsertReq data) {
-		final InsertRes res = industryService.insert(data);
-		return new ResponseEntity<>(res, HttpStatus.OK);
-	}
-
-	@PutMapping
-	ResponseEntity<UpdateRes> update(@RequestBody final IndustryUpdateReq data) {
-		final UpdateRes res = industryService.update(data);
+	public ResponseEntity<InsertRes> insert(@RequestBody final BookmarkInsertReq data) {
+		final InsertRes res = bookmarkService.insert(data);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
+	@PutMapping("soft-delete")
+	public ResponseEntity<UpdateRes> softDelete(@RequestBody final BookmarkUpdateReq data) {
+		final UpdateRes res = bookmarkService.softDelete(data);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+
 	@GetMapping("{id}")
-	public ResponseEntity<IndustryRes> getById(@PathVariable("id") final String id) {
-		final IndustryRes result = industryService.getById(id);
+	public ResponseEntity<BookmarkRes> getById(@PathVariable("id") final String id) {
+		final BookmarkRes result = bookmarkService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }
