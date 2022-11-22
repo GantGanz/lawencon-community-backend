@@ -108,6 +108,7 @@ public class PaymentPremiumService extends BaseCoreService {
 			paymentPremiumData.setFileId(paymentPremium.getFile().getId());
 			paymentPremiumData.setUserId(paymentPremium.getUser().getId());
 			paymentPremiumData.setFullname(paymentPremium.getUser().getFullname());
+			paymentPremiumData.setEmail(paymentPremium.getUser().getEmail());
 			paymentPremiumData.setCreatedAt(paymentPremium.getCreatedAt());
 			paymentPremiumData.setUpdatedAt(paymentPremium.getUpdatedAt());
 
@@ -132,6 +133,7 @@ public class PaymentPremiumService extends BaseCoreService {
 			paymentPremiumData.setFileId(paymentPremium.getFile().getId());
 			paymentPremiumData.setUserId(paymentPremium.getUser().getId());
 			paymentPremiumData.setFullname(paymentPremium.getUser().getFullname());
+			paymentPremiumData.setEmail(paymentPremium.getUser().getEmail());
 			paymentPremiumData.setCreatedAt(paymentPremium.getCreatedAt());
 			paymentPremiumData.setUpdatedAt(paymentPremium.getUpdatedAt());
 
@@ -153,6 +155,7 @@ public class PaymentPremiumService extends BaseCoreService {
 		paymentPremiumData.setFileId(paymentPremium.getFile().getId());
 		paymentPremiumData.setUserId(paymentPremium.getUser().getId());
 		paymentPremiumData.setFullname(paymentPremium.getUser().getFullname());
+		paymentPremiumData.setEmail(paymentPremium.getUser().getEmail());
 		paymentPremiumData.setCreatedAt(paymentPremium.getCreatedAt());
 		paymentPremiumData.setUpdatedAt(paymentPremium.getUpdatedAt());
 

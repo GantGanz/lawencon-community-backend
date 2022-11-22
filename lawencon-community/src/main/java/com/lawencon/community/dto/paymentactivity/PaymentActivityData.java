@@ -15,6 +15,7 @@ public class PaymentActivityData {
 	private String fileId;
 	private String userId;
 	private String fullname;
+	private String email;
 	private String activityId;
 	private String activityTitle;
 	private LocalDateTime createdAt;
