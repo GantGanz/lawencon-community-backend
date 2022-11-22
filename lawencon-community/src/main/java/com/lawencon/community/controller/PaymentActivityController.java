@@ -1,5 +1,7 @@
 package com.lawencon.community.controller;
 
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +33,18 @@ public class PaymentActivityController {
 	@GetMapping("count")
 	public ResponseEntity<Long> countAllUnapproved() {
 		final Long res = paymentActivityService.countAllUnapproved();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("creator-income")
+	public ResponseEntity<BigDecimal> getCreatorIncome() {
+		final BigDecimal res = paymentActivityService.getCreatorIncome();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("system-income")
+	public ResponseEntity<BigDecimal> getSystemIncome() {
+		final BigDecimal res = paymentActivityService.getSystemIncome();
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	

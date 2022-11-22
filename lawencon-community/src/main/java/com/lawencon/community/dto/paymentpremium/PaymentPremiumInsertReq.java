@@ -8,6 +8,7 @@ import lombok.Data;
 public class PaymentPremiumInsertReq {
 
 	private BigDecimal nominal;
-	private String fileId;
-	private String userId;
+	private String fileCodes;
+	private String extensions;
+
 }
