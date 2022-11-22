@@ -112,8 +112,12 @@ public class PostService extends BaseCoreService {
 
 					attachmentPost.setPost(postInsert);
 
-					final File file = fileDao.getById(File.class, attachmentPostInsertReq.getFileId());
-					attachmentPost.setFile(file);
+					File fileInsert = new File();
+					fileInsert.setFileCodes(attachmentPostInsertReq.getFileCodes());
+					fileInsert.setExtensions(attachmentPostInsertReq.getExtensions());
+					
+					fileInsert = fileDao.save(fileInsert);
+					attachmentPost.setFile(fileInsert);
 
 					attachmentPostDao.save(attachmentPost);
 				}

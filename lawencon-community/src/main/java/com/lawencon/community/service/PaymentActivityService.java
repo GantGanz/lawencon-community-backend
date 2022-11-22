@@ -56,12 +56,12 @@ public class PaymentActivityService extends BaseCoreService {
 
 		try {
 			begin();
-			final File fileInsert = new File();
+			File fileInsert = new File();
 			fileInsert.setFileCodes(data.getFileCodes());
 			fileInsert.setExtensions(data.getExtensions());
 			
-			final File file = fileDao.save(fileInsert);
-			paymentActivityInsert.setFile(file);
+			fileInsert = fileDao.save(fileInsert);
+			paymentActivityInsert.setFile(fileInsert);
 			
 			paymentActivityInsert = paymentActivityDao.save(paymentActivityInsert);
 			commit();

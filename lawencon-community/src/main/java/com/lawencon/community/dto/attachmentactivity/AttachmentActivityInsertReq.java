@@ -5,7 +5,8 @@ import lombok.Data;
 @Data
 public class AttachmentActivityInsertReq {
 
-	private String fileId;
+	private String fileCodes;
+	private String extensions;
 	private String activityId;
 
 }
