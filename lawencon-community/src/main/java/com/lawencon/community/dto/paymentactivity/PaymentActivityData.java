@@ -14,6 +14,7 @@ public class PaymentActivityData {
 	private Boolean isApproved;
 	private String fileId;
 	private String userId;
+	private String fullname;
 	private String activityId;
 	private String activityTitle;
 	private LocalDateTime createdAt;

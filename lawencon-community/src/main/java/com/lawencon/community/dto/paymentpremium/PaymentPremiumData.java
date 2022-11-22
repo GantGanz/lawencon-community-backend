@@ -14,6 +14,7 @@ public class PaymentPremiumData {
 	private Boolean isApproved;
 	private String fileId;
 	private String userId;
+	private String fullname;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	

@@ -116,6 +116,7 @@ public class PaymentActivityService extends BaseCoreService {
 			paymentActivityData.setIsApproved(paymentActivity.getIsApproved());
 			paymentActivityData.setFileId(paymentActivity.getFile().getId());
 			paymentActivityData.setUserId(paymentActivity.getUser().getId());
+			paymentActivityData.setFullname(paymentActivity.getUser().getFullname());
 			paymentActivityData.setActivityId(paymentActivity.getActivity().getId());
 			paymentActivityData.setActivityTitle(paymentActivity.getActivity().getActivityTitle());
 			paymentActivityData.setCreatedAt(paymentActivity.getCreatedAt());
@@ -141,6 +142,7 @@ public class PaymentActivityService extends BaseCoreService {
 			paymentActivityData.setIsApproved(paymentActivity.getIsApproved());
 			paymentActivityData.setFileId(paymentActivity.getFile().getId());
 			paymentActivityData.setUserId(paymentActivity.getUser().getId());
+			paymentActivityData.setFullname(paymentActivity.getUser().getFullname());
 			paymentActivityData.setActivityId(paymentActivity.getActivity().getId());
 			paymentActivityData.setActivityTitle(paymentActivity.getActivity().getActivityTitle());
 			paymentActivityData.setCreatedAt(paymentActivity.getCreatedAt());
@@ -167,6 +169,7 @@ public class PaymentActivityService extends BaseCoreService {
 			paymentActivityData.setIsApproved(paymentActivity.getIsApproved());
 			paymentActivityData.setFileId(paymentActivity.getFile().getId());
 			paymentActivityData.setUserId(paymentActivity.getUser().getId());
+			paymentActivityData.setFullname(paymentActivity.getUser().getFullname());
 			paymentActivityData.setActivityId(paymentActivity.getActivity().getId());
 			paymentActivityData.setActivityTitle(paymentActivity.getActivity().getActivityTitle());
 			paymentActivityData.setCreatedAt(paymentActivity.getCreatedAt());
@@ -189,6 +192,7 @@ public class PaymentActivityService extends BaseCoreService {
 		paymentActivityData.setIsApproved(paymentActivity.getIsApproved());
 		paymentActivityData.setFileId(paymentActivity.getFile().getId());
 		paymentActivityData.setUserId(paymentActivity.getUser().getId());
+		paymentActivityData.setFullname(paymentActivity.getUser().getFullname());
 		paymentActivityData.setActivityId(paymentActivity.getActivity().getId());
 		paymentActivityData.setActivityTitle(paymentActivity.getActivity().getActivityTitle());
 		paymentActivityData.setCreatedAt(paymentActivity.getCreatedAt());
