@@ -76,8 +76,8 @@ public class IndustryService extends BaseCoreService {
 		return res;
 	}
 
-	public IndustriesRes getAll() {
-		final List<Industry> industries = industryDao.getAll(Industry.class);
+	public IndustriesRes getAll(final Integer offset, final Integer limit) {
+		final List<Industry> industries = industryDao.getAll(Industry.class, offset, limit);
 		final List<IndustryData> industryDatas = new ArrayList<>();
 		for (int i = 0; i < industries.size(); i++) {
 			final Industry industry = industries.get(i);
