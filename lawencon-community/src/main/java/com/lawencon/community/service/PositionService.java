@@ -84,8 +84,8 @@ public class PositionService extends BaseCoreService {
 			final Position position = positions.get(i);
 			final PositionData positionData = new PositionData();
 			positionData.setId(position.getId());
-			positionData.setIndustryCode(position.getPositionCode());
-			positionData.setIndustryName(position.getPositionName());
+			positionData.setPositionCode(position.getPositionCode());
+			positionData.setPositionName(position.getPositionName());
 			positionData.setVersion(position.getVersion());
 
 			positionDatas.add(positionData);
@@ -100,8 +100,8 @@ public class PositionService extends BaseCoreService {
 		final Position position = positionDao.getById(Position.class, id);
 		final PositionData positionData = new PositionData();
 		positionData.setId(position.getId());
-		positionData.setIndustryCode(position.getPositionCode());
-		positionData.setIndustryName(position.getPositionName());
+		positionData.setPositionCode(position.getPositionCode());
+		positionData.setPositionName(position.getPositionName());
 		positionData.setVersion(position.getVersion());
 
 		final PositionRes positionRes = new PositionRes();

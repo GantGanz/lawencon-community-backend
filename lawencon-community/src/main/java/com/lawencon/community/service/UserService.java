@@ -1,7 +1,9 @@
 package com.lawencon.community.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,9 @@ import com.lawencon.community.model.Industry;
 import com.lawencon.community.model.Position;
 import com.lawencon.community.model.Role;
 import com.lawencon.community.model.User;
+import com.lawencon.community.util.GenerateCodeUtil;
 import com.lawencon.security.principal.PrincipalService;
+import com.lawencon.util.MailUtil;
 
 @Service
 public class UserService extends BaseCoreService implements UserDetailsService {
@@ -51,6 +55,8 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 	private PasswordEncoder passwordEncoder;
 	@Autowired
 	private PrincipalService principalService;
+	@Autowired
+	private MailUtil mailUtil;
 
 	@Override
 	public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
@@ -120,7 +126,8 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		userInsert.setFullname(data.getFullname());
 		userInsert.setEmail(data.getEmail());
 
-		final String hashPassword = passwordEncoder.encode(data.getPassword());
+		final String plainPassword = GenerateCodeUtil.generateCode();
+		final String hashPassword = passwordEncoder.encode(plainPassword);
 		userInsert.setPass(hashPassword);
 
 		userInsert.setCompany(data.getCompany());
@@ -141,7 +148,7 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 
 		try {
 			begin();
-			userInsert = userDao.saveNoLogin(userInsert, () -> userDao.getSystemId());
+			userInsert = userDao.save(userInsert);
 			commit();
 		} catch (final Exception e) {
 			e.printStackTrace();
@@ -155,6 +162,16 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		final InsertRes insertRes = new InsertRes();
 		insertRes.setData(dataRes);
 		insertRes.setMessage("Registration Success");
+		
+		final Map<String,Object> template = new HashMap<>();
+		template.put("email", userInsert.getEmail());
+		template.put("code", plainPassword);
+		final String subject = "Zenith Admin Registration";
+		try {
+			mailUtil.sendMessageFreeMarker(userInsert.getEmail(), subject, template, "index2.ftl");
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
 
 		return insertRes;
 	}
@@ -315,9 +332,6 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		}
 		if (data.getEmail() == null) {
 			throw new RuntimeException("Email cannot be empty");
-		}
-		if (data.getPassword() == null) {
-			throw new RuntimeException("Password cannot be empty");
 		}
 		if (data.getCompany() == null) {
 			throw new RuntimeException("Company cannot be empty");

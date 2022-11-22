@@ -7,7 +7,7 @@ public class PositionData {
 
 	private String id;
 	private Integer version;
-	private String industryCode;
-	private String industryName;
+	private String positionCode;
+	private String positionName;
 	
 }
