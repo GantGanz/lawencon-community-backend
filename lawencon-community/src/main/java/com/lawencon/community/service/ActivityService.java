@@ -66,8 +66,12 @@ public class ActivityService extends BaseCoreService {
 
 				attachmentActivity.setActivity(activityInsert);
 
-				final File file = fileDao.getById(File.class, attachmentActivityInsertReq.getFileId());
-				attachmentActivity.setFile(file);
+				File fileInsert = new File();
+				fileInsert.setFileCodes(attachmentActivityInsertReq.getFileCodes());
+				fileInsert.setExtensions(attachmentActivityInsertReq.getExtensions());
+				
+				fileInsert = fileDao.save(fileInsert);
+				attachmentActivity.setFile(fileInsert);
 
 				attachmentActivityDao.save(attachmentActivity);
 			}

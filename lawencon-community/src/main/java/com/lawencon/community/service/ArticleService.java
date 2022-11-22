@@ -63,8 +63,12 @@ public class ArticleService extends BaseCoreService {
 
 				attachmentArticle.setArticle(articleInsert);
 
-				final File file = fileDao.getById(File.class, attachmentArticleInsertReq.getFileId());
-				attachmentArticle.setFile(file);
+				File fileInsert = new File();
+				fileInsert.setFileCodes(attachmentArticleInsertReq.getFileCodes());
+				fileInsert.setExtensions(attachmentArticleInsertReq.getExtensions());
+				
+				fileInsert = fileDao.save(fileInsert);
+				attachmentArticle.setFile(fileInsert);
 
 				attachmentArticleDao.save(attachmentArticle);
 			}

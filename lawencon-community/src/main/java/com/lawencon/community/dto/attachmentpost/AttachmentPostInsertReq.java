@@ -5,7 +5,8 @@ import lombok.Data;
 @Data
 public class AttachmentPostInsertReq {
 
-	private String fileId;
+	private String fileCodes;
+	private String extensions;
 	private String postId;
 
 }
