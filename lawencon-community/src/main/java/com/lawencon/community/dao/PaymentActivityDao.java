@@ -18,8 +18,8 @@ public class PaymentActivityDao extends AbstractJpaDao {
 
 	public List<PaymentActivity> getAllApproved() {
 		final StringBuilder str = new StringBuilder();
-		str.append(
-				"SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, p.created_at, p.activity_id ")
+		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, ")
+				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at ")
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
 				.append("WHERE p.is_approved = TRUE ").append("ORDER BY a.id DESC");
 
@@ -49,8 +49,13 @@ public class PaymentActivityDao extends AbstractJpaDao {
 
 				final Activity activity = new Activity();
 				activity.setId(objArr[7].toString());
+				activity.setActivityTitle(objArr[8].toString());
 				paymentActivity.setActivity(activity);
 
+				paymentActivity.setVersion(Integer.valueOf(objArr[9].toString()));
+				if(objArr[10].toString() != null) {					
+					paymentActivity.setCreatedAt(Timestamp.valueOf(objArr[10].toString()).toLocalDateTime());
+				}
 				paymentActivities.add(paymentActivity);
 			});
 		}
@@ -60,8 +65,8 @@ public class PaymentActivityDao extends AbstractJpaDao {
 
 	public List<PaymentActivity> getAllUnapproved() {
 		final StringBuilder str = new StringBuilder();
-		str.append(
-				"SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, p.created_at, p.activity_id ")
+		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, ")
+				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at  ")
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
 				.append("WHERE p.is_approved = FALSE ").append("ORDER BY a.id DESC");
 
@@ -91,8 +96,13 @@ public class PaymentActivityDao extends AbstractJpaDao {
 
 				final Activity activity = new Activity();
 				activity.setId(objArr[7].toString());
+				activity.setActivityTitle(objArr[8].toString());
 				paymentActivity.setActivity(activity);
-
+				
+				paymentActivity.setVersion(Integer.valueOf(objArr[9].toString()));
+				if(objArr[10].toString() != null) {					
+					paymentActivity.setCreatedAt(Timestamp.valueOf(objArr[10].toString()).toLocalDateTime());
+				}
 				paymentActivities.add(paymentActivity);
 			});
 		}
@@ -102,11 +112,11 @@ public class PaymentActivityDao extends AbstractJpaDao {
 
 	public List<PaymentActivity> getAllByCreatorId(final String userId) {
 		final StringBuilder str = new StringBuilder();
-		str.append(
-				"SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, p.created_at, p.activity_id ")
+		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname,")
+				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at  ")
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE p.is_approved = TRUE ").append("AND p.created_by = :userId ")
-				.append("ORDER BY a.id DESC");
+				.append("INNER JOIN t_activity a ON a.id = p.activity_id ").append("WHERE p.is_approved = TRUE ")
+				.append("AND p.created_by = :userId ").append("ORDER BY a.id DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql).setParameter("userId", userId).getResultList();
@@ -134,8 +144,13 @@ public class PaymentActivityDao extends AbstractJpaDao {
 
 				final Activity activity = new Activity();
 				activity.setId(objArr[7].toString());
+				activity.setActivityTitle(objArr[8].toString());
 				paymentActivity.setActivity(activity);
 
+				paymentActivity.setVersion(Integer.valueOf(objArr[9].toString()));
+				if(objArr[10].toString() != null) {					
+					paymentActivity.setCreatedAt(Timestamp.valueOf(objArr[10].toString()).toLocalDateTime());
+				}
 				paymentActivities.add(paymentActivity);
 			});
 		}
@@ -149,8 +164,7 @@ public class PaymentActivityDao extends AbstractJpaDao {
 
 		BigDecimal totalIncome = null;
 		try {
-			final Object userObj = createNativeQuery(str.toString())
-					.setParameter("userId", userId).getSingleResult();
+			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
 			if (userObj != null) {
 				totalIncome = BigDecimal.valueOf(Long.valueOf(userObj.toString()));
 			}
@@ -159,11 +173,10 @@ public class PaymentActivityDao extends AbstractJpaDao {
 		}
 		return totalIncome;
 	}
-	
+
 	public Long countAllUnapproved() {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT count(p.id) ").append("FROM t_payment_activity p ")
-				.append("WHERE p.is_approved = FALSE ");
+		str.append("SELECT count(p.id) ").append("FROM t_payment_activity p ").append("WHERE p.is_approved = FALSE ");
 
 		Long total = null;
 		try {
