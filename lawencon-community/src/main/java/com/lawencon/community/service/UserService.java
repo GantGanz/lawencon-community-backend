@@ -201,7 +201,9 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 			final Industry industry = industryDao.getById(Industry.class, data.getIndustryId());
 			userUpdate.setIndustry(industry);
 
-			userUpdate.setIsPremium(data.getIsPremium());
+			if (data.getIsPremium()!=null) {				
+				userUpdate.setIsPremium(data.getIsPremium());
+			}
 			userUpdate.setIsActive(data.getIsActive());
 			userUpdate.setVersion(data.getVersion());
 
