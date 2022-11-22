@@ -57,4 +57,10 @@ public class LikeController {
 		final LikeRes result = likeService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("liked/{id}")
+	public ResponseEntity<Long> isLiked(@PathVariable("id") final String postId) {
+		final Long res = likeService.isLiked(postId);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
 }

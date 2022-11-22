@@ -124,6 +124,11 @@ public class LikeService extends BaseCoreService {
 		return likeRes;
 	}
 
+	public Long isLiked(final String postId) {
+		final String userId = principalService.getAuthPrincipal();
+		return likeDao.isLiked(postId, userId);
+	}
+	
 	private void valUpdate(final LikeUpdateReq data) {
 		valIdNotNull(data);
 		valIdFound(data);

@@ -119,6 +119,11 @@ public class BookmarkService extends BaseCoreService {
 		return bookmarkRes;
 	}
 
+	public Long isBookmarked(final String postId) {
+		final String userId = principalService.getAuthPrincipal();
+		return bookmarkDao.isBookmarked(postId, userId);
+	}
+	
 	private void valUpdate(final BookmarkUpdateReq data) {
 		valIdNotNull(data);
 		valIdFound(data);
