@@ -1,17 +1,154 @@
 package com.lawencon.community.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.dao.LikeDao;
+import com.lawencon.community.dao.PostDao;
+import com.lawencon.community.dao.UserDao;
+import com.lawencon.community.dto.InsertDataRes;
+import com.lawencon.community.dto.InsertRes;
+import com.lawencon.community.dto.UpdateDataRes;
+import com.lawencon.community.dto.UpdateRes;
+import com.lawencon.community.dto.like.LikeData;
+import com.lawencon.community.dto.like.LikeInsertReq;
+import com.lawencon.community.dto.like.LikeRes;
+import com.lawencon.community.dto.like.LikeUpdateReq;
+import com.lawencon.community.dto.like.LikesRes;
+import com.lawencon.community.model.Like;
+import com.lawencon.community.model.Post;
+import com.lawencon.community.model.User;
+import com.lawencon.security.principal.PrincipalService;
 
 @Service
 public class LikeService extends BaseCoreService {
 
 	@Autowired
 	private LikeDao likeDao;
-	
+	@Autowired
+	private UserDao userDao;
+	@Autowired
+	private PostDao postDao;
+	@Autowired
+	private PrincipalService principalService;
+
 	public Long countLike(final String postId) {
 		return likeDao.countLike(postId);
+	}
+
+	public InsertRes insert(final LikeInsertReq data) {
+		Like likeInsert = new Like();
+
+		final String userId = principalService.getAuthPrincipal();
+		final User user = userDao.getById(User.class, userId);
+		likeInsert.setUser(user);
+
+		final Post post = postDao.getById(Post.class, data.getPostId());
+		likeInsert.setPost(post);
+
+		try {
+			begin();
+			likeInsert = likeDao.save(likeInsert);
+			commit();
+		} catch (final Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new RuntimeException("Failed to create Like");
+		}
+		final InsertDataRes dataRes = new InsertDataRes();
+		dataRes.setId(likeInsert.getId());
+
+		final InsertRes insertRes = new InsertRes();
+		insertRes.setData(dataRes);
+		insertRes.setMessage("Like created");
+
+		return insertRes;
+	}
+
+	public UpdateRes softDelete(final LikeUpdateReq data) {
+		valUpdate(data);
+		Like like = likeDao.getByIdAndDetach(Like.class, data.getId());
+		like.setIsActive(false);
+		like.setVersion(data.getVersion());
+
+		try {
+			begin();
+			like = likeDao.saveAndFlush(like);
+			commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new RuntimeException("Soft Delete failed");
+		}
+		final UpdateDataRes dataRes = new UpdateDataRes();
+		dataRes.setVersion(like.getVersion());
+
+		final UpdateRes res = new UpdateRes();
+		res.setData(dataRes);
+		res.setMessage("Soft Delete success");
+		return res;
+	}
+
+	public LikesRes getAllByUserId() {
+		final String userId = principalService.getAuthPrincipal();
+		final List<Like> likes = likeDao.getAllByUserId(userId);
+		final List<LikeData> likeDatas = new ArrayList<>();
+		for (int i = 0; i < likes.size(); i++) {
+			final Like like = likes.get(i);
+			final LikeData likeData = new LikeData();
+			likeData.setId(like.getId());
+			likeData.setUserId(like.getUser().getId());
+			likeData.setPostId(like.getPost().getId());
+			likeDatas.add(likeData);
+		}
+		final LikesRes likesRes = new LikesRes();
+		likesRes.setData(likeDatas);
+
+		return likesRes;
+	}
+
+	public LikeRes getById(final String id) {
+		final Like like = likeDao.getById(Like.class, id);
+		final LikeData likeData = new LikeData();
+		likeData.setId(like.getId());
+		likeData.setUserId(like.getUser().getId());
+		likeData.setPostId(like.getPost().getId());
+
+		final LikeRes likeRes = new LikeRes();
+		likeRes.setData(likeData);
+
+		return likeRes;
+	}
+
+	private void valUpdate(final LikeUpdateReq data) {
+		valIdNotNull(data);
+		valIdFound(data);
+		valContentNotNull(data);
+	}
+
+	private void valIdNotNull(final LikeUpdateReq data) {
+		if (data.getId() == null) {
+			throw new RuntimeException("id cannot be empty");
+		}
+	}
+
+	private void valContentNotNull(final LikeUpdateReq data) {
+		if (data.getIsActive() == null) {
+			throw new RuntimeException("isActive cannot be empty");
+		}
+		if (data.getVersion() == null) {
+			throw new RuntimeException("Version cannot be empty");
+		}
+	}
+
+	private void valIdFound(final LikeUpdateReq data) {
+		final Like like = likeDao.getById(Like.class, data.getId());
+		if (like == null) {
+			throw new RuntimeException("Like not found");
+		}
 	}
 }

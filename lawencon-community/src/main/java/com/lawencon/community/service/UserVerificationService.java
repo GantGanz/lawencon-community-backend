@@ -28,7 +28,7 @@ public class UserVerificationService extends BaseCoreService {
 		template.put("code", code);
 		final String subject = "Zenith Verification Code";
 		try {
-			mailUtil.sendMessageFreeMarker(email, subject, template, "index.ftl");
+			mailUtil.sendMessageFreeMarker(email, subject, template, "MemberRegistration.ftl");
 		} catch (final Exception e) {
 			e.printStackTrace();
 		}
