@@ -9,10 +9,12 @@ import lombok.Data;
 public class PaymentPremiumData {
 
 	private String id;
+	private Integer version;
 	private BigDecimal nominal;
 	private Boolean isApproved;
 	private String fileId;
 	private String userId;
 	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
 	
 }
