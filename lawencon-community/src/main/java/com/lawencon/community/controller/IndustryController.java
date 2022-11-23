@@ -58,4 +58,10 @@ public class IndustryController {
 		final IndustryRes result = industryService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("count")
+	public ResponseEntity<Long> countAll() {
+		final Long res = industryService.countAll();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
 }
