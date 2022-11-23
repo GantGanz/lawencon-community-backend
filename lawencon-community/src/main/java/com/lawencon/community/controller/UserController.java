@@ -31,7 +31,7 @@ public class UserController {
 	private UserService userService;
 
 	@GetMapping
-	public ResponseEntity<UsersRes> getAll(@RequestParam final Integer offset, @RequestParam final Integer limit) {
+	public ResponseEntity<UsersRes> getAll(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
 		final UsersRes res = userService.getAll(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
