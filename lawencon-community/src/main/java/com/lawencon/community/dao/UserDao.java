@@ -121,7 +121,7 @@ public class UserDao extends AbstractJpaDao {
 
 	public List<User> getAll(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT u.id, u.fullname, u.email, u.company, u.role_id, r.role_name, ")
+		str.append("SELECT u.id, u.fullname, u.email, u.company, u.role_id, ur.role_name, ")
 				.append("u.industry_id, i.industry_name, u.position_id, p.position_name, ")
 				.append("u.is_premium, u.file_id, u.ver, u.is_active ").append("FROM t_user u ")
 				.append("INNER JOIN t_role ur ON ur.id = u.role_id ")
