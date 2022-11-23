@@ -184,6 +184,40 @@ public class ArticleService extends BaseCoreService {
 		return articlesRes;
 	}
 
+	public ArticleRes getById(final String id) {
+		final Article article = articleDao.getById(Article.class, id);
+		final ArticleData articleData = new ArticleData();
+		articleData.setId(article.getId());
+		articleData.setArticleTitle(article.getArticleTitle());
+		articleData.setArticleContent(article.getArticleContent());
+		articleData.setCreatedBy(article.getCreatedBy());
+		articleData.setCreatedAt(article.getCreatedAt());
+		articleData.setVersion(article.getVersion());
+
+		final List<AttachmentArticle> attachmentArticles = attachmentArticleDao.getAllById(article.getId());
+		final int articleAttachmentSize = attachmentArticles.size();
+		final List<AttachmentArticleData> attachmentArticleDatas = new ArrayList<>();
+		for (int x = 0; x < articleAttachmentSize; x++) {
+			final AttachmentArticle attachmentArticle = attachmentArticles.get(x);
+			final AttachmentArticleData attachmentArticleData = new AttachmentArticleData();
+			attachmentArticleData.setId(attachmentArticle.getId());
+			attachmentArticleData.setArticleId(attachmentArticle.getArticle().getId());
+			attachmentArticleData.setFileId(attachmentArticle.getFile().getId());
+
+			attachmentArticleDatas.add(attachmentArticleData);
+		}
+		articleData.setAttachmentArticleDatas(attachmentArticleDatas);
+		
+		final ArticleRes articleRes = new ArticleRes();
+		articleRes.setData(articleData);
+
+		return articleRes;
+	}
+	
+	public Long countAllArticle() {
+		return articleDao.countAllArticle(principalService.getAuthPrincipal());
+	}
+	
 	private void valInsert(final ArticleInsertReq data) {
 		valContentNotNull(data);
 	}
@@ -229,39 +263,5 @@ public class ArticleService extends BaseCoreService {
 		if (article == null) {
 			throw new RuntimeException("Article not found");
 		}
-	}
-
-	public ArticleRes getById(final String id) {
-		final Article article = articleDao.getById(Article.class, id);
-		final ArticleData articleData = new ArticleData();
-		articleData.setId(article.getId());
-		articleData.setArticleTitle(article.getArticleTitle());
-		articleData.setArticleContent(article.getArticleContent());
-		articleData.setCreatedBy(article.getCreatedBy());
-		articleData.setCreatedAt(article.getCreatedAt());
-		articleData.setVersion(article.getVersion());
-
-		final List<AttachmentArticle> attachmentArticles = attachmentArticleDao.getAllById(article.getId());
-		final int articleAttachmentSize = attachmentArticles.size();
-		final List<AttachmentArticleData> attachmentArticleDatas = new ArrayList<>();
-		for (int x = 0; x < articleAttachmentSize; x++) {
-			final AttachmentArticle attachmentArticle = attachmentArticles.get(x);
-			final AttachmentArticleData attachmentArticleData = new AttachmentArticleData();
-			attachmentArticleData.setId(attachmentArticle.getId());
-			attachmentArticleData.setArticleId(attachmentArticle.getArticle().getId());
-			attachmentArticleData.setFileId(attachmentArticle.getFile().getId());
-
-			attachmentArticleDatas.add(attachmentArticleData);
-		}
-		articleData.setAttachmentArticleDatas(attachmentArticleDatas);
-		
-		final ArticleRes articleRes = new ArticleRes();
-		articleRes.setData(articleData);
-
-		return articleRes;
-	}
-	
-	public Long countAllArticle() {
-		return articleDao.countAllArticle(principalService.getAuthPrincipal());
 	}
 }

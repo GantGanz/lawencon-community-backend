@@ -36,6 +36,8 @@ public class BookmarkService extends BaseCoreService {
 	private PrincipalService principalService;
 
 	public InsertRes insert(final BookmarkInsertReq data) {
+		valInsert(data);
+		
 		Bookmark bookmarkInsert = new Bookmark();
 
 		final String userId = principalService.getAuthPrincipal();
@@ -122,6 +124,40 @@ public class BookmarkService extends BaseCoreService {
 	public Long isBookmarked(final String postId) {
 		final String userId = principalService.getAuthPrincipal();
 		return bookmarkDao.isBookmarked(postId, userId);
+	}
+	
+	private void valInsert(final BookmarkInsertReq data) {
+		valBkNotDuplicate(data);
+		valIdFkNotNull(data);
+		valFkFound(data);
+	}
+	
+	private void valIdFkNotNull(final BookmarkInsertReq data) {
+		if (data.getUserId() == null) {
+			throw new RuntimeException("User id cannot be empty");
+		}
+		if (data.getPostId() == null) {
+			throw new RuntimeException("Industry id cannot be empty");
+		}
+	}
+
+	private void valFkFound(final BookmarkInsertReq data) {
+		final User user = userDao.getByIdAndDetach(User.class, data.getUserId());
+		if (user == null) {
+			throw new RuntimeException("User not found");
+		}
+		final Post post = postDao.getByIdAndDetach(Post.class, data.getPostId());
+		if (post == null) {
+			throw new RuntimeException("Post not found");
+		}
+	}
+
+	private void valBkNotDuplicate(final BookmarkInsertReq data) {
+		final User user = userDao.getByIdAndDetach(User.class, data.getUserId());
+		final Post post = postDao.getByIdAndDetach(Post.class, data.getPostId());
+		if (user != null && post != null) {
+			throw new RuntimeException("User already bookmark this post");
+		}
 	}
 	
 	private void valUpdate(final BookmarkUpdateReq data) {
