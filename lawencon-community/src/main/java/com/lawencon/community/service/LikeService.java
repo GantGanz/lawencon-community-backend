@@ -169,9 +169,6 @@ public class LikeService extends BaseCoreService {
 	}
 
 	private void valContentNotNull(final LikeUpdateReq data) {
-		if (data.getIsActive() == null) {
-			throw new RuntimeException("isActive cannot be empty");
-		}
 		if (data.getVersion() == null) {
 			throw new RuntimeException("Version cannot be empty");
 		}
