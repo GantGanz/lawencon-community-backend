@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.InsertRes;
@@ -30,8 +31,8 @@ public class UserController {
 	private UserService userService;
 
 	@GetMapping
-	public ResponseEntity<UsersRes> getAll() {
-		final UsersRes res = userService.getAll();
+	public ResponseEntity<UsersRes> getAll(@RequestParam final Integer offset, @RequestParam final Integer limit) {
+		final UsersRes res = userService.getAll(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
@@ -80,6 +81,12 @@ public class UserController {
 	@GetMapping("count-premium")
 	public ResponseEntity<Long> countAllPremium() {
 		final Long res = userService.countAllPremium();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("count")
+	public ResponseEntity<Long> countAllUser() {
+		final Long res = userService.countAllUser();
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 }

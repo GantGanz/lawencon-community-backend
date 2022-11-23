@@ -13,6 +13,7 @@ public class ActivityInsertReq {
 
 	private String activityTitle;
 	private String activityLocation;
+	private String provider;
 	private LocalDateTime startAt;
 	private LocalDateTime endAt;
 	private BigDecimal fee;

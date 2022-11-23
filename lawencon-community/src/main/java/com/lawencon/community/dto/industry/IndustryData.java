@@ -9,5 +9,6 @@ public class IndustryData {
 	private Integer version;
 	private String industryCode;
 	private String industryName;
+	private Boolean isActive;
 	
 }

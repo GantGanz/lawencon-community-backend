@@ -119,7 +119,7 @@ public class UserDao extends AbstractJpaDao {
 		return total;
 	}
 
-	public List<User> getAll() {
+	public List<User> getAll(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT u.id, u.fullname, u.email, u.company, u.role_id, r.role_name, ")
 				.append("u.industry_id, i.industry_name, u.position_id, p.position_name, ")
@@ -128,7 +128,7 @@ public class UserDao extends AbstractJpaDao {
 				.append("INNER JOIN t_industry i ON u.industry_id = i.id ")
 				.append("INNER JOIN t_position p ON u.position_id = p.id ").append("WHERE u.is_active = TRUE ").append("ORDER BY u.id DESC");
 
-		final List<?> result = createNativeQuery(str.toString()).getResultList();
+		final List<?> result = createNativeQuery(str.toString(), offset, limit).getResultList();
 
 		final List<User> users = new ArrayList<>();
 
