@@ -25,7 +25,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @SecurityRequirement(name = "bearerAuth")
 @RestController
-@RequestMapping("payment-activity")
+@RequestMapping("payment-activities")
 public class PaymentActivityController {
 	@Autowired
 	private PaymentActivityService paymentActivityService;
