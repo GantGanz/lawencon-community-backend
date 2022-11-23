@@ -58,4 +58,10 @@ public class PositionController {
 		final PositionRes result = positionService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("count")
+	public ResponseEntity<Long> countAll() {
+		final Long res = positionService.countAll();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
 }
