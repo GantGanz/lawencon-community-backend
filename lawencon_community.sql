@@ -415,5 +415,3 @@ INSERT INTO t_user (id,fullname,email,pass,company,role_id,industry_id,position_
 ('18','dummy','dummy18','system','PT Lawencon Internasional','85b2bed6-104e-4f17-9f94-8aede7dd18cb','4eb0b229-953a-41f9-980f-0fa188f76b9b','ca0f691f-b583-4f33-954e-a7060613171d','2c77dd06-6557-48b2-a0e0-3d8245dd40f9','02b8ff5a-7fe3-4d9c-b4f1-6fe1485965b9',now()),
 ('19','dummy','dummy19','system','PT Lawencon Internasional','85b2bed6-104e-4f17-9f94-8aede7dd18cb','4eb0b229-953a-41f9-980f-0fa188f76b9b','ca0f691f-b583-4f33-954e-a7060613171d','2c77dd06-6557-48b2-a0e0-3d8245dd40f9','02b8ff5a-7fe3-4d9c-b4f1-6fe1485965b9',now()),
 ('20','dummy','dummy20','system','PT Lawencon Internasional','85b2bed6-104e-4f17-9f94-8aede7dd18cb','4eb0b229-953a-41f9-980f-0fa188f76b9b','ca0f691f-b583-4f33-954e-a7060613171d','2c77dd06-6557-48b2-a0e0-3d8245dd40f9','02b8ff5a-7fe3-4d9c-b4f1-6fe1485965b9',now());
-
-SELECT COUNT(u.id) FROM t_user u INNER JOIN t_role ur ON ur.id = u.role_id WHERE role_code = 'SYS';

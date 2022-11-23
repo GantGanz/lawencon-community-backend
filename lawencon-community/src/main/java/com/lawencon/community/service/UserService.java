@@ -137,10 +137,10 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		final Role role = roleDao.getById(Role.class, roleId);
 		userInsert.setRole(role);
 
-		final Industry industry = industryDao.getById(Industry.class, data.getIndustryId());
+		final Industry industry = industryDao.getById(Industry.class, "4eb0b229-953a-41f9-980f-0fa188f76b9b");
 		userInsert.setIndustry(industry);
 
-		final Position position = positionDao.getById(Position.class, data.getPositionId());
+		final Position position = positionDao.getById(Position.class, "1e8f8cae-3272-4721-9fdd-893681f3bcce");
 		userInsert.setPosition(position);
 
 		final File file = fileDao.getById(File.class, "d45027a8-a2e2-46a9-b2c2-4f4fd2310d7c");
