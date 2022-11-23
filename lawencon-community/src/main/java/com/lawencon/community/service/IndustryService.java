@@ -131,6 +131,10 @@ public class IndustryService extends BaseCoreService {
 		return industryRes;
 	}
 
+	public Long countAll() {
+		return industryDao.countAll(Industry.class);
+	}
+	
 	private void valUpdate(final IndustryUpdateReq data) {
 		valIdNotNull(data);
 		valIdFound(data);

@@ -50,6 +50,7 @@ public class LoginController {
 		res.setFullname(user.getFullname());
 		res.setRoleCode(user.getRole().getRoleCode());
 		res.setFileId(user.getFile().getId());
+		res.setIsPremium(user.getIsPremium());
 		res.setToken(jwtUtil.generateToken(claims));
 		return new ResponseEntity<LoginResDto>(res, HttpStatus.OK);
 	}

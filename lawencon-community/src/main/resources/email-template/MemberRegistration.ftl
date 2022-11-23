@@ -62,7 +62,7 @@
             <h3>To: ${email}</h3>
             <p>Your verification code :</p>
             <h1>${code}</h1>
-            <p>This code will expire in <b>5 minutes</b></p>
+            <p>This code will expire in <b>1 hour</b></p>
             <p>Thank You</p>
         </div>
         <div class="footer">@Copyright - Zenith</div>
