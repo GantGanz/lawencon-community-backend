@@ -132,6 +132,10 @@ public class PositionService extends BaseCoreService {
 		return positionRes;
 	}
 
+	public Long countAll() {
+		return positionDao.countAll(Position.class);
+	}
+	
 	private void valInsert(final PositionInsertReq data) {
 		valContentNotNull(data);
 		valBkNotDuplicate(data);
