@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.InsertRes;
@@ -29,14 +30,14 @@ public class IndustryController {
 	private IndustryService industryService;
 
 	@GetMapping
-	public ResponseEntity<IndustriesRes> getAll() {
-		final IndustriesRes res = industryService.getAll();
+	public ResponseEntity<IndustriesRes> getAll(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+		final IndustriesRes res = industryService.getAll(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
 	@GetMapping("active")
 	public ResponseEntity<IndustriesRes> getAllActive() {
-		final IndustriesRes res = industryService.getAll();
+		final IndustriesRes res = industryService.getAllActive();
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
