@@ -164,9 +164,6 @@ public class BookmarkService extends BaseCoreService {
 	}
 
 	private void valContentNotNull(final BookmarkUpdateReq data) {
-		if (data.getIsActive() == null) {
-			throw new RuntimeException("isActive cannot be empty");
-		}
 		if (data.getVersion() == null) {
 			throw new RuntimeException("Version cannot be empty");
 		}

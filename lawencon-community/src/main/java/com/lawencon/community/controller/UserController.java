@@ -60,6 +60,12 @@ public class UserController {
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
+	@PutMapping("soft-delete")
+	public ResponseEntity<UpdateRes> softDelete(@RequestBody final UserUpdateReq data) {
+		final UpdateRes res = userService.softDelete(data);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
 	@GetMapping("{id}")
 	public ResponseEntity<UserRes> getById(@PathVariable("id") final String id) {
 		final UserRes result = userService.getById(id);

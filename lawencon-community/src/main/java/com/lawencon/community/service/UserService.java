@@ -249,6 +249,30 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 
 		return res;
 	}
+	
+	public UpdateRes softDelete(final UserUpdateReq data) {
+		valSoftDelete(data);
+		User user = userDao.getByIdAndDetach(User.class, data.getId());
+		user.setIsActive(false);
+		user.setVersion(data.getVersion());
+
+		try {
+			begin();
+			user = userDao.saveAndFlush(user);
+			commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new RuntimeException("Soft Delete failed");
+		}
+		final UpdateDataRes dataRes = new UpdateDataRes();
+		dataRes.setVersion(user.getVersion());
+
+		final UpdateRes res = new UpdateRes();
+		res.setData(dataRes);
+		res.setMessage("Soft Delete success");
+		return res;
+	}
   
 	public UsersRes getAll(final Integer offset, final Integer limit) {
 		final List<User> users = userDao.getAll(offset, limit);
@@ -369,11 +393,38 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 	}
 
 	private void valUpdate(final UserUpdateReq data) {
+		valIdNotNull(data);
+		valIdFound(data);
 		valIdFkNotNull(data);
 		valFkFound(data);
 		valContentNotNull(data);
 	}
-
+	
+	private void valSoftDelete(final UserUpdateReq data) {
+		valIdNotNull(data);
+		valIdFound(data);
+		valVersionNotNull(data);
+	}
+	
+	private void valIdNotNull(final UserUpdateReq data) {
+		if (data.getId() == null) {
+			throw new RuntimeException("id cannot be empty");
+		}
+	}
+	
+	private void valIdFound(final UserUpdateReq data) {
+		final User user = userDao.getById(User.class, data.getId());
+		if (user == null) {
+			throw new RuntimeException("user not found");
+		}
+	}
+	
+	private void valVersionNotNull(final UserUpdateReq data) {
+		if (data.getVersion() == null) {
+			throw new RuntimeException("Version cannot be empty");
+		}
+	}
+	
 	private void valContentNotNull(final UserUpdateReq data) {
 		if (data.getFullname() == null) {
 			throw new RuntimeException("Fullname cannot be empty");

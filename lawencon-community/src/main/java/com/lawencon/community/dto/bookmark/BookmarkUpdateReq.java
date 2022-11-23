@@ -6,6 +6,5 @@ import lombok.Data;
 public class BookmarkUpdateReq {
 
 	private String id;
-	private Boolean isActive;
 	private Integer version;
 }
