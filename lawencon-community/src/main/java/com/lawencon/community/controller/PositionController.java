@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.InsertRes;
@@ -29,8 +30,8 @@ public class PositionController {
 	private PositionService positionService;
 
 	@GetMapping
-	public ResponseEntity<PositionsRes> getAll() {
-		final PositionsRes res = positionService.getAll();
+	public ResponseEntity<PositionsRes> getAll(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+		final PositionsRes res = positionService.getAll(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
