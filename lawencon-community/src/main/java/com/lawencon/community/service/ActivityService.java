@@ -11,6 +11,7 @@ import com.lawencon.community.dao.ActivityDao;
 import com.lawencon.community.dao.ActivityTypeDao;
 import com.lawencon.community.dao.AttachmentActivityDao;
 import com.lawencon.community.dao.FileDao;
+import com.lawencon.community.dao.UserDao;
 import com.lawencon.community.dto.InsertDataRes;
 import com.lawencon.community.dto.InsertRes;
 import com.lawencon.community.dto.UpdateDataRes;
@@ -26,6 +27,7 @@ import com.lawencon.community.model.Activity;
 import com.lawencon.community.model.ActivityType;
 import com.lawencon.community.model.AttachmentActivity;
 import com.lawencon.community.model.File;
+import com.lawencon.community.model.User;
 import com.lawencon.security.principal.PrincipalService;
 
 @Service
@@ -38,6 +40,8 @@ public class ActivityService extends BaseCoreService {
 	@Autowired
 	private AttachmentActivityDao attachmentActivityDao;
 	@Autowired
+	private UserDao userDao;
+	@Autowired
 	private FileDao fileDao;
 	@Autowired
 	private PrincipalService principalService;
@@ -48,12 +52,17 @@ public class ActivityService extends BaseCoreService {
 		Activity activityInsert = new Activity();
 		activityInsert.setActivityTitle(data.getActivityTitle());
 		activityInsert.setActivityLocation(data.getActivityLocation());
+		activityInsert.setProvider(data.getProvider());
 		activityInsert.setStartAt(data.getStartAt());
 		activityInsert.setEndAt(data.getEndAt());
 		activityInsert.setFee(data.getFee());
 
 		final ActivityType activityType = activityTypeDao.getById(ActivityType.class, data.getActivityTypeId());
 		activityInsert.setActivityType(activityType);
+		
+		final String userId = principalService.getAuthPrincipal();
+		final User user = userDao.getById(User.class, userId);
+		activityInsert.setUser(user);
 
 		final int attachmentSize = data.getAttachmentActivityInsertReqs().size();
 		try {
@@ -96,6 +105,7 @@ public class ActivityService extends BaseCoreService {
 		Activity activity = activityDao.getByIdAndDetach(Activity.class, data.getId());
 		activity.setActivityTitle(data.getActivityTitle());
 		activity.setActivityLocation(data.getActivityLocation());
+		activity.setProvider(data.getProvider());
 		activity.setStartAt(data.getStartAt());
 		activity.setEndAt(data.getEndAt());
 		activity.setFee(data.getFee());
@@ -133,6 +143,7 @@ public class ActivityService extends BaseCoreService {
 			activityData.setVersion(activity.getVersion());
 			activityData.setActivityTitle(activity.getId());
 			activityData.setActivityLocation(activity.getActivityLocation());
+			activityData.setProvider(activity.getProvider());
 			activityData.setStartAt(activity.getStartAt());
 			activityData.setEndAt(activity.getEndAt());
 			activityData.setFee(activity.getFee());
@@ -174,6 +185,7 @@ public class ActivityService extends BaseCoreService {
 			activityData.setVersion(activity.getVersion());
 			activityData.setActivityTitle(activity.getId());
 			activityData.setActivityLocation(activity.getActivityLocation());
+			activityData.setProvider(activity.getProvider());
 			activityData.setStartAt(activity.getStartAt());
 			activityData.setEndAt(activity.getEndAt());
 			activityData.setFee(activity.getFee());
@@ -215,6 +227,7 @@ public class ActivityService extends BaseCoreService {
 			activityData.setVersion(activity.getVersion());
 			activityData.setActivityTitle(activity.getId());
 			activityData.setActivityLocation(activity.getActivityLocation());
+			activityData.setProvider(activity.getProvider());
 			activityData.setStartAt(activity.getStartAt());
 			activityData.setEndAt(activity.getEndAt());
 			activityData.setFee(activity.getFee());
@@ -256,6 +269,7 @@ public class ActivityService extends BaseCoreService {
 			activityData.setVersion(activity.getVersion());
 			activityData.setActivityTitle(activity.getId());
 			activityData.setActivityLocation(activity.getActivityLocation());
+			activityData.setProvider(activity.getProvider());
 			activityData.setStartAt(activity.getStartAt());
 			activityData.setEndAt(activity.getEndAt());
 			activityData.setFee(activity.getFee());
@@ -297,6 +311,7 @@ public class ActivityService extends BaseCoreService {
 			activityData.setVersion(activity.getVersion());
 			activityData.setActivityTitle(activity.getId());
 			activityData.setActivityLocation(activity.getActivityLocation());
+			activityData.setProvider(activity.getProvider());
 			activityData.setStartAt(activity.getStartAt());
 			activityData.setEndAt(activity.getEndAt());
 			activityData.setFee(activity.getFee());
@@ -338,6 +353,7 @@ public class ActivityService extends BaseCoreService {
 			activityData.setVersion(activity.getVersion());
 			activityData.setActivityTitle(activity.getId());
 			activityData.setActivityLocation(activity.getActivityLocation());
+			activityData.setProvider(activity.getProvider());
 			activityData.setStartAt(activity.getStartAt());
 			activityData.setEndAt(activity.getEndAt());
 			activityData.setFee(activity.getFee());
@@ -376,6 +392,7 @@ public class ActivityService extends BaseCoreService {
 		activityData.setVersion(activity.getVersion());
 		activityData.setActivityTitle(activity.getId());
 		activityData.setActivityLocation(activity.getActivityLocation());
+		activityData.setProvider(activity.getProvider());
 		activityData.setStartAt(activity.getStartAt());
 		activityData.setEndAt(activity.getEndAt());
 		activityData.setFee(activity.getFee());
@@ -408,6 +425,8 @@ public class ActivityService extends BaseCoreService {
 
 	private void valInsert(final ActivityInsertReq data) {
 		valContentNotNull(data);
+		valIdFkNotNull(data);
+		valFkFound(data);
 	}
 
 	private void valContentNotNull(final ActivityInsertReq data) {
@@ -417,12 +436,39 @@ public class ActivityService extends BaseCoreService {
 		if (data.getActivityLocation() == null) {
 			throw new RuntimeException("Location cannot be empty");
 		}
+		if (data.getProvider() == null) {
+			throw new RuntimeException("Provider cannot be empty");
+		}
+		if (data.getStartAt() == null) {
+			throw new RuntimeException("Start At cannot be empty");
+		}
+		if (data.getEndAt() == null) {
+			throw new RuntimeException("End At cannot be empty");
+		}
+		if (data.getFee() == null) {
+			throw new RuntimeException("Fee cannot be empty");
+		}
+	}
+	
+	private void valIdFkNotNull(final ActivityInsertReq data) {
+		if (data.getActivityTypeId() == null) {
+			throw new RuntimeException("Activity Type id cannot be empty");
+		}
+	}
+
+	private void valFkFound(final ActivityInsertReq data) {
+		final ActivityType activityType = activityTypeDao.getByIdAndDetach(ActivityType.class, data.getActivityTypeId());
+		if (activityType == null) {
+			throw new RuntimeException("Activity Type not found");
+		}
 	}
 
 	private void valUpdate(final ActivityUpdateReq data) {
 		valIdNotNull(data);
 		valIdFound(data);
 		valContentNotNull(data);
+		valIdFkNotNull(data);
+		valFkFound(data);
 	}
 
 	private void valIdNotNull(final ActivityUpdateReq data) {
@@ -438,8 +484,17 @@ public class ActivityService extends BaseCoreService {
 		if (data.getActivityLocation() == null) {
 			throw new RuntimeException("Location cannot be empty");
 		}
-		if (data.getActivityTypeId() == null) {
-			throw new RuntimeException("Activity type cannot be empty");
+		if (data.getProvider() == null) {
+			throw new RuntimeException("Provider cannot be empty");
+		}
+		if (data.getStartAt() == null) {
+			throw new RuntimeException("Start At cannot be empty");
+		}
+		if (data.getEndAt() == null) {
+			throw new RuntimeException("End At cannot be empty");
+		}
+		if (data.getFee() == null) {
+			throw new RuntimeException("Fee cannot be empty");
 		}
 		if (data.getIsActive() == null) {
 			throw new RuntimeException("isActive cannot be empty");
@@ -453,6 +508,19 @@ public class ActivityService extends BaseCoreService {
 		final Activity activity = activityDao.getById(Activity.class, data.getId());
 		if (activity == null) {
 			throw new RuntimeException("activity not found");
+		}
+	}
+	
+	private void valIdFkNotNull(final ActivityUpdateReq data) {
+		if (data.getActivityTypeId() == null) {
+			throw new RuntimeException("Activity type cannot be empty");
+		}
+	}
+	
+	private void valFkFound(final ActivityUpdateReq data) {
+		final ActivityType activityType = activityTypeDao.getByIdAndDetach(ActivityType.class, data.getActivityTypeId());
+		if (activityType == null) {
+			throw new RuntimeException("Activity Type not found");
 		}
 	}
 }

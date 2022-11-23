@@ -252,9 +252,9 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 
 		return res;
 	}
-
-	public UsersRes getAll() {
-		final List<User> users = userDao.getAll(User.class);
+  
+	public UsersRes getAll(final Integer offset, final Integer limit) {
+		final List<User> users = userDao.getAll(offset, limit);
 		final List<UserData> userDatas = new ArrayList<>();
 		for (int i = 0; i < users.size(); i++) {
 			final User user = users.get(i);
@@ -316,6 +316,10 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 
 	public Long countAllPremium() {
 		return userDao.countAllPremium();
+	}
+	
+	public Long countAllUser() {
+		return userDao.countAll(User.class);
 	}
 
 	private void valInsert(final UserInsertReq data) {

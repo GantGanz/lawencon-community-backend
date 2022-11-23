@@ -9,5 +9,6 @@ public class PositionData {
 	private Integer version;
 	private String positionCode;
 	private String positionName;
+	private Boolean isActive;
 	
 }

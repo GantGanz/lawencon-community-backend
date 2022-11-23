@@ -15,6 +15,7 @@ public class ActivityData {
 	private String activityTitle;
 	private Integer version;
 	private String activityLocation;
+	private String provider;
 	private LocalDateTime startAt;
 	private LocalDateTime endAt;
 	private BigDecimal fee;
