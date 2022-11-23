@@ -41,6 +41,8 @@ public class LikeService extends BaseCoreService {
 	}
 
 	public InsertRes insert(final LikeInsertReq data) {
+		valInsert(data);
+		
 		Like likeInsert = new Like();
 
 		final String userId = principalService.getAuthPrincipal();
@@ -127,6 +129,31 @@ public class LikeService extends BaseCoreService {
 	public Long isLiked(final String postId) {
 		final String userId = principalService.getAuthPrincipal();
 		return likeDao.isLiked(postId, userId);
+	}
+	
+	private void valInsert(final LikeInsertReq data) {
+		valIdFkNotNull(data);
+		valFkFound(data);
+	}
+	
+	private void valIdFkNotNull(final LikeInsertReq data) {
+		if (data.getUserId() == null) {
+			throw new RuntimeException("User id cannot be empty");
+		}
+		if (data.getPostId() == null) {
+			throw new RuntimeException("Industry id cannot be empty");
+		}
+	}
+
+	private void valFkFound(final LikeInsertReq data) {
+		final User user = userDao.getByIdAndDetach(User.class, data.getUserId());
+		if (user == null) {
+			throw new RuntimeException("User not found");
+		}
+		final Post post = postDao.getByIdAndDetach(Post.class, data.getPostId());
+		if (post == null) {
+			throw new RuntimeException("Post not found");
+		}
 	}
 	
 	private void valUpdate(final LikeUpdateReq data) {

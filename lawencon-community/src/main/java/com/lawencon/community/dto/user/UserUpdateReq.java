@@ -12,7 +12,6 @@ public class UserUpdateReq {
 	private String extension;
 	private String positionId;
 	private String industryId;
-	private Boolean isPremium;
 	private Boolean isActive;
 	private Integer version;
 }

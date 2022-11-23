@@ -86,6 +86,7 @@ public class IndustryService extends BaseCoreService {
 			industryData.setIndustryCode(industry.getIndustryCode());
 			industryData.setIndustryName(industry.getIndustryName());
 			industryData.setVersion(industry.getVersion());
+			industryData.setIsActive(industry.getIsActive());
 
 			industryDatas.add(industryData);
 		}
@@ -105,7 +106,8 @@ public class IndustryService extends BaseCoreService {
 			industryData.setIndustryCode(industry.getIndustryCode());
 			industryData.setIndustryName(industry.getIndustryName());
 			industryData.setVersion(industry.getVersion());
-
+			industryData.setIsActive(industry.getIsActive());
+			
 			industryDatas.add(industryData);
 		}
 		final IndustriesRes industriesRes = new IndustriesRes();
@@ -121,7 +123,8 @@ public class IndustryService extends BaseCoreService {
 		industryData.setIndustryCode(industry.getIndustryCode());
 		industryData.setIndustryName(industry.getIndustryName());
 		industryData.setVersion(industry.getVersion());
-
+		industryData.setIsActive(industry.getIsActive());
+		
 		final IndustryRes industryRes = new IndustryRes();
 		industryRes.setData(industryData);
 

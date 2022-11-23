@@ -115,7 +115,7 @@ public class PostService extends BaseCoreService {
 					File fileInsert = new File();
 					fileInsert.setFileCodes(attachmentPostInsertReq.getFileCodes());
 					fileInsert.setExtensions(attachmentPostInsertReq.getExtensions());
-					
+
 					fileInsert = fileDao.save(fileInsert);
 					attachmentPost.setFile(fileInsert);
 
@@ -145,9 +145,6 @@ public class PostService extends BaseCoreService {
 		post.setPostContent(data.getPostContent());
 		post.setIsActive(data.getIsActive());
 		post.setVersion(data.getVersion());
-
-		final PostType postType = postTypeDao.getById(PostType.class, data.getPostTypeId());
-		post.setPostType(postType);
 
 		try {
 			begin();
@@ -634,14 +631,29 @@ public class PostService extends BaseCoreService {
 
 	private void valInsert(final PostInsertReq data) {
 		valContentNotNull(data);
+		valIdFkNotNull(data);
+		valFkFound(data);
 	}
-
+	
 	private void valContentNotNull(final PostInsertReq data) {
 		if (data.getPostTitle() == null) {
 			throw new RuntimeException("Title cannot be empty");
 		}
 		if (data.getPostContent() == null) {
 			throw new RuntimeException("Content cannot be empty");
+		}
+	}
+
+	private void valIdFkNotNull(final PostInsertReq data) {
+		if (data.getPostTypeId() == null) {
+			throw new RuntimeException("Post Type id cannot be empty");
+		}
+	}
+
+	private void valFkFound(final PostInsertReq data) {
+		final PostType postType = postTypeDao.getByIdAndDetach(PostType.class, data.getPostTypeId());
+		if (postType == null) {
+			throw new RuntimeException("Post Type not found");
 		}
 	}
 
@@ -663,9 +675,6 @@ public class PostService extends BaseCoreService {
 		}
 		if (data.getPostContent() == null) {
 			throw new RuntimeException("Content cannot be empty");
-		}
-		if (data.getPostTypeId() == null) {
-			throw new RuntimeException("Post type cannot be empty");
 		}
 		if (data.getIsActive() == null) {
 			throw new RuntimeException("isActive cannot be empty");

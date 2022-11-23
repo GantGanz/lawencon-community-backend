@@ -87,7 +87,8 @@ public class PositionService extends BaseCoreService {
 			positionData.setPositionCode(position.getPositionCode());
 			positionData.setPositionName(position.getPositionName());
 			positionData.setVersion(position.getVersion());
-
+			positionData.setIsActive(position.getIsActive());
+			
 			positionDatas.add(positionData);
 		}
 		final PositionsRes positionsRes = new PositionsRes();
@@ -106,7 +107,8 @@ public class PositionService extends BaseCoreService {
 			positionData.setPositionCode(position.getPositionCode());
 			positionData.setPositionName(position.getPositionName());
 			positionData.setVersion(position.getVersion());
-
+			positionData.setIsActive(position.getIsActive());
+			
 			positionDatas.add(positionData);
 		}
 		final PositionsRes positionsRes = new PositionsRes();
@@ -122,7 +124,8 @@ public class PositionService extends BaseCoreService {
 		positionData.setPositionCode(position.getPositionCode());
 		positionData.setPositionName(position.getPositionName());
 		positionData.setVersion(position.getVersion());
-
+		positionData.setIsActive(position.getIsActive());
+		
 		final PositionRes positionRes = new PositionRes();
 		positionRes.setData(positionData);
 

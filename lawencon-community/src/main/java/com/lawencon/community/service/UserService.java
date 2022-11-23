@@ -200,9 +200,6 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 			final Industry industry = industryDao.getById(Industry.class, data.getIndustryId());
 			userUpdate.setIndustry(industry);
 
-			if (data.getIsPremium() != null) {
-				userUpdate.setIsPremium(data.getIsPremium());
-			}
 			userUpdate.setIsActive(data.getIsActive());
 			userUpdate.setVersion(data.getVersion());
 
@@ -336,6 +333,9 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		if (data.getEmail() == null) {
 			throw new RuntimeException("Email cannot be empty");
 		}
+		if (data.getPassword() == null) {
+			throw new RuntimeException("Password cannot be empty");
+		}
 		if (data.getCompany() == null) {
 			throw new RuntimeException("Company cannot be empty");
 		}
@@ -371,8 +371,24 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 	private void valUpdate(final UserUpdateReq data) {
 		valIdFkNotNull(data);
 		valFkFound(data);
+		valContentNotNull(data);
 	}
 
+	private void valContentNotNull(final UserUpdateReq data) {
+		if (data.getFullname() == null) {
+			throw new RuntimeException("Fullname cannot be empty");
+		}
+		if (data.getCompany() == null) {
+			throw new RuntimeException("Company cannot be empty");
+		}
+		if (data.getIsActive() == null) {
+			throw new RuntimeException("isActive cannot be empty");
+		}
+		if (data.getVersion() == null) {
+			throw new RuntimeException("Version cannot be empty");
+		}
+	}
+	
 	private void valFkFound(final UserUpdateReq data) {
 		final Position position = positionDao.getByIdAndDetach(Position.class, data.getPositionId());
 		if (position == null) {
@@ -394,15 +410,18 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 	}
 
 	private void valChangePassword(final UserChangePasswordReq data) {
-		contentNotNull(data);
+		valContentNotNullPassword(data);
 	}
 
-	private void contentNotNull(final UserChangePasswordReq data) {
+	private void valContentNotNullPassword(final UserChangePasswordReq data) {
 		if (data.getOldPassword() == null) {
 			throw new RuntimeException("Old password cannot be empty");
 		}
 		if (data.getNewPassword() == null) {
 			throw new RuntimeException("New password cannot be empty");
+		}
+		if (data.getVersion() == null) {
+			throw new RuntimeException("Version cannot be empty");
 		}
 	}
 
