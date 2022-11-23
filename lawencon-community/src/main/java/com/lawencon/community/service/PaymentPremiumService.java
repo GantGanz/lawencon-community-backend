@@ -77,9 +77,12 @@ public class PaymentPremiumService extends BaseCoreService {
 		paymentPremium.setIsApproved(true);
 		paymentPremium.setVersion(data.getVersion());
 
+		final User userUpdate = userDao.getByIdAndDetach(User.class, paymentPremium.getUser().getId());
+		userUpdate.setIsPremium(true);
 		try {
 			begin();
 			paymentPremium = paymentPremiumDao.saveAndFlush(paymentPremium);
+			userDao.saveAndFlush(userUpdate);
 			commit();
 		} catch (Exception e) {
 			e.printStackTrace();
