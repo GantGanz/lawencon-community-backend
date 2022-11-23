@@ -226,6 +226,8 @@ public class PaymentActivityService extends BaseCoreService {
 
 	private void valInsert(final PaymentActivityInsertReq data) {
 		valContentNotNull(data);
+		valIdFkNotNull(data);
+		valFkFound(data);
 	}
 
 	private void valContentNotNull(final PaymentActivityInsertReq data) {
@@ -237,6 +239,19 @@ public class PaymentActivityService extends BaseCoreService {
 		}
 		if (data.getExtensions() == null) {
 			throw new RuntimeException("Extensions cannot be empty");
+		}
+	}
+	
+	private void valIdFkNotNull(final PaymentActivityInsertReq data) {
+		if (data.getActivityId() == null) {
+			throw new RuntimeException("Activity id cannot be empty");
+		}
+	}
+
+	private void valFkFound(final PaymentActivityInsertReq data) {
+		final Activity activity = activityDao.getByIdAndDetach(Activity.class, data.getActivityId());
+		if (activity == null) {
+			throw new RuntimeException("Post not found");
 		}
 	}
 

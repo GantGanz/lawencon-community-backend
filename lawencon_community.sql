@@ -143,6 +143,7 @@ CREATE TABLE t_bookmark(
 ALTER TABLE t_bookmark ADD CONSTRAINT t_bookmark_pk PRIMARY KEY(id);
 ALTER TABLE t_bookmark ADD CONSTRAINT t_bookmark_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
 ALTER TABLE t_bookmark ADD CONSTRAINT t_bookmark_post_fk FOREIGN KEY(post_id) REFERENCES t_post(id);
+ALTER TABLE t_bookmark ADD CONSTRAINT t_bookmark_ck UNIQUE(user_id, post_id);
 
 CREATE TABLE t_like(
     id text,
@@ -158,6 +159,7 @@ CREATE TABLE t_like(
 ALTER TABLE t_like ADD CONSTRAINT t_like_pk PRIMARY KEY(id);
 ALTER TABLE t_like ADD CONSTRAINT t_like_user_fk FOREIGN KEY(user_id) REFERENCES t_user(id);
 ALTER TABLE t_like ADD CONSTRAINT t_like_post_fk FOREIGN KEY(post_id) REFERENCES t_post(id);
+ALTER TABLE t_like ADD CONSTRAINT t_like_ck UNIQUE(user_id, post_id);
 
 CREATE TABLE t_comment(
     id text,

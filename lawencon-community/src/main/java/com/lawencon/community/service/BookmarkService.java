@@ -127,7 +127,6 @@ public class BookmarkService extends BaseCoreService {
 	}
 	
 	private void valInsert(final BookmarkInsertReq data) {
-		valBkNotDuplicate(data);
 		valIdFkNotNull(data);
 		valFkFound(data);
 	}
@@ -149,14 +148,6 @@ public class BookmarkService extends BaseCoreService {
 		final Post post = postDao.getByIdAndDetach(Post.class, data.getPostId());
 		if (post == null) {
 			throw new RuntimeException("Post not found");
-		}
-	}
-
-	private void valBkNotDuplicate(final BookmarkInsertReq data) {
-		final User user = userDao.getByIdAndDetach(User.class, data.getUserId());
-		final Post post = postDao.getByIdAndDetach(Post.class, data.getPostId());
-		if (user != null && post != null) {
-			throw new RuntimeException("User already bookmark this post");
 		}
 	}
 	

@@ -180,11 +180,33 @@ public class CommentService extends BaseCoreService {
 	
 	private void valInsert(final CommentInsertReq data) {
 		valContentNotNull(data);
+		valIdFkNotNull(data);
+		valFkFound(data);
 	}
 
 	private void valContentNotNull(final CommentInsertReq data) {
 		if (data.getCommentContent() == null) {
 			throw new RuntimeException("Content cannot be empty");
+		}
+	}
+	
+	private void valIdFkNotNull(final CommentInsertReq data) {
+		if (data.getUserId() == null) {
+			throw new RuntimeException("User id cannot be empty");
+		}
+		if (data.getPostId() == null) {
+			throw new RuntimeException("Industry id cannot be empty");
+		}
+	}
+
+	private void valFkFound(final CommentInsertReq data) {
+		final User user = userDao.getByIdAndDetach(User.class, data.getUserId());
+		if (user == null) {
+			throw new RuntimeException("User not found");
+		}
+		final Post post = postDao.getByIdAndDetach(Post.class, data.getPostId());
+		if (post == null) {
+			throw new RuntimeException("Post not found");
 		}
 	}
 
