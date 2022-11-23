@@ -23,7 +23,7 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @SecurityRequirement(name = "bearerAuth")
 @RestController
-@RequestMapping("payment-premium")
+@RequestMapping("payment-premiums")
 public class PaymentPremiumController {
 	@Autowired
 	private PaymentPremiumService paymentPremiumService;
