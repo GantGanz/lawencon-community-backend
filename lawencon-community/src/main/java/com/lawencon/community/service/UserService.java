@@ -249,7 +249,7 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 
 		return res;
 	}
-	
+
 	public UpdateRes softDelete(final UserUpdateReq data) {
 		valSoftDelete(data);
 		User user = userDao.getByIdAndDetach(User.class, data.getId());
@@ -273,9 +273,9 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		res.setMessage("Soft Delete success");
 		return res;
 	}
-  
+
 	public UsersRes getAll(final Integer offset, final Integer limit) {
-		final List<User> users = userDao.getAll(User.class,offset, limit);
+		final List<User> users = userDao.getAll(User.class, offset, limit);
 		final List<UserData> userDatas = new ArrayList<>();
 		for (int i = 0; i < users.size(); i++) {
 			final User user = users.get(i);
@@ -338,7 +338,7 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 	public Long countAllPremium() {
 		return userDao.countAllPremium();
 	}
-	
+
 	public Long countAllUser() {
 		return userDao.countAll(User.class);
 	}
@@ -399,32 +399,32 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		valFkFound(data);
 		valContentNotNull(data);
 	}
-	
+
 	private void valSoftDelete(final UserUpdateReq data) {
 		valIdNotNull(data);
 		valIdFound(data);
 		valVersionNotNull(data);
 	}
-	
+
 	private void valIdNotNull(final UserUpdateReq data) {
 		if (data.getId() == null) {
 			throw new RuntimeException("id cannot be empty");
 		}
 	}
-	
+
 	private void valIdFound(final UserUpdateReq data) {
 		final User user = userDao.getById(User.class, data.getId());
 		if (user == null) {
 			throw new RuntimeException("user not found");
 		}
 	}
-	
+
 	private void valVersionNotNull(final UserUpdateReq data) {
 		if (data.getVersion() == null) {
 			throw new RuntimeException("Version cannot be empty");
 		}
 	}
-	
+
 	private void valContentNotNull(final UserUpdateReq data) {
 		if (data.getFullname() == null) {
 			throw new RuntimeException("Fullname cannot be empty");
@@ -439,7 +439,7 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 			throw new RuntimeException("Version cannot be empty");
 		}
 	}
-	
+
 	private void valFkFound(final UserUpdateReq data) {
 		final Position position = positionDao.getByIdAndDetach(Position.class, data.getPositionId());
 		if (position == null) {
