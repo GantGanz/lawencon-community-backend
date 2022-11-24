@@ -56,21 +56,31 @@ public class ArticleService extends BaseCoreService {
 		try {
 			begin();
 			articleInsert = articleDao.save(articleInsert);
-			for (int i = 0; i < attachmentSize; i++) {
-				final AttachmentArticleInsertReq attachmentArticleInsertReq = data.getAttachmentArticleInsertReqs()
-						.get(i);
-				final AttachmentArticle attachmentArticle = new AttachmentArticle();
 
-				attachmentArticle.setArticle(articleInsert);
-
-				File fileInsert = new File();
-				fileInsert.setFileCodes(attachmentArticleInsertReq.getFileCodes());
-				fileInsert.setExtensions(attachmentArticleInsertReq.getExtensions());
-				
+			File fileInsert = new File();
+			final AttachmentArticle attachmentArticle = new AttachmentArticle();
+			if (attachmentSize == 0) {
+				fileInsert = fileDao.getById(File.class, "3160cc08-7fd7-4faa-9854-9d5f090c0d13");
 				fileInsert = fileDao.save(fileInsert);
 				attachmentArticle.setFile(fileInsert);
-
+				attachmentArticle.setArticle(articleInsert);
+				
 				attachmentArticleDao.save(attachmentArticle);
+			} else {
+				for (int i = 0; i < attachmentSize; i++) {
+					final AttachmentArticleInsertReq attachmentArticleInsertReq = data.getAttachmentArticleInsertReqs()
+							.get(i);
+
+					attachmentArticle.setArticle(articleInsert);
+
+					fileInsert.setFileCodes(attachmentArticleInsertReq.getFileCodes());
+					fileInsert.setExtensions(attachmentArticleInsertReq.getExtensions());
+
+					fileInsert = fileDao.save(fileInsert);
+					attachmentArticle.setFile(fileInsert);
+
+					attachmentArticleDao.save(attachmentArticle);
+				}
 			}
 			commit();
 		} catch (final Exception e) {
@@ -127,7 +137,7 @@ public class ArticleService extends BaseCoreService {
 			articleData.setCreatedAt(article.getCreatedAt());
 			articleData.setVersion(article.getVersion());
 			articleData.setIsActive(article.getIsActive());
-			
+
 			final List<AttachmentArticle> attachmentArticles = attachmentArticleDao.getAllById(article.getId());
 			final int articleAttachmentSize = attachmentArticles.size();
 			final List<AttachmentArticleData> attachmentArticleDatas = new ArrayList<>();
@@ -196,7 +206,7 @@ public class ArticleService extends BaseCoreService {
 		articleData.setCreatedAt(article.getCreatedAt());
 		articleData.setVersion(article.getVersion());
 		articleData.setIsActive(article.getIsActive());
-		
+
 		final List<AttachmentArticle> attachmentArticles = attachmentArticleDao.getAllById(article.getId());
 		final int articleAttachmentSize = attachmentArticles.size();
 		final List<AttachmentArticleData> attachmentArticleDatas = new ArrayList<>();
@@ -210,17 +220,17 @@ public class ArticleService extends BaseCoreService {
 			attachmentArticleDatas.add(attachmentArticleData);
 		}
 		articleData.setAttachmentArticleDatas(attachmentArticleDatas);
-		
+
 		final ArticleRes articleRes = new ArticleRes();
 		articleRes.setData(articleData);
 
 		return articleRes;
 	}
-	
+
 	public Long countAllArticle() {
 		return articleDao.countAllArticle(principalService.getAuthPrincipal());
 	}
-	
+
 	private void valInsert(final ArticleInsertReq data) {
 		valContentNotNull(data);
 	}
