@@ -120,7 +120,7 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 	}
 
 	public InsertRes registerAdmin(final UserInsertReq data) {
-		valInsert(data);
+		valInsertAdmin(data);
 
 		User userInsert = new User();
 		userInsert.setFullname(data.getFullname());
@@ -342,7 +342,11 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 	public Long countAllUser() {
 		return userDao.countAll(User.class);
 	}
-
+	private void valInsertAdmin(final UserInsertReq data) {
+		valContentNotNullAdmin(data);
+		valBkNotDuplicate(data);
+	}
+	
 	private void valInsert(final UserInsertReq data) {
 		valContentNotNull(data);
 		valBkNotDuplicate(data);
@@ -350,6 +354,18 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		valFkFound(data);
 	}
 
+	private void valContentNotNullAdmin(final UserInsertReq data) {
+		if (data.getFullname() == null) {
+			throw new RuntimeException("Fullname cannot be empty");
+		}
+		if (data.getEmail() == null) {
+			throw new RuntimeException("Email cannot be empty");
+		}
+		if (data.getCompany() == null) {
+			throw new RuntimeException("Company cannot be empty");
+		}
+	}
+	
 	private void valContentNotNull(final UserInsertReq data) {
 		if (data.getFullname() == null) {
 			throw new RuntimeException("Fullname cannot be empty");
