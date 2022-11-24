@@ -17,5 +17,6 @@ public class ArticleData {
 	private String createdBy;
 	private LocalDateTime createdAt;
 	private List<AttachmentArticleData> attachmentArticleDatas;
+	private Boolean isActive;
 
 }

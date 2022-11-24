@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.InsertRes;
@@ -29,14 +30,14 @@ public class ArticleController {
 	private ArticleService articleService;
 
 	@GetMapping
-	public ResponseEntity<ArticlesRes> getAll() {
-		final ArticlesRes res = articleService.getAll();
+	public ResponseEntity<ArticlesRes> getAll(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+		final ArticlesRes res = articleService.getAll(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
 	@GetMapping("user")
-	public ResponseEntity<ArticlesRes> getAllById() {
-		final ArticlesRes res = articleService.getAllById();
+	public ResponseEntity<ArticlesRes> getAllById(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+		final ArticlesRes res = articleService.getAllById(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
