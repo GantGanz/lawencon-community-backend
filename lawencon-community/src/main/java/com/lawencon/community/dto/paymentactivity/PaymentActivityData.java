@@ -18,6 +18,7 @@ public class PaymentActivityData {
 	private String email;
 	private String activityId;
 	private String activityTitle;
+	private String activityType;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	
