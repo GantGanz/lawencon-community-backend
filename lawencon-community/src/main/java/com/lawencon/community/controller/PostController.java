@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.InsertRes;
@@ -28,6 +29,12 @@ public class PostController {
 	@Autowired
 	private PostService postService;
 
+	@GetMapping
+	public ResponseEntity<PostsRes> getAll(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+		final PostsRes res = postService.getAll(offset, limit);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
 	@GetMapping("regular")
 	public ResponseEntity<PostsRes> getAllRegular() {
 		final PostsRes res = postService.getAllRegular();
@@ -43,6 +50,12 @@ public class PostController {
 	@GetMapping("premium")
 	public ResponseEntity<PostsRes> getAllPremium() {
 		final PostsRes res = postService.getAllRegular();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("user")
+	public ResponseEntity<PostsRes> getAllById(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+		final PostsRes res = postService.getAllById(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
@@ -65,14 +78,14 @@ public class PostController {
 	}
 	
 	@GetMapping("liked")
-	public ResponseEntity<PostsRes> getAllLiked() {
-		final PostsRes res = postService.getAllLiked();
+	public ResponseEntity<PostsRes> getAllLiked(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+		final PostsRes res = postService.getAllLiked(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
 	@GetMapping("bookmarked")
-	public ResponseEntity<PostsRes> getAllBookmarked() {
-		final PostsRes res = postService.getAllBookmarked();
+	public ResponseEntity<PostsRes> getAllBookmarked(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+		final PostsRes res = postService.getAllBookmarked(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
