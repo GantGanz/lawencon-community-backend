@@ -20,6 +20,9 @@ public class PostData {
 	private String userId;
 	private String creatorName;
 	private String createdBy;
+	private String positionName;
+	private String company;
+	private String fileId;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	private List<AttachmentPostData> attachmentPostDatas;
