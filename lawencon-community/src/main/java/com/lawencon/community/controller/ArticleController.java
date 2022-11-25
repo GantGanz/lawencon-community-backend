@@ -46,6 +46,12 @@ public class ArticleController {
 		final Long res = articleService.countAllArticle();
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
+	
+	@GetMapping("count-user")
+	public ResponseEntity<Long> countAllArticleById() {
+		final Long res = articleService.countAllArticleById();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
 
 	@PostMapping
 	public ResponseEntity<InsertRes> insert(@RequestBody final ArticleInsertReq data) {

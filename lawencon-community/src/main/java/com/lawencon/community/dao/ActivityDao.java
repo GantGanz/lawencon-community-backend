@@ -16,7 +16,7 @@ import com.lawencon.community.model.User;
 @Repository
 public class ActivityDao extends AbstractJpaDao {
 
-	public List<Activity> getAllEvent() {
+	public List<Activity> getAllEvent(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.activity_title, a.activity_location, a.startAt, a.endAt, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
@@ -27,7 +27,7 @@ public class ActivityDao extends AbstractJpaDao {
 				.append("ORDER BY a.id DESC");
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql)
+		final List<?> result = createNativeQuery(sql, offset, limit)
 				.setParameter("activityTypeCode", ActivityTypeConstant.EVENT.getActivityTypeCode()).getResultList();
 
 		final List<Activity> activities = new ArrayList<>();
@@ -68,7 +68,7 @@ public class ActivityDao extends AbstractJpaDao {
 		return activities;
 	}
 
-	public List<Activity> getAllCourse() {
+	public List<Activity> getAllCourse(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.activity_title, a.activity_location, a.startAt, a.endAt, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
@@ -78,7 +78,7 @@ public class ActivityDao extends AbstractJpaDao {
 				.append("WHERE pt.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ").append("ORDER BY a.id DESC");
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql)
+		final List<?> result = createNativeQuery(sql, offset, limit)
 				.setParameter("activityTypeCode", ActivityTypeConstant.COURSE.getActivityTypeCode()).getResultList();
 
 		final List<Activity> activities = new ArrayList<>();
@@ -119,7 +119,7 @@ public class ActivityDao extends AbstractJpaDao {
 		return activities;
 	}
 
-	public List<Activity> getAllEventById(final String userId) {
+	public List<Activity> getAllEventById(final String userId, final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.activity_title, a.activity_location, a.startAt, a.endAt, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
@@ -130,7 +130,7 @@ public class ActivityDao extends AbstractJpaDao {
 				.append("ORDER BY a.id DESC");
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql)
+		final List<?> result = createNativeQuery(sql, offset, limit)
 				.setParameter("activityTypeCode", ActivityTypeConstant.EVENT.getActivityTypeCode())
 				.setParameter("userId", userId).getResultList();
 
@@ -172,7 +172,7 @@ public class ActivityDao extends AbstractJpaDao {
 		return activities;
 	}
 
-	public List<Activity> getAllCourseById(final String userId) {
+	public List<Activity> getAllCourseById(final String userId, final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.activity_title, a.activity_location, a.startAt, a.endAt, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
@@ -183,7 +183,7 @@ public class ActivityDao extends AbstractJpaDao {
 				.append("ORDER BY a.id DESC");
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql)
+		final List<?> result = createNativeQuery(sql, offset, limit)
 				.setParameter("activityTypeCode", ActivityTypeConstant.COURSE.getActivityTypeCode())
 				.setParameter("userId", userId).getResultList();
 
@@ -225,7 +225,7 @@ public class ActivityDao extends AbstractJpaDao {
 		return activities;
 	}
 
-	public List<Activity> getAllJoinedEventById(final String userId) {
+	public List<Activity> getAllJoinedEventById(final String userId, final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.activity_title, a.activity_location, a.startAt, a.endAt, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
@@ -237,7 +237,7 @@ public class ActivityDao extends AbstractJpaDao {
 				.append("AND a.is_active = TRUE ").append("ORDER BY a.id DESC");
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql)
+		final List<?> result = createNativeQuery(sql, offset, limit)
 				.setParameter("activityTypeCode", ActivityTypeConstant.EVENT.getActivityTypeCode())
 				.setParameter("userId", userId).getResultList();
 
@@ -279,7 +279,7 @@ public class ActivityDao extends AbstractJpaDao {
 		return activities;
 	}
 
-	public List<Activity> getAllJoinedCourseById(final String userId) {
+	public List<Activity> getAllJoinedCourseById(final String userId, final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.activity_title, a.activity_location, a.startAt, a.endAt, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
@@ -291,7 +291,7 @@ public class ActivityDao extends AbstractJpaDao {
 				.append("ORDER BY a.id DESC");
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql)
+		final List<?> result = createNativeQuery(sql, offset, limit)
 				.setParameter("activityTypeCode", ActivityTypeConstant.COURSE.getActivityTypeCode())
 				.setParameter("userId", userId).getResultList();
 
