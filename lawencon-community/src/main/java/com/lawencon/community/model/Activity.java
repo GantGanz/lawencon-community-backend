@@ -22,7 +22,7 @@ public class Activity extends BaseEntity {
 
 	private static final long serialVersionUID = 289179169564948704L;
 
-	@Column(name = "activity_title", nullable = false, length = 50)
+	@Column(name = "title", nullable = false, length = 50)
 	private String activityTitle;
 
 	@Column(name = "provider", nullable = false, length = 50)
