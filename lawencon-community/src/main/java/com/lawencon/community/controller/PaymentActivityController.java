@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.InsertRes;
@@ -49,20 +50,26 @@ public class PaymentActivityController {
 	}
 	
 	@GetMapping("approved")
-	public ResponseEntity<PaymentActivitiesRes> getAllApproved() {
-		final PaymentActivitiesRes res = paymentActivityService.getAllApproved();
+	public ResponseEntity<PaymentActivitiesRes> getAllApproved(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+		final PaymentActivitiesRes res = paymentActivityService.getAllApproved(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
 	@GetMapping("unapproved")
-	public ResponseEntity<PaymentActivitiesRes> getAllUnapproved() {
-		final PaymentActivitiesRes res = paymentActivityService.getAllUnapproved();
+	public ResponseEntity<PaymentActivitiesRes> getAllUnapproved(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+		final PaymentActivitiesRes res = paymentActivityService.getAllUnapproved(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
 	@GetMapping("user")
 	public ResponseEntity<PaymentActivitiesRes> getAllByCreatorId() {
 		final PaymentActivitiesRes res = paymentActivityService.getAllByCreatorId();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("member")
+	public ResponseEntity<PaymentActivitiesRes> getAllByMemberId(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+		final PaymentActivitiesRes res = paymentActivityService.getAllByMemberId(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 

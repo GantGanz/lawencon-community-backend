@@ -98,8 +98,8 @@ public class PaymentPremiumService extends BaseCoreService {
 		return res;
 	}
 
-	public PaymentPremiumsRes getAllApproved() {
-		final List<PaymentPremium> paymentPremiums = paymentPremiumDao.getAllApproved();
+	public PaymentPremiumsRes getAllApproved(final Integer offset, final Integer limit) {
+		final List<PaymentPremium> paymentPremiums = paymentPremiumDao.getAllApproved(offset, limit);
 		final List<PaymentPremiumData> paymentPremiumDatas = new ArrayList<>();
 		for (int i = 0; i < paymentPremiums.size(); i++) {
 			final PaymentPremium paymentPremium = paymentPremiums.get(i);
@@ -123,8 +123,8 @@ public class PaymentPremiumService extends BaseCoreService {
 		return paymentPremiumsRes;
 	}
 	
-	public PaymentPremiumsRes getAllUnapproved() {
-		final List<PaymentPremium> paymentPremiums = paymentPremiumDao.getAllUnapproved();
+	public PaymentPremiumsRes getAllUnapproved(final Integer offset, final Integer limit) {
+		final List<PaymentPremium> paymentPremiums = paymentPremiumDao.getAllUnapproved(offset, limit);
 		final List<PaymentPremiumData> paymentPremiumDatas = new ArrayList<>();
 		for (int i = 0; i < paymentPremiums.size(); i++) {
 			final PaymentPremium paymentPremium = paymentPremiums.get(i);

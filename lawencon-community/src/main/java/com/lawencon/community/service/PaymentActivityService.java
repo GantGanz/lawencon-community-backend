@@ -104,8 +104,8 @@ public class PaymentActivityService extends BaseCoreService {
 		return res;
 	}
 
-	public PaymentActivitiesRes getAllApproved() {
-		final List<PaymentActivity> paymentActivities = paymentActivityDao.getAllApproved();
+	public PaymentActivitiesRes getAllApproved(final Integer offset, final Integer limit) {
+		final List<PaymentActivity> paymentActivities = paymentActivityDao.getAllApproved(offset, limit);
 		final List<PaymentActivityData> paymentActivityDatas = new ArrayList<>();
 		for (int i = 0; i < paymentActivities.size(); i++) {
 			final PaymentActivity paymentActivity = paymentActivities.get(i);
@@ -131,8 +131,8 @@ public class PaymentActivityService extends BaseCoreService {
 		return paymentActivitiesRes;
 	}
 
-	public PaymentActivitiesRes getAllUnapproved() {
-		final List<PaymentActivity> paymentActivities = paymentActivityDao.getAllUnapproved();
+	public PaymentActivitiesRes getAllUnapproved(final Integer offset, final Integer limit) {
+		final List<PaymentActivity> paymentActivities = paymentActivityDao.getAllUnapproved(offset, limit);
 		final List<PaymentActivityData> paymentActivityDatas = new ArrayList<>();
 		for (int i = 0; i < paymentActivities.size(); i++) {
 			final PaymentActivity paymentActivity = paymentActivities.get(i);
@@ -161,6 +161,34 @@ public class PaymentActivityService extends BaseCoreService {
 	public PaymentActivitiesRes getAllByCreatorId() {
 		final String userId = principalService.getAuthPrincipal();
 		final List<PaymentActivity> paymentActivities = paymentActivityDao.getAllByCreatorId(userId);
+		final List<PaymentActivityData> paymentActivityDatas = new ArrayList<>();
+		for (int i = 0; i < paymentActivities.size(); i++) {
+			final PaymentActivity paymentActivity = paymentActivities.get(i);
+			final PaymentActivityData paymentActivityData = new PaymentActivityData();
+			paymentActivityData.setId(paymentActivity.getId());
+			paymentActivityData.setVersion(paymentActivity.getVersion());
+			paymentActivityData.setNominal(paymentActivity.getNominal());
+			paymentActivityData.setIsApproved(paymentActivity.getIsApproved());
+			paymentActivityData.setFileId(paymentActivity.getFile().getId());
+			paymentActivityData.setUserId(paymentActivity.getUser().getId());
+			paymentActivityData.setFullname(paymentActivity.getUser().getFullname());
+			paymentActivityData.setEmail(paymentActivity.getUser().getEmail());
+			paymentActivityData.setActivityId(paymentActivity.getActivity().getId());
+			paymentActivityData.setActivityTitle(paymentActivity.getActivity().getActivityTitle());
+			paymentActivityData.setCreatedAt(paymentActivity.getCreatedAt());
+			paymentActivityData.setUpdatedAt(paymentActivity.getUpdatedAt());
+
+			paymentActivityDatas.add(paymentActivityData);
+		}
+		final PaymentActivitiesRes paymentActivitiesRes = new PaymentActivitiesRes();
+		paymentActivitiesRes.setData(paymentActivityDatas);
+
+		return paymentActivitiesRes;
+	}
+	
+	public PaymentActivitiesRes getAllByMemberId(final Integer offset, final Integer limit) {
+		final String userId = principalService.getAuthPrincipal();
+		final List<PaymentActivity> paymentActivities = paymentActivityDao.getAllByMemberId(userId, offset, limit);
 		final List<PaymentActivityData> paymentActivityDatas = new ArrayList<>();
 		for (int i = 0; i < paymentActivities.size(); i++) {
 			final PaymentActivity paymentActivity = paymentActivities.get(i);
