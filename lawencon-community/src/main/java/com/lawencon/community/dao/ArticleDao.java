@@ -17,8 +17,7 @@ public class ArticleDao extends AbstractJpaDao {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.article_title, a.article_content, u.fullname, a.created_by, ")
 				.append("a.created_at, a.updated_at, a.is_active ").append("FROM t_article a ")
-				.append("INNER JOIN t_user u ON u.id = a.created_by ").append("WHERE a.created_by = :userId ")
-				.append("AND a.is_active = TRUE ").append("ORDER BY a.created_at DESC ").append("LIMIT :limit OFFSET :offset");
+				.append("INNER JOIN t_user u ON u.id = a.created_by ").append("WHERE a.is_active = TRUE ").append("ORDER BY a.created_at DESC ").append("LIMIT :limit OFFSET :offset");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql).setParameter("offset", offset)
