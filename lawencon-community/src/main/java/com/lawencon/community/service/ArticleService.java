@@ -137,6 +137,10 @@ public class ArticleService extends BaseCoreService {
 			articleData.setCreatedAt(article.getCreatedAt());
 			articleData.setVersion(article.getVersion());
 			articleData.setIsActive(article.getIsActive());
+			articleData.setFullname(article.getUser().getFullname());
+			articleData.setCompany(article.getUser().getCompany());
+			articleData.setPositionName(article.getUser().getPosition().getPositionName());
+			articleData.setFileId(article.getUser().getFile().getId());
 
 			final List<AttachmentArticle> attachmentArticles = attachmentArticleDao.getAllById(article.getId());
 			final int articleAttachmentSize = attachmentArticles.size();
@@ -173,7 +177,11 @@ public class ArticleService extends BaseCoreService {
 			articleData.setCreatedBy(article.getCreatedBy());
 			articleData.setVersion(article.getVersion());
 			articleData.setIsActive(article.getIsActive());
-
+			articleData.setFullname(article.getUser().getFullname());
+			articleData.setCompany(article.getUser().getCompany());
+			articleData.setPositionName(article.getUser().getPosition().getPositionName());
+			articleData.setFileId(article.getUser().getFile().getId());
+			
 			final List<AttachmentArticle> attachmentArticles = attachmentArticleDao.getAllById(article.getId());
 			final int articleAttachmentSize = attachmentArticles.size();
 			final List<AttachmentArticleData> attachmentArticleDatas = new ArrayList<>();
@@ -206,7 +214,11 @@ public class ArticleService extends BaseCoreService {
 		articleData.setCreatedAt(article.getCreatedAt());
 		articleData.setVersion(article.getVersion());
 		articleData.setIsActive(article.getIsActive());
-
+		articleData.setFullname(article.getUser().getFullname());
+		articleData.setCompany(article.getUser().getCompany());
+		articleData.setPositionName(article.getUser().getPosition().getPositionName());
+		articleData.setFileId(article.getUser().getFile().getId());
+		
 		final List<AttachmentArticle> attachmentArticles = attachmentArticleDao.getAllById(article.getId());
 		final int articleAttachmentSize = attachmentArticles.size();
 		final List<AttachmentArticleData> attachmentArticleDatas = new ArrayList<>();
@@ -228,7 +240,11 @@ public class ArticleService extends BaseCoreService {
 	}
 
 	public Long countAllArticle() {
-		return articleDao.countAllArticle(principalService.getAuthPrincipal());
+		return articleDao.countAllArticle();
+	}
+	
+	public Long countAllArticleById() {
+		return articleDao.countAllArticleById(principalService.getAuthPrincipal());
 	}
 
 	private void valInsert(final ArticleInsertReq data) {

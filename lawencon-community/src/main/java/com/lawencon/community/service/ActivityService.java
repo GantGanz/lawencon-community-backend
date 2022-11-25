@@ -133,8 +133,8 @@ public class ActivityService extends BaseCoreService {
 		return res;
 	}
 	
-	public ActivitiesRes getAllEvent() {
-		final List<Activity> activities = activityDao.getAllEvent();
+	public ActivitiesRes getAllEvent(final Integer offset, final Integer limit) {
+		final List<Activity> activities = activityDao.getAllEvent(offset, limit);
 		final List<ActivityData> activityDatas = new ArrayList<>();
 		for (int i = 0; i < activities.size(); i++) {
 			final Activity activity = activities.get(i);
@@ -175,8 +175,8 @@ public class ActivityService extends BaseCoreService {
 		return activitiesRes;
 	}
 	
-	public ActivitiesRes getAllCourse() {
-		final List<Activity> activities = activityDao.getAllCourse();
+	public ActivitiesRes getAllCourse(final Integer offset, final Integer limit) {
+		final List<Activity> activities = activityDao.getAllCourse(offset, limit);
 		final List<ActivityData> activityDatas = new ArrayList<>();
 		for (int i = 0; i < activities.size(); i++) {
 			final Activity activity = activities.get(i);
@@ -217,8 +217,8 @@ public class ActivityService extends BaseCoreService {
 		return activitiesRes;
 	}
 	
-	public ActivitiesRes getAllEventById() {
-		final List<Activity> activities = activityDao.getAllEventById(principalService.getAuthPrincipal());
+	public ActivitiesRes getAllEventById(final Integer offset, final Integer limit) {
+		final List<Activity> activities = activityDao.getAllEventById(principalService.getAuthPrincipal(), offset, limit);
 		final List<ActivityData> activityDatas = new ArrayList<>();
 		for (int i = 0; i < activities.size(); i++) {
 			final Activity activity = activities.get(i);
@@ -259,8 +259,8 @@ public class ActivityService extends BaseCoreService {
 		return activitiesRes;
 	}
 	
-	public ActivitiesRes getAllCourseById() {
-		final List<Activity> activities = activityDao.getAllCourseById(principalService.getAuthPrincipal());
+	public ActivitiesRes getAllCourseById(final Integer offset, final Integer limit) {
+		final List<Activity> activities = activityDao.getAllCourseById(principalService.getAuthPrincipal(), offset, limit);
 		final List<ActivityData> activityDatas = new ArrayList<>();
 		for (int i = 0; i < activities.size(); i++) {
 			final Activity activity = activities.get(i);
@@ -301,8 +301,8 @@ public class ActivityService extends BaseCoreService {
 		return activitiesRes;
 	}
 	
-	public ActivitiesRes getAllJoinedEventById() {
-		final List<Activity> activities = activityDao.getAllJoinedEventById(principalService.getAuthPrincipal());
+	public ActivitiesRes getAllJoinedEventById(final Integer offset, final Integer limit) {
+		final List<Activity> activities = activityDao.getAllJoinedEventById(principalService.getAuthPrincipal(), offset, limit);
 		final List<ActivityData> activityDatas = new ArrayList<>();
 		for (int i = 0; i < activities.size(); i++) {
 			final Activity activity = activities.get(i);
@@ -343,8 +343,8 @@ public class ActivityService extends BaseCoreService {
 		return activitiesRes;
 	}
 	
-	public ActivitiesRes getAllJoinedCourseById() {
-		final List<Activity> activities = activityDao.getAllJoinedCourseById(principalService.getAuthPrincipal());
+	public ActivitiesRes getAllJoinedCourseById(final Integer offset, final Integer limit) {
+		final List<Activity> activities = activityDao.getAllJoinedCourseById(principalService.getAuthPrincipal(), offset, limit);
 		final List<ActivityData> activityDatas = new ArrayList<>();
 		for (int i = 0; i < activities.size(); i++) {
 			final Activity activity = activities.get(i);

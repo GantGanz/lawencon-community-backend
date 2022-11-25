@@ -15,6 +15,10 @@ public class ArticleData {
 	private String articleTitle;
 	private String articleContent;
 	private String createdBy;
+	private String fullname;
+	private String positionName;
+	private String company;
+	private String fileId;
 	private LocalDateTime createdAt;
 	private List<AttachmentArticleData> attachmentArticleDatas;
 	private Boolean isActive;
