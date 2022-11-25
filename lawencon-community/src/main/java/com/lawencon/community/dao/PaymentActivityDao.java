@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.community.model.Activity;
+import com.lawencon.community.model.ActivityType;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.PaymentActivity;
 import com.lawencon.community.model.User;
@@ -19,13 +20,16 @@ public class PaymentActivityDao extends AbstractJpaDao {
 	public List<PaymentActivity> getAllApproved(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, ")
-				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at ")
+				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at, at.activity_type_name ")
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE p.is_approved = TRUE ").append("ORDER BY a.id DESC ").append("LIMIT :limit OFFSET :offset");
+				.append("INNER JOIN t_activity a ON a.id = p.activity_id  ")
+				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
+				.append("WHERE p.is_approved = TRUE ")
+				.append("ORDER BY a.id DESC ").append("LIMIT :limit OFFSET :offset");
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql).setParameter("offset", offset)
-				.setParameter("limit", limit).getResultList();
+		final List<?> result = createNativeQuery(sql).setParameter("offset", offset).setParameter("limit", limit)
+				.getResultList();
 
 		final List<PaymentActivity> paymentActivities = new ArrayList<>();
 
@@ -51,10 +55,14 @@ public class PaymentActivityDao extends AbstractJpaDao {
 				final Activity activity = new Activity();
 				activity.setId(objArr[7].toString());
 				activity.setActivityTitle(objArr[8].toString());
+				
+				final ActivityType activityType = new ActivityType();
+				activityType.setActivityTypeName(objArr[11].toString());
+				activity.setActivityType(activityType);
 				paymentActivity.setActivity(activity);
 
 				paymentActivity.setVersion(Integer.valueOf(objArr[9].toString()));
-				if(objArr[10].toString() != null) {					
+				if (objArr[10].toString() != null) {
 					paymentActivity.setCreatedAt(Timestamp.valueOf(objArr[10].toString()).toLocalDateTime());
 				}
 				paymentActivities.add(paymentActivity);
@@ -67,13 +75,16 @@ public class PaymentActivityDao extends AbstractJpaDao {
 	public List<PaymentActivity> getAllUnapproved(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, ")
-				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at  ")
+				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at, at.activity_type_name  ")
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE p.is_approved = FALSE ").append("ORDER BY a.id DESC ").append("LIMIT :limit OFFSET :offset");
+				.append("INNER JOIN t_activity a ON a.id = p.activity_id  ")
+				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
+				.append("WHERE p.is_approved = FALSE ").append("ORDER BY a.id DESC ")
+				.append("LIMIT :limit OFFSET :offset");
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql).setParameter("offset", offset)
-				.setParameter("limit", limit).getResultList();
+		final List<?> result = createNativeQuery(sql).setParameter("offset", offset).setParameter("limit", limit)
+				.getResultList();
 
 		final List<PaymentActivity> paymentActivities = new ArrayList<>();
 
@@ -99,10 +110,14 @@ public class PaymentActivityDao extends AbstractJpaDao {
 				final Activity activity = new Activity();
 				activity.setId(objArr[7].toString());
 				activity.setActivityTitle(objArr[8].toString());
-				paymentActivity.setActivity(activity);
 				
+				final ActivityType activityType = new ActivityType();
+				activityType.setActivityTypeName(objArr[11].toString());
+				activity.setActivityType(activityType);
+				paymentActivity.setActivity(activity);
+
 				paymentActivity.setVersion(Integer.valueOf(objArr[9].toString()));
-				if(objArr[10].toString() != null) {					
+				if (objArr[10].toString() != null) {
 					paymentActivity.setCreatedAt(Timestamp.valueOf(objArr[10].toString()).toLocalDateTime());
 				}
 				paymentActivities.add(paymentActivity);
@@ -115,9 +130,11 @@ public class PaymentActivityDao extends AbstractJpaDao {
 	public List<PaymentActivity> getAllByCreatorId(final String userId) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname,")
-				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at  ")
+				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at, at.activity_type_name  ")
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("INNER JOIN t_activity a ON a.id = p.activity_id ").append("WHERE a.created_by = :userId ").append("ORDER BY a.id DESC");
+				.append("INNER JOIN t_activity a ON a.id = p.activity_id  ")
+				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ").append("WHERE a.created_by = :userId ")
+				.append("ORDER BY a.id DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql).setParameter("userId", userId).getResultList();
@@ -146,10 +163,14 @@ public class PaymentActivityDao extends AbstractJpaDao {
 				final Activity activity = new Activity();
 				activity.setId(objArr[7].toString());
 				activity.setActivityTitle(objArr[8].toString());
+				
+				final ActivityType activityType = new ActivityType();
+				activityType.setActivityTypeName(objArr[11].toString());
+				activity.setActivityType(activityType);
 				paymentActivity.setActivity(activity);
 
 				paymentActivity.setVersion(Integer.valueOf(objArr[9].toString()));
-				if(objArr[10].toString() != null) {					
+				if (objArr[10].toString() != null) {
 					paymentActivity.setCreatedAt(Timestamp.valueOf(objArr[10].toString()).toLocalDateTime());
 				}
 				paymentActivities.add(paymentActivity);
@@ -158,13 +179,15 @@ public class PaymentActivityDao extends AbstractJpaDao {
 
 		return paymentActivities;
 	}
-	
+
 	public List<PaymentActivity> getAllByMemberId(final String userId, final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname,")
-				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at  ")
+				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at, at.activity_type_name  ")
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("INNER JOIN t_activity a ON a.id = p.activity_id ").append("WHERE p.created_by = :userId ").append("ORDER BY a.id DESC ").append("LIMIT :limit OFFSET :offset");
+				.append("INNER JOIN t_activity a ON a.id = p.activity_id  ")
+				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ").append("WHERE p.created_by = :userId ")
+				.append("ORDER BY a.id DESC ").append("LIMIT :limit OFFSET :offset");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql).setParameter("userId", userId).setParameter("offset", offset)
@@ -194,10 +217,14 @@ public class PaymentActivityDao extends AbstractJpaDao {
 				final Activity activity = new Activity();
 				activity.setId(objArr[7].toString());
 				activity.setActivityTitle(objArr[8].toString());
+				
+				final ActivityType activityType = new ActivityType();
+				activityType.setActivityTypeName(objArr[11].toString());
+				activity.setActivityType(activityType);
 				paymentActivity.setActivity(activity);
 
 				paymentActivity.setVersion(Integer.valueOf(objArr[9].toString()));
-				if(objArr[10].toString() != null) {					
+				if (objArr[10].toString() != null) {
 					paymentActivity.setCreatedAt(Timestamp.valueOf(objArr[10].toString()).toLocalDateTime());
 				}
 				paymentActivities.add(paymentActivity);
@@ -238,7 +265,7 @@ public class PaymentActivityDao extends AbstractJpaDao {
 		}
 		return total;
 	}
-	
+
 	public Long countAllApproved() {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT count(p.id) ").append("FROM t_payment_activity p ").append("WHERE p.is_approved = TRUE ");

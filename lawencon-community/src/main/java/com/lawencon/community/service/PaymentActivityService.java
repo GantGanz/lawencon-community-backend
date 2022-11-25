@@ -120,6 +120,7 @@ public class PaymentActivityService extends BaseCoreService {
 			paymentActivityData.setEmail(paymentActivity.getUser().getEmail());
 			paymentActivityData.setActivityId(paymentActivity.getActivity().getId());
 			paymentActivityData.setActivityTitle(paymentActivity.getActivity().getActivityTitle());
+			paymentActivityData.setActivityType(paymentActivity.getActivity().getActivityType().getActivityTypeName());
 			paymentActivityData.setCreatedAt(paymentActivity.getCreatedAt());
 			paymentActivityData.setUpdatedAt(paymentActivity.getUpdatedAt());
 
@@ -147,6 +148,7 @@ public class PaymentActivityService extends BaseCoreService {
 			paymentActivityData.setEmail(paymentActivity.getUser().getEmail());
 			paymentActivityData.setActivityId(paymentActivity.getActivity().getId());
 			paymentActivityData.setActivityTitle(paymentActivity.getActivity().getActivityTitle());
+			paymentActivityData.setActivityType(paymentActivity.getActivity().getActivityType().getActivityTypeName());
 			paymentActivityData.setCreatedAt(paymentActivity.getCreatedAt());
 			paymentActivityData.setUpdatedAt(paymentActivity.getUpdatedAt());
 
@@ -175,6 +177,7 @@ public class PaymentActivityService extends BaseCoreService {
 			paymentActivityData.setEmail(paymentActivity.getUser().getEmail());
 			paymentActivityData.setActivityId(paymentActivity.getActivity().getId());
 			paymentActivityData.setActivityTitle(paymentActivity.getActivity().getActivityTitle());
+			paymentActivityData.setActivityType(paymentActivity.getActivity().getActivityType().getActivityTypeName());
 			paymentActivityData.setCreatedAt(paymentActivity.getCreatedAt());
 			paymentActivityData.setUpdatedAt(paymentActivity.getUpdatedAt());
 
@@ -203,6 +206,7 @@ public class PaymentActivityService extends BaseCoreService {
 			paymentActivityData.setEmail(paymentActivity.getUser().getEmail());
 			paymentActivityData.setActivityId(paymentActivity.getActivity().getId());
 			paymentActivityData.setActivityTitle(paymentActivity.getActivity().getActivityTitle());
+			paymentActivityData.setActivityType(paymentActivity.getActivity().getActivityType().getActivityTypeName());
 			paymentActivityData.setCreatedAt(paymentActivity.getCreatedAt());
 			paymentActivityData.setUpdatedAt(paymentActivity.getUpdatedAt());
 
@@ -227,6 +231,7 @@ public class PaymentActivityService extends BaseCoreService {
 		paymentActivityData.setEmail(paymentActivity.getUser().getEmail());
 		paymentActivityData.setActivityId(paymentActivity.getActivity().getId());
 		paymentActivityData.setActivityTitle(paymentActivity.getActivity().getActivityTitle());
+		paymentActivityData.setActivityType(paymentActivity.getActivity().getActivityType().getActivityTypeName());
 		paymentActivityData.setCreatedAt(paymentActivity.getCreatedAt());
 		paymentActivityData.setUpdatedAt(paymentActivity.getUpdatedAt());
 
