@@ -32,4 +32,10 @@ public class PostTypeController {
 		final PostTypeRes result = postTypeService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("code/{code}")
+	public ResponseEntity<String> getIdByCode(@PathVariable("code") final String code) {
+		final String result = postTypeService.getPostTypeIdByCode(code);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 }

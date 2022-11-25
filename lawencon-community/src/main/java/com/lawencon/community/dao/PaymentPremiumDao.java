@@ -17,9 +17,9 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 
 	public List<PaymentPremium> getAllApproved(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, p.created_at ")
+		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, p.created_at, u.email, p.ver, p.updated_at ")
 				.append("FROM t_payment_premium p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE p.is_approved = TRUE ").append("ORDER BY a.id DESC ").append("LIMIT :limit OFFSET :offset");
+				.append("WHERE p.is_approved = TRUE ").append("ORDER BY p.created_at DESC ").append("LIMIT :limit OFFSET :offset");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql).setParameter("offset", offset)
@@ -32,7 +32,8 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 				final Object[] objArr = (Object[]) resultObj;
 				final PaymentPremium paymentPremium = new PaymentPremium();
 				paymentPremium.setId(objArr[0].toString());
-				paymentPremium.setNominal(BigDecimal.valueOf(Long.valueOf(objArr[1].toString())));
+				final BigDecimal bd = new BigDecimal(objArr[1].toString());
+				paymentPremium.setNominal(bd);
 				paymentPremium.setIsApproved(Boolean.valueOf(objArr[2].toString()));
 
 				final File file = new File();
@@ -42,9 +43,14 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 				final User user = new User();
 				user.setId(objArr[4].toString());
 				user.setFullname(objArr[5].toString());
+				user.setEmail(objArr[7].toString());
 				paymentPremium.setUser(user);
 
 				paymentPremium.setCreatedAt(Timestamp.valueOf(objArr[6].toString()).toLocalDateTime());
+				paymentPremium.setVersion(Integer.valueOf(objArr[8].toString()));
+				if (objArr[9] != null) {
+					paymentPremium.setUpdatedAt(Timestamp.valueOf(objArr[9].toString()).toLocalDateTime());
+				}
 				paymentPremiums.add(paymentPremium);
 			});
 		}
@@ -54,9 +60,9 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 
 	public List<PaymentPremium> getAllUnapproved(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, p.created_at ")
+		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, p.created_at, u.email, p.ver, p.updated_at ")
 				.append("FROM t_payment_premium p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE p.is_approved = FALSE ").append("ORDER BY a.id DESC ").append("LIMIT :limit OFFSET :offset");;
+				.append("WHERE p.is_approved = FALSE ").append("ORDER BY p.created_at DESC ").append("LIMIT :limit OFFSET :offset");;
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql).setParameter("offset", offset)
@@ -69,7 +75,8 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 				final Object[] objArr = (Object[]) resultObj;
 				final PaymentPremium paymentPremium = new PaymentPremium();
 				paymentPremium.setId(objArr[0].toString());
-				paymentPremium.setNominal(BigDecimal.valueOf(Long.valueOf(objArr[1].toString())));
+				final BigDecimal bd = new BigDecimal(objArr[1].toString());
+				paymentPremium.setNominal(bd);
 				paymentPremium.setIsApproved(Boolean.valueOf(objArr[2].toString()));
 
 				final File file = new File();
@@ -79,9 +86,14 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 				final User user = new User();
 				user.setId(objArr[4].toString());
 				user.setFullname(objArr[5].toString());
+				user.setEmail(objArr[7].toString());
 				paymentPremium.setUser(user);
 
 				paymentPremium.setCreatedAt(Timestamp.valueOf(objArr[6].toString()).toLocalDateTime());
+				paymentPremium.setVersion(Integer.valueOf(objArr[8].toString()));
+				if (objArr[9] != null) {
+					paymentPremium.setUpdatedAt(Timestamp.valueOf(objArr[9].toString()).toLocalDateTime());
+				}
 				paymentPremiums.add(paymentPremium);
 			});
 		}
