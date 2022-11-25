@@ -180,7 +180,10 @@ public class PostService extends BaseCoreService {
 			postData.setCreatedBy(post.getCreatedBy());
 			postData.setCreatedAt(post.getCreatedAt());
 			postData.setUpdatedAt(post.getUpdatedAt());
-
+			postData.setCompany(post.getUser().getCompany());
+			postData.setPositionName(post.getUser().getPosition().getPositionName());
+			postData.setFileId(post.getUser().getFile().getId());
+			
 			final String postTypeCode = post.getPostType().getPostTypeCode();
 			postData.setPostTypeCode(postTypeCode);
 
@@ -379,7 +382,10 @@ public class PostService extends BaseCoreService {
 			postData.setCreatedBy(post.getCreatedBy());
 			postData.setCreatedAt(post.getCreatedAt());
 			postData.setUpdatedAt(post.getUpdatedAt());
-
+			postData.setCompany(post.getUser().getCompany());
+			postData.setPositionName(post.getUser().getPosition().getPositionName());
+			postData.setFileId(post.getUser().getFile().getId());
+			
 			final String postTypeCode = post.getPostType().getPostTypeCode();
 			postData.setPostTypeCode(postTypeCode);
 
@@ -579,6 +585,9 @@ public class PostService extends BaseCoreService {
 			postData.setCreatedBy(post.getCreatedBy());
 			postData.setCreatedAt(post.getCreatedAt());
 			postData.setUpdatedAt(post.getUpdatedAt());
+			postData.setCompany(post.getUser().getCompany());
+			postData.setPositionName(post.getUser().getPosition().getPositionName());
+			postData.setFileId(post.getUser().getFile().getId());
 			final String postTypeCode = post.getPostType().getPostTypeCode();
 			postData.setPostTypeCode(postTypeCode);
 
@@ -649,6 +658,9 @@ public class PostService extends BaseCoreService {
 			postData.setCreatedBy(post.getCreatedBy());
 			postData.setCreatedAt(post.getCreatedAt());
 			postData.setUpdatedAt(post.getUpdatedAt());
+			postData.setCompany(post.getUser().getCompany());
+			postData.setPositionName(post.getUser().getPosition().getPositionName());
+			postData.setFileId(post.getUser().getFile().getId());
 			final String postTypeCode = post.getPostType().getPostTypeCode();
 			postData.setPostTypeCode(postTypeCode);
 
@@ -716,6 +728,9 @@ public class PostService extends BaseCoreService {
 		postData.setCreatedBy(post.getCreatedBy());
 		postData.setCreatedAt(post.getCreatedAt());
 		postData.setUpdatedAt(post.getUpdatedAt());
+		postData.setCompany(post.getUser().getCompany());
+		postData.setPositionName(post.getUser().getPosition().getPositionName());
+		postData.setFileId(post.getUser().getFile().getId());
 		final String postTypeCode = post.getPostType().getPostTypeCode();
 		postData.setPostTypeCode(postTypeCode);
 
