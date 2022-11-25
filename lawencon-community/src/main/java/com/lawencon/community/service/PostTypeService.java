@@ -49,4 +49,8 @@ public class PostTypeService extends BaseCoreService {
 
 		return postTypeRes;
 	}
+	
+	public String getPostTypeIdByCode(final String code) {
+		return postTypeDao.getPostTypeIdbyCode(code);
+	}
 }
