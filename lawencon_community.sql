@@ -465,3 +465,80 @@ INSERT INTO t_attachment_article (id, article_id, file_id, created_by,created_at
 ('20', '2', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '8cd73718-a4f5-4b86-b935-b6ac51129370',now()),
 ('21', '1', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '8cd73718-a4f5-4b86-b935-b6ac51129370',now()),
 ('22', '2', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '8cd73718-a4f5-4b86-b935-b6ac51129370',now());
+
+CREATE TABLE t_payment_activity(
+    id text,
+    nominal double precision NOT NULL,
+    is_approved boolean NOT NULL DEFAULT FALSE,
+    file_id text NOT NULL,
+    user_id text NOT NULL,
+    activity_id text NOT NULL,
+    created_by text NOT NULL,
+    created_at timestamp WITHOUT time ZONE NOT NULL,
+    updated_by text,
+    updated_at timestamp WITHOUT time ZONE,
+    ver int NOT NULL DEFAULT 0,
+    is_active boolean NOT NULL DEFAULT TRUE
+);
+
+INSERT INTO t_activity (id, title, provider, activity_location, start_at, end_at , fee, user_id, activity_type_id , created_by,created_at) VALUES 
+('1', 'mantap', 'prov', 'jakarta', now(), now(), 100000, '1', 'e4cd6ea9-2363-49c9-bc36-264359bf4e49', '1',now()),
+('2', 'jiwa', 'lawen', 'semarang', now(), now(), 200000,'2', '9e8da04e-acc8-45a2-af5a-573a87fccfbd','2', now());
+
+INSERT INTO t_payment_activity (id, nominal, is_approved, user_id, file_id, activity_id, created_by,created_at) VALUES 
+('1', 100000, true, '1', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '1', '1', now()),
+('2', 100000, true, '2', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '1','2', now()),
+('3', 100000, true, '3', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '1','3', now()),
+('4', 100000,true,  '4', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '1','4', now()),
+('5', 100000,true,  '5', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '1','5', now()),
+('6', 100000, false, '6', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '1','6', now()),
+('7', 100000, false, '7', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '1','7', now()),
+('8', 100000, false, '8', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '1','8', now()),
+('9', 100000, false, '9', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '1','9', now()),
+('10', 100000, false, '10', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '1','10', now()),
+('11', 200000, true, '11', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '2','11', now()),
+('12', 200000, true, '12', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '2','12', now()),
+('13', 200000, true, '13', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '2','13', now()),
+('14', 200000, true, '14', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '2','14', now()),
+('15', 200000, true, '15', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '2','15', now()),
+('16', 200000, false, '16', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '2','16', now()),
+('17', 200000, false, '17', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '2','17', now()),
+('18', 200000, false, '18', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '2','18', now()),
+('19', 200000, false, '19', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '2','19', now()),
+('20', 200000, false, '20', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '2','20', now()),
+('21', 200000, true, '1', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '1','1', now()),
+('22', 200000, false, '2', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '2','2', now());
+
+id text,
+    nominal double precision NOT NULL,
+    is_approved boolean NOT NULL DEFAULT FALSE,
+    file_id text NOT NULL,
+    user_id text NOT NULL,
+    created_by text NOT NULL,
+    created_at timestamp WITHOUT time ZONE NOT NULL,
+    updated_by text,
+    updated_at timestamp WITHOUT time ZONE,
+    ver int NOT NULL DEFAULT 0,
+    is_active boolean NOT NULL DEFAULT TRUE
+    
+INSERT INTO t_payment_premium (id, nominal, is_approved, user_id, file_id, created_by,created_at) VALUES 
+('1', 100000, true, '1', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '1', now()),
+('2', 100000, true, '2', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '2', now()),
+('3', 100000, true, '3', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '3', now()),
+('4', 100000,false,  '4', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '4', now()),
+('5', 100000,false,  '5', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '5', now()),
+('6', 100000, false, '6', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '6', now()),
+('7', 100000, false, '7', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '7', now()),
+('8', 100000, false, '8', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '8', now()),
+('9', 100000, false, '9', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '9', now()),
+('10', 100000, false, '10', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c','10', now()),
+('11', 200000, true, '11', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '11', now()),
+('12', 200000, true, '12', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '12', now()),
+('13', 200000, true, '13', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '13', now()),
+('14', 200000, true, '14', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '14', now()),
+('15', 200000, true, '15', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '15', now()),
+('16', 200000, false, '16', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '16', now()),
+('17', 200000, false, '17', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '17', now()),
+('18', 200000, false, '18', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '18', now()),
+('19', 200000, false, '19', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '19', now()),
+('20', 200000, false, '20', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '20', now());
