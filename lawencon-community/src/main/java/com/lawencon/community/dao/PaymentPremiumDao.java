@@ -105,5 +105,22 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 		}
 		return total;
 	}
+	
+	public Long countAllApproved() {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ")
+				.append("WHERE p.is_approved = TRUE ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
 
 }

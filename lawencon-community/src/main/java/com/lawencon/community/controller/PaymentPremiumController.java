@@ -35,6 +35,12 @@ public class PaymentPremiumController {
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
+	@GetMapping("count-approved")
+	public ResponseEntity<Long> countAllApproved() {
+		final Long res = paymentPremiumService.countAllApproved();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
 	@GetMapping("approved")
 	public ResponseEntity<PaymentPremiumsRes> getAllApproved(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
 		final PaymentPremiumsRes res = paymentPremiumService.getAllApproved(offset, limit);
