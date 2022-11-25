@@ -21,10 +21,10 @@ public class ArticleDao extends AbstractJpaDao {
 				.append("a.created_at, a.updated_at, a.is_active, u.company, p.position_name, u.file_id ")
 				.append("FROM t_article a ").append("INNER JOIN t_user u ON u.id = a.created_by ")
 				.append("INNER JOIN t_position p ON p.id = u.position_id ").append("WHERE a.is_active = TRUE ")
-				.append("ORDER BY a.created_at DESC ").append("LIMIT :limit OFFSET :offset");
+				.append("ORDER BY a.created_at DESC ");
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql).setParameter("offset", offset).setParameter("limit", limit)
+		final List<?> result = createNativeQuery(sql, offset, limit)
 				.getResultList();
 
 		final List<Article> articles = new ArrayList<>();
@@ -52,7 +52,7 @@ public class ArticleDao extends AbstractJpaDao {
 				final Position position = new Position();
 				position.setPositionName(objArr[10].toString());
 				user.setPosition(position);
-				
+
 				final File file = new File();
 				file.setId(objArr[11].toString());
 				user.setFile(file);
@@ -68,13 +68,13 @@ public class ArticleDao extends AbstractJpaDao {
 	public List<Article> getAllById(final String userId, final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.article_title, a.article_content, u.fullname, a.created_by, ")
-				.append("a.created_at, a.updated_at, a.is_active, u.company, p.position_name, u.file_id  ").append("FROM t_article a ")
-				.append("INNER JOIN t_user u ON u.id = a.created_by ").append("WHERE a.created_by = :userId ")
-				.append("ORDER BY a.created_at DESC ").append("LIMIT :limit OFFSET :offset");
+				.append("a.created_at, a.updated_at, a.is_active, u.company, p.position_name, u.file_id  ")
+				.append("FROM t_article a ").append("INNER JOIN t_user u ON u.id = a.created_by ")
+				.append("INNER JOIN t_position p ON p.id = u.position_id ").append("WHERE a.created_by = :userId ")
+				.append("ORDER BY a.created_at DESC ");
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql).setParameter("userId", userId).setParameter("offset", offset)
-				.setParameter("limit", limit).getResultList();
+		final List<?> result = createNativeQuery(sql, offset, limit).setParameter("userId", userId).getResultList();
 
 		final List<Article> articles = new ArrayList<>();
 
@@ -101,12 +101,12 @@ public class ArticleDao extends AbstractJpaDao {
 				final Position position = new Position();
 				position.setPositionName(objArr[10].toString());
 				user.setPosition(position);
-				
+
 				final File file = new File();
 				file.setId(objArr[11].toString());
 				user.setFile(file);
 				article.setUser(user);
-				
+
 				articles.add(article);
 			});
 		}
