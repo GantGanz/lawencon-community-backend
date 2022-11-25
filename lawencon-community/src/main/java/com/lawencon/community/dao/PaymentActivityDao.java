@@ -20,7 +20,7 @@ public class PaymentActivityDao extends AbstractJpaDao {
 	public List<PaymentActivity> getAllApproved(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, ")
-				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at, at.activity_type_name ")
+				.append("p.created_at, p.activity_id, a.title, p.ver, p.updated_at, at.activity_type_name ")
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
 				.append("INNER JOIN t_activity a ON a.id = p.activity_id  ")
 				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
@@ -75,7 +75,7 @@ public class PaymentActivityDao extends AbstractJpaDao {
 	public List<PaymentActivity> getAllUnapproved(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, ")
-				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at, at.activity_type_name  ")
+				.append("p.created_at, p.activity_id, a.title, p.ver, p.updated_at, at.activity_type_name  ")
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
 				.append("INNER JOIN t_activity a ON a.id = p.activity_id  ")
 				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
@@ -130,7 +130,7 @@ public class PaymentActivityDao extends AbstractJpaDao {
 	public List<PaymentActivity> getAllByCreatorId(final String userId) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname,")
-				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at, at.activity_type_name  ")
+				.append("p.created_at, p.activity_id, a.title, p.ver, p.updated_at, at.activity_type_name  ")
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
 				.append("INNER JOIN t_activity a ON a.id = p.activity_id  ")
 				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ").append("WHERE a.created_by = :userId ")
@@ -183,7 +183,7 @@ public class PaymentActivityDao extends AbstractJpaDao {
 	public List<PaymentActivity> getAllByMemberId(final String userId, final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname,")
-				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at, at.activity_type_name  ")
+				.append("p.created_at, p.activity_id, a.title, p.ver, p.updated_at, at.activity_type_name  ")
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
 				.append("INNER JOIN t_activity a ON a.id = p.activity_id  ")
 				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ").append("WHERE p.created_by = :userId ")
