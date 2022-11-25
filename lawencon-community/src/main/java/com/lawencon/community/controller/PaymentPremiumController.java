@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.dto.InsertRes;
@@ -35,14 +36,14 @@ public class PaymentPremiumController {
 	}
 	
 	@GetMapping("approved")
-	public ResponseEntity<PaymentPremiumsRes> getAllApproved() {
-		final PaymentPremiumsRes res = paymentPremiumService.getAllApproved();
+	public ResponseEntity<PaymentPremiumsRes> getAllApproved(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+		final PaymentPremiumsRes res = paymentPremiumService.getAllApproved(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
 	@GetMapping("unapproved")
-	public ResponseEntity<PaymentPremiumsRes> getAllUnapproved() {
-		final PaymentPremiumsRes res = paymentPremiumService.getAllUnapproved();
+	public ResponseEntity<PaymentPremiumsRes> getAllUnapproved(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+		final PaymentPremiumsRes res = paymentPremiumService.getAllUnapproved(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 

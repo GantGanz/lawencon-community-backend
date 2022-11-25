@@ -15,14 +15,15 @@ import com.lawencon.community.model.User;
 @Repository
 public class PaymentPremiumDao extends AbstractJpaDao {
 
-	public List<PaymentPremium> getAllApproved() {
+	public List<PaymentPremium> getAllApproved(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, p.created_at ")
 				.append("FROM t_payment_premium p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE p.is_approved = TRUE ").append("ORDER BY a.id DESC");
+				.append("WHERE p.is_approved = TRUE ").append("ORDER BY a.id DESC ").append("LIMIT :limit OFFSET :offset");
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql).getResultList();
+		final List<?> result = createNativeQuery(sql).setParameter("offset", offset)
+				.setParameter("limit", limit).getResultList();
 
 		final List<PaymentPremium> paymentPremiums = new ArrayList<>();
 
@@ -51,14 +52,15 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 		return paymentPremiums;
 	}
 
-	public List<PaymentPremium> getAllUnapproved() {
+	public List<PaymentPremium> getAllUnapproved(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, p.created_at ")
 				.append("FROM t_payment_premium p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE p.is_approved = FALSE ").append("ORDER BY a.id DESC");
+				.append("WHERE p.is_approved = FALSE ").append("ORDER BY a.id DESC ").append("LIMIT :limit OFFSET :offset");;
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql).getResultList();
+		final List<?> result = createNativeQuery(sql).setParameter("offset", offset)
+				.setParameter("limit", limit).getResultList();
 
 		final List<PaymentPremium> paymentPremiums = new ArrayList<>();
 

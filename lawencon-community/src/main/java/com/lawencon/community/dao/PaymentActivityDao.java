@@ -16,15 +16,16 @@ import com.lawencon.community.model.User;
 @Repository
 public class PaymentActivityDao extends AbstractJpaDao {
 
-	public List<PaymentActivity> getAllApproved() {
+	public List<PaymentActivity> getAllApproved(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, ")
 				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at ")
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE p.is_approved = TRUE ").append("ORDER BY a.id DESC");
+				.append("WHERE p.is_approved = TRUE ").append("ORDER BY a.id DESC ").append("LIMIT :limit OFFSET :offset");
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql).getResultList();
+		final List<?> result = createNativeQuery(sql).setParameter("offset", offset)
+				.setParameter("limit", limit).getResultList();
 
 		final List<PaymentActivity> paymentActivities = new ArrayList<>();
 
@@ -63,15 +64,16 @@ public class PaymentActivityDao extends AbstractJpaDao {
 		return paymentActivities;
 	}
 
-	public List<PaymentActivity> getAllUnapproved() {
+	public List<PaymentActivity> getAllUnapproved(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, ")
 				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at  ")
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE p.is_approved = FALSE ").append("ORDER BY a.id DESC");
+				.append("WHERE p.is_approved = FALSE ").append("ORDER BY a.id DESC ").append("LIMIT :limit OFFSET :offset");
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql).getResultList();
+		final List<?> result = createNativeQuery(sql).setParameter("offset", offset)
+				.setParameter("limit", limit).getResultList();
 
 		final List<PaymentActivity> paymentActivities = new ArrayList<>();
 
@@ -115,11 +117,58 @@ public class PaymentActivityDao extends AbstractJpaDao {
 		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname,")
 				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at  ")
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("INNER JOIN t_activity a ON a.id = p.activity_id ").append("WHERE p.is_approved = TRUE ")
-				.append("AND p.created_by = :userId ").append("ORDER BY a.id DESC");
+				.append("INNER JOIN t_activity a ON a.id = p.activity_id ").append("WHERE a.created_by = :userId ").append("ORDER BY a.id DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql).setParameter("userId", userId).getResultList();
+
+		final List<PaymentActivity> paymentActivities = new ArrayList<>();
+
+		if (result != null && result.size() > 0) {
+			result.forEach(resultObj -> {
+				final Object[] objArr = (Object[]) resultObj;
+				final PaymentActivity paymentActivity = new PaymentActivity();
+				paymentActivity.setId(objArr[0].toString());
+				paymentActivity.setNominal(BigDecimal.valueOf(Long.valueOf(objArr[1].toString())));
+				paymentActivity.setIsApproved(Boolean.valueOf(objArr[2].toString()));
+
+				final File file = new File();
+				file.setId(objArr[3].toString());
+				paymentActivity.setFile(file);
+
+				final User user = new User();
+				user.setId(objArr[4].toString());
+				user.setFullname(objArr[5].toString());
+				paymentActivity.setUser(user);
+
+				paymentActivity.setCreatedAt(Timestamp.valueOf(objArr[6].toString()).toLocalDateTime());
+
+				final Activity activity = new Activity();
+				activity.setId(objArr[7].toString());
+				activity.setActivityTitle(objArr[8].toString());
+				paymentActivity.setActivity(activity);
+
+				paymentActivity.setVersion(Integer.valueOf(objArr[9].toString()));
+				if(objArr[10].toString() != null) {					
+					paymentActivity.setCreatedAt(Timestamp.valueOf(objArr[10].toString()).toLocalDateTime());
+				}
+				paymentActivities.add(paymentActivity);
+			});
+		}
+
+		return paymentActivities;
+	}
+	
+	public List<PaymentActivity> getAllByMemberId(final String userId, final Integer offset, final Integer limit) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname,")
+				.append("p.created_at, p.activity_id, a.activity_title, p.version, p.updated_at  ")
+				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
+				.append("INNER JOIN t_activity a ON a.id = p.activity_id ").append("WHERE p.created_by = :userId ").append("ORDER BY a.id DESC ").append("LIMIT :limit OFFSET :offset");
+
+		final String sql = str.toString();
+		final List<?> result = createNativeQuery(sql).setParameter("userId", userId).setParameter("offset", offset)
+				.setParameter("limit", limit).getResultList();
 
 		final List<PaymentActivity> paymentActivities = new ArrayList<>();
 
