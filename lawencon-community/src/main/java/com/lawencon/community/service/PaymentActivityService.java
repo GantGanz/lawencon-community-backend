@@ -239,6 +239,10 @@ public class PaymentActivityService extends BaseCoreService {
 	public Long countAllUnapproved() {
 		return paymentActivityDao.countAllUnapproved();
 	}
+	
+	public Long countAllApproved() {
+		return paymentActivityDao.countAllApproved();
+	}
 
 	public BigDecimal getCreatorIncome() {
 		final String userId = principalService.getAuthPrincipal();

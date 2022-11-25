@@ -37,6 +37,12 @@ public class PaymentActivityController {
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
+	@GetMapping("count-approved")
+	public ResponseEntity<Long> countAllApproved() {
+		final Long res = paymentActivityService.countAllApproved();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
 	@GetMapping("creator-income")
 	public ResponseEntity<BigDecimal> getCreatorIncome() {
 		final BigDecimal res = paymentActivityService.getCreatorIncome();

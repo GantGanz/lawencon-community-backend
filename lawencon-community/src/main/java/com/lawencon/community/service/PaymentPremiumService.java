@@ -172,6 +172,10 @@ public class PaymentPremiumService extends BaseCoreService {
 		return paymentPremiumDao.countAllUnapproved();
 	}
 	
+	public Long countAllApproved() {
+		return paymentPremiumDao.countAllApproved();
+	}
+	
 	private void valInsert(final PaymentPremiumInsertReq data) {
 		valContentNotNull(data);
 	}
