@@ -20,14 +20,13 @@ public class PostDao extends AbstractJpaDao {
 	public List<Post> getAll(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT p.id, p.ver, p.post_title, p.post_content, u.fullname, p.created_by, ").append(
-				"p.created_at, p.updated_at, p.is_active, pt.post_type_code, pt.id as ptid, u.company, p.position_name, u.file_id ")
+				"p.created_at, p.updated_at, p.is_active, pt.post_type_code, pt.id as ptid, u.company, po.position_name, u.file_id ")
 				.append("FROM t_post p ").append("INNER JOIN t_post_type pt ON pt.id = p.post_type_id ")
-				.append("INNER JOIN t_user u ON u.id = p.created_by ").append("WHERE p.is_active = TRUE ")
+				.append("INNER JOIN t_user u ON u.id = p.created_by ").append("INNER JOIN t_position po ON po.id = u.position_id ").append("WHERE p.is_active = TRUE ")
 				.append("ORDER BY p.id DESC ");
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql, offset, limit)
-				.setParameter("postTypeCode", PostTypeConstant.REGULAR.getPostTypeCode()).getResultList();
+		final List<?> result = createNativeQuery(sql, offset, limit).getResultList();
 
 		final List<Post> posts = new ArrayList<>();
 

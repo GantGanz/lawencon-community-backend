@@ -172,7 +172,7 @@ public class PostService extends BaseCoreService {
 			final PostData postData = new PostData();
 			postData.setId(post.getId());
 			postData.setVersion(post.getVersion());
-			postData.setPostTitle(post.getId());
+			postData.setPostTitle(post.getPostTitle());
 			postData.setPostContent(post.getPostContent());
 			postData.setPostTypeId(post.getPostType().getId());
 			postData.setUserId(post.getUser().getId());
