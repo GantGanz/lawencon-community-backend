@@ -61,7 +61,7 @@ public class ActivityDao extends AbstractJpaDao {
 					activity.setUpdatedAt(Timestamp.valueOf(objArr[12].toString()).toLocalDateTime());
 				}
 				activity.setIsActive(Boolean.valueOf(objArr[13].toString()));
-				activity.setProvider(String.valueOf(objArr[14].toString()));
+				activity.setProvider(String.valueOf(objArr[15].toString()));
 
 				activities.add(activity);
 			});
@@ -279,7 +279,8 @@ public class ActivityDao extends AbstractJpaDao {
 					activity.setUpdatedAt(Timestamp.valueOf(objArr[12].toString()).toLocalDateTime());
 				}
 				activity.setIsActive(Boolean.valueOf(objArr[13].toString()));
-
+				activity.setProvider(String.valueOf(objArr[15].toString()));
+				
 				activities.add(activity);
 			});
 		}
@@ -335,7 +336,8 @@ public class ActivityDao extends AbstractJpaDao {
 					activity.setUpdatedAt(Timestamp.valueOf(objArr[12].toString()).toLocalDateTime());
 				}
 				activity.setIsActive(Boolean.valueOf(objArr[13].toString()));
-
+				activity.setProvider(String.valueOf(objArr[15].toString()));
+				
 				activities.add(activity);
 			});
 		}
