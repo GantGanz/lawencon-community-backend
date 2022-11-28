@@ -70,4 +70,10 @@ public class PaymentPremiumController {
 		final PaymentPremiumRes result = paymentPremiumService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("status")
+	public ResponseEntity<Boolean> checkStatus() {
+		final Boolean result = paymentPremiumService.checkStatus();
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 }

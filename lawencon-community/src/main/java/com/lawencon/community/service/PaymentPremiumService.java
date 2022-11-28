@@ -176,6 +176,15 @@ public class PaymentPremiumService extends BaseCoreService {
 		return paymentPremiumDao.countAllApproved();
 	}
 	
+	public Boolean checkStatus() {
+		final String userId = principalService.getAuthPrincipal();
+		Boolean status = false; 
+		if(paymentPremiumDao.checkStatus(userId) != null) {
+			status = true;
+		}
+		return status;
+	}
+	
 	private void valInsert(final PaymentPremiumInsertReq data) {
 		valContentNotNull(data);
 	}

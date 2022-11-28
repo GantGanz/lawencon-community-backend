@@ -18,12 +18,12 @@ public class ActivityDao extends AbstractJpaDao {
 
 	public List<Activity> getAllEvent(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT a.id, a.ver, a.activity_title, a.activity_location, a.startAt, a.endAt, a.fee,")
+		str.append("SELECT a.id, a.ver, a.title, a.activity_location, a.start_at, a.end_at, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
-				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code ").append("FROM t_activity a ")
+				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider ").append("FROM t_activity a ")
 				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_user u ON u.id = a.created_by ")
-				.append("WHERE pt.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ")
+				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ")
 				.append("ORDER BY a.id DESC");
 
 		final String sql = str.toString();
@@ -42,7 +42,8 @@ public class ActivityDao extends AbstractJpaDao {
 				activity.setActivityLocation(objArr[3].toString());
 				activity.setStartAt(Timestamp.valueOf(objArr[4].toString()).toLocalDateTime());
 				activity.setEndAt(Timestamp.valueOf(objArr[5].toString()).toLocalDateTime());
-				activity.setFee(BigDecimal.valueOf(Long.valueOf(objArr[6].toString())));
+				final BigDecimal bd = new BigDecimal(objArr[6].toString());
+				activity.setFee(bd);
 
 				final ActivityType activityType = new ActivityType();
 				activityType.setId(objArr[7].toString());
@@ -60,6 +61,7 @@ public class ActivityDao extends AbstractJpaDao {
 					activity.setUpdatedAt(Timestamp.valueOf(objArr[12].toString()).toLocalDateTime());
 				}
 				activity.setIsActive(Boolean.valueOf(objArr[13].toString()));
+				activity.setProvider(String.valueOf(objArr[14].toString()));
 
 				activities.add(activity);
 			});
@@ -70,12 +72,12 @@ public class ActivityDao extends AbstractJpaDao {
 
 	public List<Activity> getAllCourse(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT a.id, a.ver, a.activity_title, a.activity_location, a.startAt, a.endAt, a.fee,")
+		str.append("SELECT a.id, a.ver, a.title, a.activity_location, a.start_at, a.end_at, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
-				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code ").append("FROM t_activity a ")
+				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider  ").append("FROM t_activity a ")
 				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_user u ON u.id = a.created_by ")
-				.append("WHERE pt.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ").append("ORDER BY a.id DESC");
+				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ").append("ORDER BY a.id DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql, offset, limit)
@@ -93,7 +95,8 @@ public class ActivityDao extends AbstractJpaDao {
 				activity.setActivityLocation(objArr[3].toString());
 				activity.setStartAt(Timestamp.valueOf(objArr[4].toString()).toLocalDateTime());
 				activity.setEndAt(Timestamp.valueOf(objArr[5].toString()).toLocalDateTime());
-				activity.setFee(BigDecimal.valueOf(Long.valueOf(objArr[6].toString())));
+				final BigDecimal bd = new BigDecimal(objArr[6].toString());
+				activity.setFee(bd);
 
 				final ActivityType activityType = new ActivityType();
 				activityType.setId(objArr[7].toString());
@@ -111,7 +114,7 @@ public class ActivityDao extends AbstractJpaDao {
 					activity.setUpdatedAt(Timestamp.valueOf(objArr[12].toString()).toLocalDateTime());
 				}
 				activity.setIsActive(Boolean.valueOf(objArr[13].toString()));
-
+				activity.setProvider(String.valueOf(objArr[15].toString()));
 				activities.add(activity);
 			});
 		}
@@ -121,12 +124,12 @@ public class ActivityDao extends AbstractJpaDao {
 
 	public List<Activity> getAllEventById(final String userId, final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT a.id, a.ver, a.activity_title, a.activity_location, a.startAt, a.endAt, a.fee,")
+		str.append("SELECT a.id, a.ver, a.title, a.activity_location, a.start_at, a.end_at, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
-				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code ").append("FROM t_activity a ")
+				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider  ").append("FROM t_activity a ")
 				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_user u ON u.id = a.created_by ")
-				.append("WHERE pt.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ").append("AND a.createdBy = :userId ")
+				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ").append("AND a.createdBy = :userId ")
 				.append("ORDER BY a.id DESC");
 
 		final String sql = str.toString();
@@ -146,7 +149,8 @@ public class ActivityDao extends AbstractJpaDao {
 				activity.setActivityLocation(objArr[3].toString());
 				activity.setStartAt(Timestamp.valueOf(objArr[4].toString()).toLocalDateTime());
 				activity.setEndAt(Timestamp.valueOf(objArr[5].toString()).toLocalDateTime());
-				activity.setFee(BigDecimal.valueOf(Long.valueOf(objArr[6].toString())));
+				final BigDecimal bd = new BigDecimal(objArr[6].toString());
+				activity.setFee(bd);
 
 				final ActivityType activityType = new ActivityType();
 				activityType.setId(objArr[7].toString());
@@ -164,7 +168,7 @@ public class ActivityDao extends AbstractJpaDao {
 					activity.setUpdatedAt(Timestamp.valueOf(objArr[12].toString()).toLocalDateTime());
 				}
 				activity.setIsActive(Boolean.valueOf(objArr[13].toString()));
-
+				activity.setProvider(String.valueOf(objArr[15].toString()));
 				activities.add(activity);
 			});
 		}
@@ -174,12 +178,12 @@ public class ActivityDao extends AbstractJpaDao {
 
 	public List<Activity> getAllCourseById(final String userId, final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT a.id, a.ver, a.activity_title, a.activity_location, a.startAt, a.endAt, a.fee,")
+		str.append("SELECT a.id, a.ver, a.title, a.activity_location, a.start_at, a.end_at, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
-				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code ").append("FROM t_activity a ")
+				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider  ").append("FROM t_activity a ")
 				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_user u ON u.id = a.created_by ")
-				.append("WHERE pt.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ").append("AND a.createdBy = :userId ")
+				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ").append("AND a.createdBy = :userId ")
 				.append("ORDER BY a.id DESC");
 
 		final String sql = str.toString();
@@ -199,7 +203,8 @@ public class ActivityDao extends AbstractJpaDao {
 				activity.setActivityLocation(objArr[3].toString());
 				activity.setStartAt(Timestamp.valueOf(objArr[4].toString()).toLocalDateTime());
 				activity.setEndAt(Timestamp.valueOf(objArr[5].toString()).toLocalDateTime());
-				activity.setFee(BigDecimal.valueOf(Long.valueOf(objArr[6].toString())));
+				final BigDecimal bd = new BigDecimal(objArr[6].toString());
+				activity.setFee(bd);
 
 				final ActivityType activityType = new ActivityType();
 				activityType.setId(objArr[7].toString());
@@ -217,7 +222,8 @@ public class ActivityDao extends AbstractJpaDao {
 					activity.setUpdatedAt(Timestamp.valueOf(objArr[12].toString()).toLocalDateTime());
 				}
 				activity.setIsActive(Boolean.valueOf(objArr[13].toString()));
-
+				activity.setProvider(String.valueOf(objArr[15].toString()));
+				
 				activities.add(activity);
 			});
 		}
@@ -227,13 +233,14 @@ public class ActivityDao extends AbstractJpaDao {
 
 	public List<Activity> getAllJoinedEventById(final String userId, final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT a.id, a.ver, a.activity_title, a.activity_location, a.startAt, a.endAt, a.fee,")
+		str.append("SELECT a.id, a.ver, a.title, a.activity_location, a.start_at, a.end_at, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
-				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code ").append("FROM t_activity a ")
+				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider  ").append("FROM t_activity a ")
 				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_payment_activity pa ON pa.activity_id = a.id ")
 				.append("INNER JOIN t_user u ON u.id = pa.user_id ")
-				.append("WHERE pt.activity_type_code = :activityTypeCode ").append("AND pa.is_active = TRUE ")
+				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND pa.is_approved = TRUE ")
+				.append("AND u.id = :userId ")
 				.append("AND a.is_active = TRUE ").append("ORDER BY a.id DESC");
 
 		final String sql = str.toString();
@@ -253,7 +260,8 @@ public class ActivityDao extends AbstractJpaDao {
 				activity.setActivityLocation(objArr[3].toString());
 				activity.setStartAt(Timestamp.valueOf(objArr[4].toString()).toLocalDateTime());
 				activity.setEndAt(Timestamp.valueOf(objArr[5].toString()).toLocalDateTime());
-				activity.setFee(BigDecimal.valueOf(Long.valueOf(objArr[6].toString())));
+				final BigDecimal bd = new BigDecimal(objArr[6].toString());
+				activity.setFee(bd);
 
 				final ActivityType activityType = new ActivityType();
 				activityType.setId(objArr[7].toString());
@@ -281,13 +289,14 @@ public class ActivityDao extends AbstractJpaDao {
 
 	public List<Activity> getAllJoinedCourseById(final String userId, final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT a.id, a.ver, a.activity_title, a.activity_location, a.startAt, a.endAt, a.fee,")
+		str.append("SELECT a.id, a.ver, a.title, a.activity_location, a.start_at, a.end_at, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
-				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code ").append("FROM t_activity a ")
+				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider  ").append("FROM t_activity a ")
 				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_payment_activity pa ON pa.activity_id = a.id ")
 				.append("INNER JOIN t_user u ON u.id = pa.user_id ")
-				.append("WHERE pt.activity_type_code = :activityTypeCode ").append("AND pa.is_active = TRUE ")
+				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND pa.is_approved = TRUE ")
+				.append("AND u.id = :userId ")
 				.append("ORDER BY a.id DESC");
 
 		final String sql = str.toString();
@@ -307,7 +316,8 @@ public class ActivityDao extends AbstractJpaDao {
 				activity.setActivityLocation(objArr[3].toString());
 				activity.setStartAt(Timestamp.valueOf(objArr[4].toString()).toLocalDateTime());
 				activity.setEndAt(Timestamp.valueOf(objArr[5].toString()).toLocalDateTime());
-				activity.setFee(BigDecimal.valueOf(Long.valueOf(objArr[6].toString())));
+				final BigDecimal bd = new BigDecimal(objArr[6].toString());
+				activity.setFee(bd);
 
 				final ActivityType activityType = new ActivityType();
 				activityType.setId(objArr[7].toString());

@@ -45,7 +45,7 @@ public class ActivityService extends BaseCoreService {
 	private FileDao fileDao;
 	@Autowired
 	private PrincipalService principalService;
-	
+
 	public InsertRes insert(final ActivityInsertReq data) {
 		valInsert(data);
 
@@ -59,7 +59,7 @@ public class ActivityService extends BaseCoreService {
 
 		final ActivityType activityType = activityTypeDao.getById(ActivityType.class, data.getActivityTypeId());
 		activityInsert.setActivityType(activityType);
-		
+
 		final String userId = principalService.getAuthPrincipal();
 		final User user = userDao.getById(User.class, userId);
 		activityInsert.setUser(user);
@@ -78,7 +78,7 @@ public class ActivityService extends BaseCoreService {
 				File fileInsert = new File();
 				fileInsert.setFileCodes(attachmentActivityInsertReq.getFileCodes());
 				fileInsert.setExtensions(attachmentActivityInsertReq.getExtensions());
-				
+
 				fileInsert = fileDao.save(fileInsert);
 				attachmentActivity.setFile(fileInsert);
 
@@ -132,7 +132,7 @@ public class ActivityService extends BaseCoreService {
 		res.setMessage("Update success");
 		return res;
 	}
-	
+
 	public ActivitiesRes getAllEvent(final Integer offset, final Integer limit) {
 		final List<Activity> activities = activityDao.getAllEvent(offset, limit);
 		final List<ActivityData> activityDatas = new ArrayList<>();
@@ -141,7 +141,7 @@ public class ActivityService extends BaseCoreService {
 			final ActivityData activityData = new ActivityData();
 			activityData.setId(activity.getId());
 			activityData.setVersion(activity.getVersion());
-			activityData.setActivityTitle(activity.getId());
+			activityData.setActivityTitle(activity.getActivityTitle());
 			activityData.setActivityLocation(activity.getActivityLocation());
 			activityData.setProvider(activity.getProvider());
 			activityData.setStartAt(activity.getStartAt());
@@ -168,13 +168,14 @@ public class ActivityService extends BaseCoreService {
 				attachmentActivityDatas.add(attachmentActivityData);
 			}
 			activityData.setAttachmentActivityDatas(attachmentActivityDatas);
+			activityDatas.add(activityData);
 		}
 		final ActivitiesRes activitiesRes = new ActivitiesRes();
 		activitiesRes.setData(activityDatas);
 
 		return activitiesRes;
 	}
-	
+
 	public ActivitiesRes getAllCourse(final Integer offset, final Integer limit) {
 		final List<Activity> activities = activityDao.getAllCourse(offset, limit);
 		final List<ActivityData> activityDatas = new ArrayList<>();
@@ -183,7 +184,7 @@ public class ActivityService extends BaseCoreService {
 			final ActivityData activityData = new ActivityData();
 			activityData.setId(activity.getId());
 			activityData.setVersion(activity.getVersion());
-			activityData.setActivityTitle(activity.getId());
+			activityData.setActivityTitle(activity.getActivityTitle());
 			activityData.setActivityLocation(activity.getActivityLocation());
 			activityData.setProvider(activity.getProvider());
 			activityData.setStartAt(activity.getStartAt());
@@ -210,22 +211,24 @@ public class ActivityService extends BaseCoreService {
 				attachmentActivityDatas.add(attachmentActivityData);
 			}
 			activityData.setAttachmentActivityDatas(attachmentActivityDatas);
+			activityDatas.add(activityData);
 		}
 		final ActivitiesRes activitiesRes = new ActivitiesRes();
 		activitiesRes.setData(activityDatas);
 
 		return activitiesRes;
 	}
-	
+
 	public ActivitiesRes getAllEventById(final Integer offset, final Integer limit) {
-		final List<Activity> activities = activityDao.getAllEventById(principalService.getAuthPrincipal(), offset, limit);
+		final List<Activity> activities = activityDao.getAllEventById(principalService.getAuthPrincipal(), offset,
+				limit);
 		final List<ActivityData> activityDatas = new ArrayList<>();
 		for (int i = 0; i < activities.size(); i++) {
 			final Activity activity = activities.get(i);
 			final ActivityData activityData = new ActivityData();
 			activityData.setId(activity.getId());
 			activityData.setVersion(activity.getVersion());
-			activityData.setActivityTitle(activity.getId());
+			activityData.setActivityTitle(activity.getActivityTitle());
 			activityData.setActivityLocation(activity.getActivityLocation());
 			activityData.setProvider(activity.getProvider());
 			activityData.setStartAt(activity.getStartAt());
@@ -252,22 +255,24 @@ public class ActivityService extends BaseCoreService {
 				attachmentActivityDatas.add(attachmentActivityData);
 			}
 			activityData.setAttachmentActivityDatas(attachmentActivityDatas);
+			activityDatas.add(activityData);
 		}
 		final ActivitiesRes activitiesRes = new ActivitiesRes();
 		activitiesRes.setData(activityDatas);
 
 		return activitiesRes;
 	}
-	
+
 	public ActivitiesRes getAllCourseById(final Integer offset, final Integer limit) {
-		final List<Activity> activities = activityDao.getAllCourseById(principalService.getAuthPrincipal(), offset, limit);
+		final List<Activity> activities = activityDao.getAllCourseById(principalService.getAuthPrincipal(), offset,
+				limit);
 		final List<ActivityData> activityDatas = new ArrayList<>();
 		for (int i = 0; i < activities.size(); i++) {
 			final Activity activity = activities.get(i);
 			final ActivityData activityData = new ActivityData();
 			activityData.setId(activity.getId());
 			activityData.setVersion(activity.getVersion());
-			activityData.setActivityTitle(activity.getId());
+			activityData.setActivityTitle(activity.getActivityTitle());
 			activityData.setActivityLocation(activity.getActivityLocation());
 			activityData.setProvider(activity.getProvider());
 			activityData.setStartAt(activity.getStartAt());
@@ -294,22 +299,24 @@ public class ActivityService extends BaseCoreService {
 				attachmentActivityDatas.add(attachmentActivityData);
 			}
 			activityData.setAttachmentActivityDatas(attachmentActivityDatas);
+			activityDatas.add(activityData);
 		}
 		final ActivitiesRes activitiesRes = new ActivitiesRes();
 		activitiesRes.setData(activityDatas);
 
 		return activitiesRes;
 	}
-	
+
 	public ActivitiesRes getAllJoinedEventById(final Integer offset, final Integer limit) {
-		final List<Activity> activities = activityDao.getAllJoinedEventById(principalService.getAuthPrincipal(), offset, limit);
+		final List<Activity> activities = activityDao.getAllJoinedEventById(principalService.getAuthPrincipal(), offset,
+				limit);
 		final List<ActivityData> activityDatas = new ArrayList<>();
 		for (int i = 0; i < activities.size(); i++) {
 			final Activity activity = activities.get(i);
 			final ActivityData activityData = new ActivityData();
 			activityData.setId(activity.getId());
 			activityData.setVersion(activity.getVersion());
-			activityData.setActivityTitle(activity.getId());
+			activityData.setActivityTitle(activity.getActivityTitle());
 			activityData.setActivityLocation(activity.getActivityLocation());
 			activityData.setProvider(activity.getProvider());
 			activityData.setStartAt(activity.getStartAt());
@@ -336,22 +343,24 @@ public class ActivityService extends BaseCoreService {
 				attachmentActivityDatas.add(attachmentActivityData);
 			}
 			activityData.setAttachmentActivityDatas(attachmentActivityDatas);
+			activityDatas.add(activityData);
 		}
 		final ActivitiesRes activitiesRes = new ActivitiesRes();
 		activitiesRes.setData(activityDatas);
 
 		return activitiesRes;
 	}
-	
+
 	public ActivitiesRes getAllJoinedCourseById(final Integer offset, final Integer limit) {
-		final List<Activity> activities = activityDao.getAllJoinedCourseById(principalService.getAuthPrincipal(), offset, limit);
+		final List<Activity> activities = activityDao.getAllJoinedCourseById(principalService.getAuthPrincipal(),
+				offset, limit);
 		final List<ActivityData> activityDatas = new ArrayList<>();
 		for (int i = 0; i < activities.size(); i++) {
 			final Activity activity = activities.get(i);
 			final ActivityData activityData = new ActivityData();
 			activityData.setId(activity.getId());
 			activityData.setVersion(activity.getVersion());
-			activityData.setActivityTitle(activity.getId());
+			activityData.setActivityTitle(activity.getActivityTitle());
 			activityData.setActivityLocation(activity.getActivityLocation());
 			activityData.setProvider(activity.getProvider());
 			activityData.setStartAt(activity.getStartAt());
@@ -378,6 +387,7 @@ public class ActivityService extends BaseCoreService {
 				attachmentActivityDatas.add(attachmentActivityData);
 			}
 			activityData.setAttachmentActivityDatas(attachmentActivityDatas);
+			activityDatas.add(activityData);
 		}
 		final ActivitiesRes activitiesRes = new ActivitiesRes();
 		activitiesRes.setData(activityDatas);
@@ -390,7 +400,7 @@ public class ActivityService extends BaseCoreService {
 		final ActivityData activityData = new ActivityData();
 		activityData.setId(activity.getId());
 		activityData.setVersion(activity.getVersion());
-		activityData.setActivityTitle(activity.getId());
+		activityData.setActivityTitle(activity.getActivityTitle());
 		activityData.setActivityLocation(activity.getActivityLocation());
 		activityData.setProvider(activity.getProvider());
 		activityData.setStartAt(activity.getStartAt());
@@ -449,7 +459,7 @@ public class ActivityService extends BaseCoreService {
 			throw new RuntimeException("Fee cannot be empty");
 		}
 	}
-	
+
 	private void valIdFkNotNull(final ActivityInsertReq data) {
 		if (data.getActivityTypeId() == null) {
 			throw new RuntimeException("Activity Type id cannot be empty");
@@ -457,7 +467,8 @@ public class ActivityService extends BaseCoreService {
 	}
 
 	private void valFkFound(final ActivityInsertReq data) {
-		final ActivityType activityType = activityTypeDao.getByIdAndDetach(ActivityType.class, data.getActivityTypeId());
+		final ActivityType activityType = activityTypeDao.getByIdAndDetach(ActivityType.class,
+				data.getActivityTypeId());
 		if (activityType == null) {
 			throw new RuntimeException("Activity Type not found");
 		}
@@ -510,15 +521,16 @@ public class ActivityService extends BaseCoreService {
 			throw new RuntimeException("activity not found");
 		}
 	}
-	
+
 	private void valIdFkNotNull(final ActivityUpdateReq data) {
 		if (data.getActivityTypeId() == null) {
 			throw new RuntimeException("Activity type cannot be empty");
 		}
 	}
-	
+
 	private void valFkFound(final ActivityUpdateReq data) {
-		final ActivityType activityType = activityTypeDao.getByIdAndDetach(ActivityType.class, data.getActivityTypeId());
+		final ActivityType activityType = activityTypeDao.getByIdAndDetach(ActivityType.class,
+				data.getActivityTypeId());
 		if (activityType == null) {
 			throw new RuntimeException("Activity Type not found");
 		}
