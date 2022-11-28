@@ -1,4 +1,5 @@
 package com.lawencon.community.service;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,8 @@ public class PaymentPremiumService extends BaseCoreService {
 		valInsert(data);
 
 		PaymentPremium paymentPremiumInsert = new PaymentPremium();
-		paymentPremiumInsert.setNominal(data.getNominal());
+		final BigDecimal bd = new BigDecimal("50000");
+		paymentPremiumInsert.setNominal(bd);
 		paymentPremiumInsert.setIsApproved(false);
 
 		final String userId = principalService.getAuthPrincipal();
@@ -179,7 +181,16 @@ public class PaymentPremiumService extends BaseCoreService {
 	public Boolean checkStatus() {
 		final String userId = principalService.getAuthPrincipal();
 		Boolean status = false; 
-		if(paymentPremiumDao.checkStatus(userId) != null) {
+		if(paymentPremiumDao.checkStatus(userId) > 0) {
+			status = true;
+		}
+		return status;
+	}
+	
+	public Boolean checkPaid() {
+		final String userId = principalService.getAuthPrincipal();
+		Boolean status = false; 
+		if(paymentPremiumDao.checkPaid(userId) > 0) {
 			status = true;
 		}
 		return status;
@@ -190,14 +201,11 @@ public class PaymentPremiumService extends BaseCoreService {
 	}
 
 	private void valContentNotNull(final PaymentPremiumInsertReq data) {
-		if (data.getNominal() == null) {
-			throw new RuntimeException("Nominal cannot be empty");
+		if (data.getFileCodes() == null || "".equals(data.getFileCodes())) {
+			throw new RuntimeException("File cannot be empty");
 		}
-		if (data.getFileCodes() == null) {
-			throw new RuntimeException("File Codes cannot be empty");
-		}
-		if (data.getExtensions() == null) {
-			throw new RuntimeException("Extensions cannot be empty");
+		if (data.getExtensions() == null|| "".equals(data.getExtensions())) {
+			throw new RuntimeException("File cannot be empty");
 		}
 	}
 
