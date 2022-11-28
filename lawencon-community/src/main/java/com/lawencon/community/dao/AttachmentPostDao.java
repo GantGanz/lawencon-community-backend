@@ -14,10 +14,10 @@ public class AttachmentPostDao extends AbstractJpaDao {
 	public List<AttachmentPost> getAllById(final String postId) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.file_id , a.post_id ").append("FROM t_attachment_post a ")
-				.append("WHERE a.post_id = :postId").append("ORDER BY a.id DESC");
+				.append("WHERE a.post_id = :postId ").append("ORDER BY a.id DESC");
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql).setParameter(":postId", postId).getResultList();
+		final List<?> result = createNativeQuery(sql).setParameter("postId", postId).getResultList();
 
 		final List<AttachmentPost> attachmentActivities = new ArrayList<>();
 
