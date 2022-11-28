@@ -247,7 +247,7 @@ public class PostService extends BaseCoreService {
 			postData.setVersion(post.getVersion());
 			postData.setPostTitle(post.getId());
 			postData.setPostContent(post.getPostContent());
-			postData.setPostTypeId(post.getPostType().getId());
+			postData.setPostTypeCode(post.getPostType().getPostTypeCode());
 			postData.setUserId(post.getUser().getId());
 			postData.setCreatorName(post.getUser().getFullname());
 			postData.setCreatedBy(post.getCreatedBy());
