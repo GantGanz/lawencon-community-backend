@@ -76,4 +76,10 @@ public class PaymentPremiumController {
 		final Boolean result = paymentPremiumService.checkStatus();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("paid")
+	public ResponseEntity<Boolean> checkPending() {
+		final Boolean result = paymentPremiumService.checkPaid();
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 }
