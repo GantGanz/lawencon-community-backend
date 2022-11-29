@@ -14,7 +14,7 @@ public class AttachmentArticleDao extends AbstractJpaDao {
 	public List<AttachmentArticle> getAllById(final String articleId) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.file_id , a.article_id ").append("FROM t_attachment_article a ")
-				.append("WHERE a.article_id = :articleId ").append("ORDER BY a.id DESC");
+				.append("WHERE a.article_id = :articleId ").append("ORDER BY a.created_at DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql).setParameter("articleId", articleId).getResultList();

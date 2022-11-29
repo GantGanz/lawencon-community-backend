@@ -20,7 +20,7 @@ public class CommentDao extends AbstractJpaDao {
 				.append("c.created_by, c.created_at, c.updated_at, c.is_active ").append("FROM t_comment c ")
 				.append("INNER JOIN t_user u ON u.id = c.created_by ")
 				.append("WHERE c.post_id = :postId ").append("AND c.is_active = TRUE ")
-				.append("ORDER BY c.id DESC");
+				.append("ORDER BY c.created_at DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql).setParameter("postId", postId).getResultList();
@@ -63,7 +63,7 @@ public class CommentDao extends AbstractJpaDao {
 				.append("c.created_by, c.created_at, c.updated_at, c.is_active ").append("FROM t_comment c ")
 				.append("INNER JOIN t_user u ON u.id = c.created_by ")
 				.append("WHERE c.comment_id = :commentId ").append("AND c.is_active = TRUE ")
-				.append("ORDER BY c.id DESC");
+				.append("ORDER BY c.created_at DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql).setParameter("commentId", commentId).getResultList();

@@ -16,7 +16,7 @@ public class AttachmentActivityDao extends AbstractJpaDao {
 	public List<AttachmentActivity> getAllById(final String activityId) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.file_id , a.activity_id ").append("FROM t_attachment_activity a ")
-				.append("WHERE a.activity_id = :activityId ").append("ORDER BY a.id DESC");
+				.append("WHERE a.activity_id = :activityId ").append("ORDER BY a.created_at DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql).setParameter("activityId", activityId).getResultList();
