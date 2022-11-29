@@ -97,15 +97,15 @@ public class PaymentActivityController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
-	@GetMapping("status")
-	public ResponseEntity<Boolean> checkStatus() {
-		final Boolean result = paymentActivityService.checkApproved();
+	@GetMapping("status/{id}")
+	public ResponseEntity<Boolean> checkStatus(@PathVariable("id") final String id) {
+		final Boolean result = paymentActivityService.checkApproved(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
-	@GetMapping("paid")
-	public ResponseEntity<Boolean> checkPending() {
-		final Boolean result = paymentActivityService.checkPaid();
+	@GetMapping("paid/{id}")
+	public ResponseEntity<Boolean> checkPending(@PathVariable("id") final String id) {
+		final Boolean result = paymentActivityService.checkPaid(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }
