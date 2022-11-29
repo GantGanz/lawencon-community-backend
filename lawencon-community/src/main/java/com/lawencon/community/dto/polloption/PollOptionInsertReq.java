@@ -6,6 +6,5 @@ import lombok.Data;
 public class PollOptionInsertReq {
 
 	private String pollContent;
-	private String pollId;
 	
 }

@@ -14,6 +14,5 @@ public class PollInsertReq {
 	private String pollTitle;
 	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'+07:00'")
 	private LocalDateTime endAt;
-	private String postId;
 	private List<PollOptionInsertReq> pollOptionInsertReqs;
 }
