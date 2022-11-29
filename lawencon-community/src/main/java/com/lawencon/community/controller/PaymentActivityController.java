@@ -96,4 +96,16 @@ public class PaymentActivityController {
 		final PaymentActivityRes result = paymentActivityService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("status")
+	public ResponseEntity<Boolean> checkStatus() {
+		final Boolean result = paymentActivityService.checkApproved();
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping("paid")
+	public ResponseEntity<Boolean> checkPending() {
+		final Boolean result = paymentActivityService.checkPaid();
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 }

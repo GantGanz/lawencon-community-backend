@@ -289,4 +289,37 @@ public class PaymentActivityDao extends AbstractJpaDao {
 		}
 		return total;
 	}
+	
+	public Long checkApproved(final String userId) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT count(p.id) ").append("FROM t_payment_activity p ").append("WHERE p.is_approved = TRUE ")
+				.append("AND p.user_id = :userId");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
+
+	public Long checkPaid(final String userId) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT count(p.id) ").append("FROM t_payment_activity p ").append("WHERE p.user_id = :userId");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
 }
