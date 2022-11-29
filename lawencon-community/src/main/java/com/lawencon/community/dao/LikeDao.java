@@ -15,8 +15,8 @@ public class LikeDao extends AbstractJpaDao {
 
 	public Long countLike(final String postId) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT COUNT(l.id) ").append("FROM t_like l ")
-				.append("WHERE l.is_active = TRUE ").append("AND l.post_id = :postId ");
+		str.append("SELECT COUNT(l.id) ").append("FROM t_like l ").append("WHERE l.is_active = TRUE ")
+				.append("AND l.post_id = :postId ");
 
 		Long total = null;
 		try {
@@ -29,7 +29,7 @@ public class LikeDao extends AbstractJpaDao {
 		}
 		return total;
 	}
-	
+
 	public List<Like> getAllByUserId(final String userId) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT l.id, l.ver, l.user_id, l.post_id, l.is_active ").append("FROM t_like l ")
@@ -81,4 +81,35 @@ public class LikeDao extends AbstractJpaDao {
 		}
 		return total;
 	}
+
+	public String getByUserAndPost(final String postId, final String userId) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT l.id ").append("FROM t_like l ").append("WHERE l.is_active = TRUE ")
+				.append("AND l.post_id = :postId ").append(" AND l.user_id = :userId ");
+
+		String total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("postId", postId)
+					.setParameter("userId", userId).getSingleResult();
+			if (userObj != null) {
+				total = userObj.toString();
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
+	
+	public Boolean customDelete(final String likeId) {
+		final StringBuilder str = new StringBuilder();
+		str.append("DELETE FORM t_like l ").append("WHERE id = :id");
+		int result =0;
+		try {
+			result = createNativeQuery(str.toString()).setParameter("id", likeId).executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result>0;
+	}
+	
 }

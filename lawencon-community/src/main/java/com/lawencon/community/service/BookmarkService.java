@@ -1,4 +1,5 @@
 package com.lawencon.community.service;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class BookmarkService extends BaseCoreService {
 
 	public InsertRes insert(final BookmarkInsertReq data) {
 		valInsert(data);
-		
+
 		Bookmark bookmarkInsert = new Bookmark();
 
 		final String userId = principalService.getAuthPrincipal();
@@ -121,16 +122,20 @@ public class BookmarkService extends BaseCoreService {
 		return bookmarkRes;
 	}
 
-	public Long isBookmarked(final String postId) {
+	public Boolean isBookmarked(final String postId) {
 		final String userId = principalService.getAuthPrincipal();
-		return bookmarkDao.isBookmarked(postId, userId);
+		Boolean status = false;
+		if (bookmarkDao.isBookmarked(postId, userId) > 0) {
+			status = true;
+		}
+		return status;
 	}
-	
+
 	private void valInsert(final BookmarkInsertReq data) {
 		valIdFkNotNull(data);
 		valFkFound(data);
 	}
-	
+
 	private void valIdFkNotNull(final BookmarkInsertReq data) {
 		if (data.getUserId() == null) {
 			throw new RuntimeException("User id cannot be empty");
@@ -150,7 +155,7 @@ public class BookmarkService extends BaseCoreService {
 			throw new RuntimeException("Post not found");
 		}
 	}
-	
+
 	private void valUpdate(final BookmarkUpdateReq data) {
 		valIdNotNull(data);
 		valIdFound(data);
