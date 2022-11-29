@@ -15,7 +15,7 @@ public class PollOptionDao extends AbstractJpaDao {
 	public List<PollOption> getAllByPostId(final String pollId) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT p.id, p.poll_content, p.poll_id ").append("FROM t_poll p ")
-				.append("WHERE c.poll_id = :pollId ").append("ORDER BY c.id DESC");
+				.append("WHERE p.poll_id = :pollId ").append("ORDER BY p.created_at DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql).setParameter("pollId", pollId).getResultList();
