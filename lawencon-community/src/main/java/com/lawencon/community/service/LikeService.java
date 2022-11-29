@@ -185,7 +185,7 @@ public class LikeService extends BaseCoreService {
 			throw new RuntimeException("User id cannot be empty");
 		}
 		if (data.getPostId() == null) {
-			throw new RuntimeException("Industry id cannot be empty");
+			throw new RuntimeException("Post id cannot be empty");
 		}
 	}
 

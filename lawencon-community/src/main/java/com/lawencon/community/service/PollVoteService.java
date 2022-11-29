@@ -42,6 +42,8 @@ public class PollVoteService extends BaseCoreService {
 		return status;
 	}
 	
+	public Boolean optionIsVoted(final String )
+	
 	public InsertRes insert(final PollVoteInsertReq data) {
 		valInsert(data);
 
@@ -78,16 +80,14 @@ public class PollVoteService extends BaseCoreService {
 	}
 
 	private void valIdFkNotNull(final PollVoteInsertReq data) {
-		if (data.getUserId() == null) {
-			throw new RuntimeException("User id cannot be empty");
-		}
 		if (data.getPollOptionId() == null) {
-			throw new RuntimeException("Industry id cannot be empty");
+			throw new RuntimeException("Poll Option id cannot be empty");
 		}
 	}
 
 	private void valFkFound(final PollVoteInsertReq data) {
-		final User user = userDao.getByIdAndDetach(User.class, data.getUserId());
+		final String userId = principalService.getAuthPrincipal();
+		final User user = userDao.getByIdAndDetach(User.class, userId);
 		if (user == null) {
 			throw new RuntimeException("User not found");
 		}
