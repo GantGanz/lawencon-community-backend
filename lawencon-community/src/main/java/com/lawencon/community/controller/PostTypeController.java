@@ -1,5 +1,8 @@
 package com.lawencon.community.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,8 +37,10 @@ public class PostTypeController {
 	}
 	
 	@GetMapping("code/{code}")
-	public ResponseEntity<String> getIdByCode(@PathVariable("code") final String code) {
+	public ResponseEntity<Map<String, Object>> getIdByCode(@PathVariable("code") final String code) {
 		final String result = postTypeService.getPostTypeIdByCode(code);
-		return new ResponseEntity<>(result, HttpStatus.OK);
+		final Map<String, Object> id = new HashMap<>();
+		id.put("id", result);
+		return new ResponseEntity<>(id, HttpStatus.OK);
 	}
 }

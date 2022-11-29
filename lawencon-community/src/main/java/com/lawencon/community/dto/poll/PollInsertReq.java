@@ -12,7 +12,6 @@ public class PollInsertReq {
 
 	private String pollTitle;
 	private LocalDateTime endAt;
-	private String postId;
 	private List<PollOptionInsertReq> pollOptionInsertReqs;
 	
 }
