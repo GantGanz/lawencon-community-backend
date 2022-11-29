@@ -42,7 +42,7 @@ public class LikeService extends BaseCoreService {
 
 	public InsertRes insert(final LikeInsertReq data) {
 		valInsert(data);
-		
+
 		Like likeInsert = new Like();
 
 		final String userId = principalService.getAuthPrincipal();
@@ -59,14 +59,13 @@ public class LikeService extends BaseCoreService {
 		} catch (final Exception e) {
 			e.printStackTrace();
 			rollback();
-			throw new RuntimeException("Failed to create Like");
+
 		}
 		final InsertDataRes dataRes = new InsertDataRes();
 		dataRes.setId(likeInsert.getId());
 
 		final InsertRes insertRes = new InsertRes();
 		insertRes.setData(dataRes);
-		insertRes.setMessage("Like created");
 
 		return insertRes;
 	}
@@ -92,6 +91,29 @@ public class LikeService extends BaseCoreService {
 		final UpdateRes res = new UpdateRes();
 		res.setData(dataRes);
 		res.setMessage("Soft Delete success");
+		return res;
+	}
+
+	public UpdateRes update(final LikeUpdateReq data) {
+		valUpdate(data);
+		Like like = likeDao.getByIdAndDetach(Like.class, data.getId());
+		like.setIsActive(true);
+		like.setVersion(data.getVersion());
+		try {
+			begin();
+			like = likeDao.saveAndFlush(like);
+			commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new RuntimeException("Like failed");
+		}
+		final UpdateDataRes dataRes = new UpdateDataRes();
+		dataRes.setVersion(like.getVersion());
+
+		final UpdateRes res = new UpdateRes();
+		res.setData(dataRes);
+		res.setMessage("Liked");
 		return res;
 	}
 
@@ -126,16 +148,38 @@ public class LikeService extends BaseCoreService {
 		return likeRes;
 	}
 
-	public Long isLiked(final String postId) {
+	public Boolean isLiked(final String postId) {
 		final String userId = principalService.getAuthPrincipal();
-		return likeDao.isLiked(postId, userId);
+		Boolean status = false;
+		if (likeDao.isLiked(postId, userId) > 0) {
+			status = true;
+		}
+		return status;
 	}
-	
+
+	public String getByUserAndPost(final String postId) {
+		final String userId = principalService.getAuthPrincipal();
+		return likeDao.getByUserAndPost(postId, userId);
+	}
+
+	public Boolean delete(final String likeId) {
+		try {
+			begin();
+			likeDao.deleteById(Like.class, likeId);
+			commit();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+		}
+		return false;
+	}
+
 	private void valInsert(final LikeInsertReq data) {
 		valIdFkNotNull(data);
 		valFkFound(data);
 	}
-	
+
 	private void valIdFkNotNull(final LikeInsertReq data) {
 		if (data.getUserId() == null) {
 			throw new RuntimeException("User id cannot be empty");
@@ -155,7 +199,7 @@ public class LikeService extends BaseCoreService {
 			throw new RuntimeException("Post not found");
 		}
 	}
-	
+
 	private void valUpdate(final LikeUpdateReq data) {
 		valIdNotNull(data);
 		valIdFound(data);

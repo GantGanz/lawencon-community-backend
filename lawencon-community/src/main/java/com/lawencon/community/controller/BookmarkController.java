@@ -39,7 +39,7 @@ public class BookmarkController {
 		final InsertRes res = bookmarkService.insert(data);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
+
 	@PutMapping("soft-delete")
 	public ResponseEntity<UpdateRes> softDelete(@RequestBody final BookmarkUpdateReq data) {
 		final UpdateRes res = bookmarkService.softDelete(data);
@@ -51,10 +51,10 @@ public class BookmarkController {
 		final BookmarkRes result = bookmarkService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("bookmarked/{id}")
-	public ResponseEntity<Long> isBookmarked(@PathVariable("id") final String postId) {
-		final Long res = bookmarkService.isBookmarked(postId);
+	public ResponseEntity<Boolean> isBookmarked(@PathVariable("id") final String postId) {
+		final Boolean res = bookmarkService.isBookmarked(postId);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 }
