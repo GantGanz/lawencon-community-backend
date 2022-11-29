@@ -16,7 +16,7 @@ public class PollDao extends AbstractJpaDao {
 		str.append("SELECT p.id, p.poll_title, p.end_at, p.post_id, p.is_active ")
 				.append("FROM t_poll p ")
 				.append("WHERE p.post_id = :postId ")
-				.append("AND u.is_active = TRUE ");
+				.append("AND p.is_active = TRUE ");
 
 		Poll poll = null;
 		try {
