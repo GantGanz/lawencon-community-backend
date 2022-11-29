@@ -290,14 +290,14 @@ public class PaymentActivityDao extends AbstractJpaDao {
 		return total;
 	}
 	
-	public Long checkApproved(final String userId) {
+	public Long checkApproved(final String userId, final String activityId) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT count(p.id) ").append("FROM t_payment_activity p ").append("WHERE p.is_approved = TRUE ")
-				.append("AND p.user_id = :userId");
+				.append("AND p.activity_id = :activityId ").append("AND p.user_id = :userId");
 
 		Long total = null;
 		try {
-			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
+			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).setParameter("activityId", activityId).getSingleResult();
 			if (userObj != null) {
 				total = Long.valueOf(userObj.toString());
 			}
@@ -307,13 +307,13 @@ public class PaymentActivityDao extends AbstractJpaDao {
 		return total;
 	}
 
-	public Long checkPaid(final String userId) {
+	public Long checkPaid(final String userId, final String activityId) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT count(p.id) ").append("FROM t_payment_activity p ").append("WHERE p.user_id = :userId");
+		str.append("SELECT count(p.id) ").append("FROM t_payment_activity p ").append("WHERE p.user_id = :userId ").append("AND p.activity_id = :activityId ");
 
 		Long total = null;
 		try {
-			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
+			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).setParameter("activityId", activityId).getSingleResult();
 			if (userObj != null) {
 				total = Long.valueOf(userObj.toString());
 			}

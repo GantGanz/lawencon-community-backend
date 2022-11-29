@@ -261,19 +261,19 @@ public class PaymentActivityService extends BaseCoreService {
 		return paymentActivityDao.getCreatorIncome(userId).multiply(multiplier);
 	}
 
-	public Boolean checkApproved() {
+	public Boolean checkApproved(final String activityId) {
 		final String userId = principalService.getAuthPrincipal();
 		Boolean status = false; 
-		if(paymentActivityDao.checkApproved(userId) > 0) {
+		if(paymentActivityDao.checkApproved(userId, activityId) > 0) {
 			status = true;
 		}
 		return status;
 	}
 	
-	public Boolean checkPaid() {
+	public Boolean checkPaid(final String activityId) {
 		final String userId = principalService.getAuthPrincipal();
 		Boolean status = false; 
-		if(paymentActivityDao.checkPaid(userId) > 0) {
+		if(paymentActivityDao.checkPaid(userId, activityId) > 0) {
 			status = true;
 		}
 		return status;
