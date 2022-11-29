@@ -12,10 +12,10 @@ import com.lawencon.community.model.PollOption;
 @Repository
 public class PollOptionDao extends AbstractJpaDao {
 
-	public List<PollOption> getAllByPostId(final String pollId) {
+	public List<PollOption> getAllByPollId(final String pollId) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT p.id, p.poll_content, p.poll_id ").append("FROM t_poll p ")
-				.append("WHERE p.poll_id = :pollId ").append("ORDER BY p.created_at DESC");
+		str.append("SELECT p.id, p.poll_content, p.poll_id ").append("FROM t_poll_option p ")
+				.append("WHERE p.poll_id = :pollId ").append("ORDER BY p.created_at");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql).setParameter("pollId", pollId).getResultList();
@@ -28,7 +28,7 @@ public class PollOptionDao extends AbstractJpaDao {
 				final PollOption pollOption = new PollOption();
 				pollOption.setId(objArr[0].toString());
 				pollOption.setPollContent(objArr[1].toString());
-				
+
 				final Poll poll = new Poll();
 				poll.setId(objArr[2].toString());
 				pollOption.setPoll(poll);

@@ -72,7 +72,7 @@ public class PostService extends BaseCoreService {
 		final PostType postType = postTypeDao.getById(PostType.class, data.getPostTypeId());
 		postInsert.setPostType(postType);
 
-		if (postType.getPostTypeCode() == PostTypeConstant.POLLING.getPostTypeCode()) {
+		if (PostTypeConstant.POLLING.getPostTypeCode().equals(postType.getPostTypeCode())) {
 			try {
 				begin();
 				postInsert = postDao.save(postInsert);
@@ -183,11 +183,11 @@ public class PostService extends BaseCoreService {
 			postData.setCompany(post.getUser().getCompany());
 			postData.setPositionName(post.getUser().getPosition().getPositionName());
 			postData.setFileId(post.getUser().getFile().getId());
-			
+
 			final String postTypeCode = post.getPostType().getPostTypeCode();
 			postData.setPostTypeCode(postTypeCode);
 
-			if (PostTypeConstant.POLLING.getPostTypeCode() == postTypeCode) {
+			if (PostTypeConstant.POLLING.getPostTypeCode().equals(postTypeCode)) {
 				final Poll poll = pollDao.getByPostId(post.getId()).get();
 				final PollData pollData = new PollData();
 
@@ -197,7 +197,7 @@ public class PostService extends BaseCoreService {
 				pollData.setPostId(poll.getPost().getId());
 				pollData.setIsActive(poll.getIsActive());
 
-				final List<PollOption> pollOptions = pollOptionDao.getAllByPostId(post.getId());
+				final List<PollOption> pollOptions = pollOptionDao.getAllByPollId(pollData.getId());
 				final int pollOptionSize = pollOptions.size();
 				final List<PollOptionData> pollOptionDatas = new ArrayList<>();
 				for (int x = 0; x < pollOptionSize; x++) {
@@ -236,7 +236,7 @@ public class PostService extends BaseCoreService {
 
 		return postsRes;
 	}
-	
+
 	public PostsRes getAllRegular() {
 		final List<Post> posts = postDao.getAllRegular();
 		final List<PostData> postDatas = new ArrayList<>();
@@ -301,7 +301,7 @@ public class PostService extends BaseCoreService {
 			pollData.setPostId(poll.getPost().getId());
 			pollData.setIsActive(poll.getIsActive());
 
-			final List<PollOption> pollOptions = pollOptionDao.getAllByPostId(post.getId());
+			final List<PollOption> pollOptions = pollOptionDao.getAllByPollId(post.getId());
 			final int pollOptionSize = pollOptions.size();
 			final List<PollOptionData> pollOptionDatas = new ArrayList<>();
 			for (int x = 0; x < pollOptionSize; x++) {
@@ -385,11 +385,11 @@ public class PostService extends BaseCoreService {
 			postData.setCompany(post.getUser().getCompany());
 			postData.setPositionName(post.getUser().getPosition().getPositionName());
 			postData.setFileId(post.getUser().getFile().getId());
-			
+
 			final String postTypeCode = post.getPostType().getPostTypeCode();
 			postData.setPostTypeCode(postTypeCode);
 
-			if (PostTypeConstant.POLLING.getPostTypeCode() == postTypeCode) {
+			if (PostTypeConstant.POLLING.getPostTypeCode().equals(postTypeCode)) {
 				final Poll poll = pollDao.getByPostId(post.getId()).get();
 				final PollData pollData = new PollData();
 
@@ -399,7 +399,7 @@ public class PostService extends BaseCoreService {
 				pollData.setPostId(poll.getPost().getId());
 				pollData.setIsActive(poll.getIsActive());
 
-				final List<PollOption> pollOptions = pollOptionDao.getAllByPostId(post.getId());
+				final List<PollOption> pollOptions = pollOptionDao.getAllByPollId(post.getId());
 				final int pollOptionSize = pollOptions.size();
 				final List<PollOptionData> pollOptionDatas = new ArrayList<>();
 				for (int x = 0; x < pollOptionSize; x++) {
@@ -439,7 +439,7 @@ public class PostService extends BaseCoreService {
 
 		return postsRes;
 	}
-	
+
 	public PostsRes getAllRegularById() {
 		final List<Post> posts = postDao.getAllRegularById(principalService.getAuthPrincipal());
 		final List<PostData> postDatas = new ArrayList<>();
@@ -504,7 +504,7 @@ public class PostService extends BaseCoreService {
 			pollData.setPostId(poll.getPost().getId());
 			pollData.setIsActive(poll.getIsActive());
 
-			final List<PollOption> pollOptions = pollOptionDao.getAllByPostId(post.getId());
+			final List<PollOption> pollOptions = pollOptionDao.getAllByPollId(post.getId());
 			final int pollOptionSize = pollOptions.size();
 			final List<PollOptionData> pollOptionDatas = new ArrayList<>();
 			for (int x = 0; x < pollOptionSize; x++) {
@@ -591,7 +591,7 @@ public class PostService extends BaseCoreService {
 			final String postTypeCode = post.getPostType().getPostTypeCode();
 			postData.setPostTypeCode(postTypeCode);
 
-			if (PostTypeConstant.POLLING.getPostTypeCode() == postTypeCode) {
+			if (PostTypeConstant.POLLING.getPostTypeCode().equals(postTypeCode)) {
 				final Poll poll = pollDao.getByPostId(post.getId()).get();
 				final PollData pollData = new PollData();
 
@@ -601,7 +601,7 @@ public class PostService extends BaseCoreService {
 				pollData.setPostId(poll.getPost().getId());
 				pollData.setIsActive(poll.getIsActive());
 
-				final List<PollOption> pollOptions = pollOptionDao.getAllByPostId(post.getId());
+				final List<PollOption> pollOptions = pollOptionDao.getAllByPollId(post.getId());
 				final int pollOptionSize = pollOptions.size();
 				final List<PollOptionData> pollOptionDatas = new ArrayList<>();
 				for (int x = 0; x < pollOptionSize; x++) {
@@ -664,7 +664,7 @@ public class PostService extends BaseCoreService {
 			final String postTypeCode = post.getPostType().getPostTypeCode();
 			postData.setPostTypeCode(postTypeCode);
 
-			if (PostTypeConstant.POLLING.getPostTypeCode() == postTypeCode) {
+			if (PostTypeConstant.POLLING.getPostTypeCode().equals(postTypeCode)) {
 				final Poll poll = pollDao.getByPostId(post.getId()).get();
 				final PollData pollData = new PollData();
 
@@ -674,7 +674,7 @@ public class PostService extends BaseCoreService {
 				pollData.setPostId(poll.getPost().getId());
 				pollData.setIsActive(poll.getIsActive());
 
-				final List<PollOption> pollOptions = pollOptionDao.getAllByPostId(post.getId());
+				final List<PollOption> pollOptions = pollOptionDao.getAllByPollId(post.getId());
 				final int pollOptionSize = pollOptions.size();
 				final List<PollOptionData> pollOptionDatas = new ArrayList<>();
 				for (int x = 0; x < pollOptionSize; x++) {
@@ -734,7 +734,7 @@ public class PostService extends BaseCoreService {
 		final String postTypeCode = post.getPostType().getPostTypeCode();
 		postData.setPostTypeCode(postTypeCode);
 
-		if (PostTypeConstant.POLLING.getPostTypeCode() == postTypeCode) {
+		if (PostTypeConstant.POLLING.getPostTypeCode().equals(postTypeCode)) {
 			final Poll poll = pollDao.getByPostId(post.getId()).get();
 			final PollData pollData = new PollData();
 
@@ -744,7 +744,7 @@ public class PostService extends BaseCoreService {
 			pollData.setPostId(poll.getPost().getId());
 			pollData.setIsActive(poll.getIsActive());
 
-			final List<PollOption> pollOptions = pollOptionDao.getAllByPostId(post.getId());
+			final List<PollOption> pollOptions = pollOptionDao.getAllByPollId(post.getId());
 			final int pollOptionSize = pollOptions.size();
 			final List<PollOptionData> pollOptionDatas = new ArrayList<>();
 			for (int x = 0; x < pollOptionSize; x++) {
@@ -787,7 +787,7 @@ public class PostService extends BaseCoreService {
 		valIdFkNotNull(data);
 		valFkFound(data);
 	}
-	
+
 	private void valContentNotNull(final PostInsertReq data) {
 		if (data.getPostTitle() == null) {
 			throw new RuntimeException("Title cannot be empty");
