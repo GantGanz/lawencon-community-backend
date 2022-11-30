@@ -20,7 +20,7 @@ public class UserDao extends AbstractJpaDao {
 	public Optional<User> getByEmail(final String email) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT u.id, u.email, u.pass, u.fullname, ur.role_name, ur.role_code, u.file_id, u.company,")
-				.append("u.is_premium, i.industry_name, p.position_name ").append("FROM t_user u ")
+				.append("i.industry_name, p.position_name ").append("FROM t_user u ")
 				.append("INNER JOIN t_role ur ON ur.id = u.role_id ")
 				.append("INNER JOIN t_industry i ON u.industry_id = i.id ")
 				.append("INNER JOIN t_position p ON u.position_id = p.id ").append("WHERE email = :username ")
@@ -46,13 +46,12 @@ public class UserDao extends AbstractJpaDao {
 				file.setId(objArr[6].toString());
 
 				user.setCompany(objArr[7].toString());
-				user.setIsPremium(Boolean.valueOf(objArr[8].toString()));
 
 				final Industry industry = new Industry();
-				industry.setIndustryName(objArr[9].toString());
+				industry.setIndustryName(objArr[8].toString());
 
 				final Position position = new Position();
-				position.setPositionName(objArr[10].toString());
+				position.setPositionName(objArr[9].toString());
 
 				user.setFile(file);
 				user.setRole(role);

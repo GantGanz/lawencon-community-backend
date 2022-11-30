@@ -10,5 +10,4 @@ public class LoginResDto {
 	private String roleCode;
 	private String email;
 	private String fileId;
-	private Boolean isPremium;
 }
