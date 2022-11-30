@@ -326,6 +326,30 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 
 		return userRes;
 	}
+	
+	public UserRes getByPrincipal() {
+		final User user = userDao.getById(User.class, principalService.getAuthPrincipal());
+		final UserData userData = new UserData();
+		userData.setId(user.getId());
+		userData.setFullname(user.getFullname());
+		userData.setEmail(user.getEmail());
+		userData.setCompany(user.getCompany());
+		userData.setRoleId(user.getRole().getId());
+		userData.setRoleName(user.getRole().getRoleName());
+		userData.setIndustryId(user.getIndustry().getId());
+		userData.setIndustryName(user.getIndustry().getIndustryName());
+		userData.setPositionId(user.getPosition().getId());
+		userData.setPositionName(user.getPosition().getPositionName());
+		userData.setFileId(user.getFile().getId());
+		userData.setIsPremium(user.getIsPremium());
+		userData.setVersion(user.getVersion());
+		userData.setIsActive(user.getIsActive());
+
+		final UserRes userRes = new UserRes();
+		userRes.setData(userData);
+
+		return userRes;
+	}
 
 	public Long countAllMember() {
 		return userDao.countAllUser(RoleConstant.MEMBER.getRoleCode());

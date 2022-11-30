@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lawencon.base.BaseCoreService;
+import com.lawencon.community.constant.ActivityTypeConstant;
 import com.lawencon.community.dao.ActivityDao;
 import com.lawencon.community.dao.ActivityTypeDao;
 import com.lawencon.community.dao.AttachmentActivityDao;
@@ -45,6 +46,14 @@ public class ActivityService extends BaseCoreService {
 	private FileDao fileDao;
 	@Autowired
 	private PrincipalService principalService;
+	
+	public Long countMyEvent() {
+		return activityDao.countMyActivity(principalService.getAuthPrincipal(), ActivityTypeConstant.EVENT.getActivityTypeCode());
+	}
+	
+	public Long countMyCourse() {
+		return activityDao.countMyActivity(principalService.getAuthPrincipal(), ActivityTypeConstant.COURSE.getActivityTypeCode());
+	}
 
 	public InsertRes insert(final ActivityInsertReq data) {
 		valInsert(data);

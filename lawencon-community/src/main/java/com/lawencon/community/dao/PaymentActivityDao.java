@@ -137,7 +137,8 @@ public class PaymentActivityDao extends AbstractJpaDao {
 				.append("p.created_at, p.activity_id, a.title, p.ver, p.updated_at, at.activity_type_name, u.email ")
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
 				.append("INNER JOIN t_activity a ON a.id = p.activity_id  ")
-				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ").append("WHERE a.created_by = :userId ")
+				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
+				.append("WHERE a.created_by = :userId ").append("p.is_approved = TRUE")
 				.append("ORDER BY p.created_at DESC");
 
 		final String sql = str.toString();
@@ -192,7 +193,7 @@ public class PaymentActivityDao extends AbstractJpaDao {
 				.append("p.created_at, p.activity_id, a.title, p.ver, p.updated_at, at.activity_type_name, u.email ")
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
 				.append("INNER JOIN t_activity a ON a.id = p.activity_id  ")
-				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ").append("WHERE p.created_by = :userId ")
+				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ").append("WHERE p.created_by = :userId ").append("p.is_approved = TRUE")
 				.append("ORDER BY p.created_at DESC ").append("LIMIT :limit OFFSET :offset");
 
 		final String sql = str.toString();
@@ -244,13 +245,31 @@ public class PaymentActivityDao extends AbstractJpaDao {
 
 	public BigDecimal getCreatorIncome(final String userId) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT SUM(nominal) ").append("FROM t_payment_activity p ").append("WHERE p.created_by = :userId ");
+		str.append("SELECT SUM(nominal) ").append("FROM t_payment_activity p ").append("INNER JOIN t_activity a ON a.id = p.activity_id ").append("WHERE a.created_by = :userId ").append("AND p.is_approved = TRUE");
 
 		BigDecimal totalIncome = null;
 		try {
 			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
 			if (userObj != null) {
-				totalIncome = BigDecimal.valueOf(Long.valueOf(userObj.toString()));
+				final BigDecimal bd = new BigDecimal(userObj.toString());
+				totalIncome = bd;
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return totalIncome;
+	}
+	
+	public BigDecimal getSystemIncome() {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT SUM(nominal) ").append("FROM t_payment_activity p ").append("INNER JOIN t_activity a ON a.id = p.activity_id ").append("WHERE p.is_approved = TRUE");
+
+		BigDecimal totalIncome = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).getSingleResult();
+			if (userObj != null) {
+				final BigDecimal bd = new BigDecimal(userObj.toString());
+				totalIncome = bd;
 			}
 		} catch (final Exception e) {
 			e.printStackTrace();
