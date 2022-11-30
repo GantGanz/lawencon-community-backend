@@ -256,9 +256,8 @@ public class PaymentActivityService extends BaseCoreService {
 	}
 
 	public BigDecimal getSystemIncome() {
-		final String userId = principalService.getAuthPrincipal();
 		final BigDecimal multiplier = new BigDecimal("0.1");
-		return paymentActivityDao.getCreatorIncome(userId).multiply(multiplier);
+		return paymentActivityDao.getSystemIncome().multiply(multiplier);
 	}
 
 	public Boolean checkApproved(final String activityId) {

@@ -82,4 +82,16 @@ public class ActivityController {
 		final ActivityRes result = activityService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("count-my-course")
+	public ResponseEntity<Long> countMyCourse() {
+		final Long res = activityService.countMyCourse();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("count-my-event")
+	public ResponseEntity<Long> countMyEvent() {
+		final Long res = activityService.countMyEvent();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
 }

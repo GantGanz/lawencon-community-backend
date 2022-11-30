@@ -20,8 +20,8 @@ public class ActivityDao extends AbstractJpaDao {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.title, a.activity_location, a.start_at, a.end_at, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
-				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider ").append("FROM t_activity a ")
-				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
+				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider ")
+				.append("FROM t_activity a ").append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_user u ON u.id = a.created_by ")
 				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ")
 				.append("ORDER BY a.created_at DESC");
@@ -74,10 +74,11 @@ public class ActivityDao extends AbstractJpaDao {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.title, a.activity_location, a.start_at, a.end_at, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
-				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider  ").append("FROM t_activity a ")
-				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
+				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider  ")
+				.append("FROM t_activity a ").append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_user u ON u.id = a.created_by ")
-				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ").append("ORDER BY a.created_at DESC");
+				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ")
+				.append("ORDER BY a.created_at DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql, offset, limit)
@@ -126,11 +127,11 @@ public class ActivityDao extends AbstractJpaDao {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.title, a.activity_location, a.start_at, a.end_at, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
-				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider  ").append("FROM t_activity a ")
-				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
+				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider  ")
+				.append("FROM t_activity a ").append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_user u ON u.id = a.created_by ")
-				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ").append("AND a.created_by = :userId ")
-				.append("ORDER BY a.created_at DESC");
+				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ")
+				.append("AND a.created_by = :userId ").append("ORDER BY a.created_at DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql, offset, limit)
@@ -180,11 +181,11 @@ public class ActivityDao extends AbstractJpaDao {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.title, a.activity_location, a.start_at, a.end_at, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
-				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider  ").append("FROM t_activity a ")
-				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
+				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider  ")
+				.append("FROM t_activity a ").append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_user u ON u.id = a.created_by ")
-				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ").append("AND a.created_by = :userId ")
-				.append("ORDER BY a.created_at DESC");
+				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ")
+				.append("AND a.created_by = :userId ").append("ORDER BY a.created_at DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql, offset, limit)
@@ -223,7 +224,7 @@ public class ActivityDao extends AbstractJpaDao {
 				}
 				activity.setIsActive(Boolean.valueOf(objArr[13].toString()));
 				activity.setProvider(String.valueOf(objArr[15].toString()));
-				
+
 				activities.add(activity);
 			});
 		}
@@ -235,13 +236,12 @@ public class ActivityDao extends AbstractJpaDao {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.title, a.activity_location, a.start_at, a.end_at, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
-				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider  ").append("FROM t_activity a ")
-				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
+				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider  ")
+				.append("FROM t_activity a ").append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_payment_activity pa ON pa.activity_id = a.id ")
 				.append("INNER JOIN t_user u ON u.id = pa.user_id ")
 				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND pa.is_approved = TRUE ")
-				.append("AND u.id = :userId ")
-				.append("AND a.is_active = TRUE ").append("ORDER BY a.created_at DESC");
+				.append("AND u.id = :userId ").append("AND a.is_active = TRUE ").append("ORDER BY a.created_at DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql, offset, limit)
@@ -280,7 +280,7 @@ public class ActivityDao extends AbstractJpaDao {
 				}
 				activity.setIsActive(Boolean.valueOf(objArr[13].toString()));
 				activity.setProvider(String.valueOf(objArr[15].toString()));
-				
+
 				activities.add(activity);
 			});
 		}
@@ -292,13 +292,12 @@ public class ActivityDao extends AbstractJpaDao {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT a.id, a.ver, a.title, a.activity_location, a.start_at, a.end_at, a.fee,")
 				.append("a.activity_type_id, at.activity_type_name, u.fullname, a.created_by, ")
-				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider  ").append("FROM t_activity a ")
-				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
+				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider  ")
+				.append("FROM t_activity a ").append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_payment_activity pa ON pa.activity_id = a.id ")
 				.append("INNER JOIN t_user u ON u.id = pa.user_id ")
 				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND pa.is_approved = TRUE ")
-				.append("AND u.id = :userId ")
-				.append("ORDER BY a.created_at DESC");
+				.append("AND u.id = :userId ").append("ORDER BY a.created_at DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql, offset, limit)
@@ -337,11 +336,32 @@ public class ActivityDao extends AbstractJpaDao {
 				}
 				activity.setIsActive(Boolean.valueOf(objArr[13].toString()));
 				activity.setProvider(String.valueOf(objArr[15].toString()));
-				
+
 				activities.add(activity);
 			});
 		}
 
 		return activities;
+	}
+	
+	public Long countMyActivity(final String userId, final String activityTypeCode) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT COUNT(a.id) ").append("FROM t_activity a ")
+				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
+				.append("INNER JOIN t_user u ON u.id = a.created_by ")
+				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND a.created_by = :userId ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString())
+					.setParameter("activityTypeCode", activityTypeCode)
+					.setParameter("userId", userId).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
 	}
 }
