@@ -20,6 +20,7 @@ import com.lawencon.community.dto.bookmark.BookmarkRes;
 import com.lawencon.community.dto.bookmark.BookmarkUpdateReq;
 import com.lawencon.community.dto.bookmark.BookmarksRes;
 import com.lawencon.community.model.Bookmark;
+import com.lawencon.community.model.Like;
 import com.lawencon.community.model.Post;
 import com.lawencon.community.model.User;
 import com.lawencon.security.principal.PrincipalService;
@@ -55,14 +56,12 @@ public class BookmarkService extends BaseCoreService {
 		} catch (final Exception e) {
 			e.printStackTrace();
 			rollback();
-			throw new RuntimeException("Failed to create Bookmark");
 		}
 		final InsertDataRes dataRes = new InsertDataRes();
 		dataRes.setId(bookmarkInsert.getId());
 
 		final InsertRes insertRes = new InsertRes();
 		insertRes.setData(dataRes);
-		insertRes.setMessage("Bookmark created");
 
 		return insertRes;
 	}
@@ -89,6 +88,11 @@ public class BookmarkService extends BaseCoreService {
 		res.setData(dataRes);
 		res.setMessage("Soft Delete success");
 		return res;
+	}
+
+	public String getByUserAndPost(final String postId) {
+		final String userId = principalService.getAuthPrincipal();
+		return bookmarkDao.getByUserAndPost(postId, userId);
 	}
 
 	public BookmarksRes getAllByUserId() {
@@ -131,25 +135,31 @@ public class BookmarkService extends BaseCoreService {
 		return status;
 	}
 
+	public Boolean delete(final String bookmarkId) {
+		try {
+			begin();
+			bookmarkDao.deleteById(Bookmark.class, bookmarkId);
+			commit();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+		}
+		return false;
+	}
+
 	private void valInsert(final BookmarkInsertReq data) {
 		valIdFkNotNull(data);
 		valFkFound(data);
 	}
 
 	private void valIdFkNotNull(final BookmarkInsertReq data) {
-		if (data.getUserId() == null) {
-			throw new RuntimeException("User id cannot be empty");
-		}
 		if (data.getPostId() == null) {
 			throw new RuntimeException("Industry id cannot be empty");
 		}
 	}
 
 	private void valFkFound(final BookmarkInsertReq data) {
-		final User user = userDao.getByIdAndDetach(User.class, data.getUserId());
-		if (user == null) {
-			throw new RuntimeException("User not found");
-		}
 		final Post post = postDao.getByIdAndDetach(Post.class, data.getPostId());
 		if (post == null) {
 			throw new RuntimeException("Post not found");

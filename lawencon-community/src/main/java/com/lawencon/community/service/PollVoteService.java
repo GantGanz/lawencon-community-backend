@@ -1,4 +1,5 @@
 package com.lawencon.community.service;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,15 +25,15 @@ public class PollVoteService extends BaseCoreService {
 	private UserDao userDao;
 	@Autowired
 	private PollOptionDao pollOptionDao;
-	
+
 	public Long countVote(final String pollId) {
 		return pollVoteDao.countPollVote(pollId);
 	}
-	
+
 	public Long countVoteByPollOption(final String pollOptionId) {
 		return pollVoteDao.countPollVoteByPollOption(pollOptionId);
 	}
-	
+
 	public Boolean isVoted(final String pollId) {
 		final String userId = principalService.getAuthPrincipal();
 		Boolean status = false;
@@ -41,9 +42,16 @@ public class PollVoteService extends BaseCoreService {
 		}
 		return status;
 	}
-	
-	public Boolean optionIsVoted(final String )
-	
+
+	public Boolean optionIsVoted(final String pollOptionId) {
+		final String userId = principalService.getAuthPrincipal();
+		Boolean status = false;
+		if (pollVoteDao.isVotedOption(pollOptionId, userId) > 0) {
+			status = true;
+		}
+		return status;
+	}
+
 	public InsertRes insert(final PollVoteInsertReq data) {
 		valInsert(data);
 
@@ -73,7 +81,7 @@ public class PollVoteService extends BaseCoreService {
 
 		return insertRes;
 	}
-	
+
 	private void valInsert(final PollVoteInsertReq data) {
 		valIdFkNotNull(data);
 		valFkFound(data);

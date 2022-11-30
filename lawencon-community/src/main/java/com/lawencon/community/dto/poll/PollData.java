@@ -15,6 +15,8 @@ public class PollData {
 	private LocalDateTime endAt;
 	private String postId;
 	private Boolean isActive;
+	private Long countVote;
+	private Boolean isVoted;
 	private List<PollOptionData> pollOptionDatas;
 	
 }
