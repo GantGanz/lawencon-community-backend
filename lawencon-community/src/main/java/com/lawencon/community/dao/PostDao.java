@@ -207,14 +207,11 @@ public class PostDao extends AbstractJpaDao {
 		str.append("SELECT p.id, p.ver, p.post_title, p.post_content, u.fullname, p.created_by, ").append(
 				"p.created_at, p.updated_at, p.is_active, pt.post_type_code, pt.id as ptidu.company, p.position_name, u.file_id ")
 				.append("FROM t_post p ").append("INNER JOIN t_post_type pt ON pt.id = p.post_type_id ")
-				.append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE pt.post_type_code = :postTypeCode ").append("AND p.is_active = TRUE ")
+				.append("INNER JOIN t_user u ON u.id = p.created_by ").append("WHERE p.is_active = TRUE ")
 				.append("AND p.createdBy = :userId ").append("ORDER BY p.created_at DESC");
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql, offset, limit)
-				.setParameter("postTypeCode", PostTypeConstant.REGULAR.getPostTypeCode()).setParameter("userId", userId)
-				.getResultList();
+		final List<?> result = createNativeQuery(sql, offset, limit).setParameter("userId", userId).getResultList();
 
 		final List<Post> posts = new ArrayList<>();
 
@@ -506,6 +503,84 @@ public class PostDao extends AbstractJpaDao {
 		}
 
 		return posts;
+	}
+
+	public Long countAll() {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT COUNT(p.id) ").append("FROM t_post p ")
+				.append("INNER JOIN t_post_type pt ON pt.id = p.post_type_id ")
+				.append("INNER JOIN t_user u ON u.id = p.created_by ")
+				.append("INNER JOIN t_position po ON po.id = u.position_id ").append("WHERE p.is_active = TRUE ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
+
+	public Long countMyPost(final String userId) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT COUNT(p.id) ").append("FROM t_post p ")
+				.append("INNER JOIN t_post_type pt ON pt.id = p.post_type_id ")
+				.append("INNER JOIN t_user u ON u.id = p.created_by ").append("WHERE p.is_active = TRUE ")
+				.append("AND p.createdBy = :userId ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
+
+	public Long countLiked(final String userId) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT COUNT(p.id) ").append("FROM t_post p ").append("INNER JOIN t_post_type pt ON pt.id = p.post_type_id ")
+				.append("INNER JOIN t_like l ON l.post_id = p.id ")
+				.append("INNER JOIN t_user u ON u.id = l.user_id ")
+				.append("INNER JOIN t_position po ON po.id = u.position_id ")
+				.append("WHERE u.id = :userId ")
+				.append("AND p.is_active = TRUE ").append("AND l.is_active = TRUE ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
+	
+	public Long countBookmarked(final String userId) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT COUNT(p.id) ").append("FROM t_post p ").append("INNER JOIN t_post_type pt ON pt.id = p.post_type_id ")
+		.append("INNER JOIN t_user u ON u.id = p.created_by ")
+		.append("INNER JOIN t_bookmark b ON b.post_id = p.id ").append("WHERE b.user_id = :userId ")
+		.append("AND p.is_active = TRUE ").append("AND b.is_active = TRUE ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
 	}
 
 }

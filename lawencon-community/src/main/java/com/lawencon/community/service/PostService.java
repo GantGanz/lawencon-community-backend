@@ -64,6 +64,22 @@ public class PostService extends BaseCoreService {
 	@Autowired
 	private BookmarkService bookmarkService;
 
+	public Long countAll() {
+		return postDao.countAll();
+	}
+	
+	public Long countMyPost() {
+		return postDao.countMyPost(principalService.getAuthPrincipal());
+	}
+	
+	public Long countLiked() {
+		return postDao.countLiked(principalService.getAuthPrincipal());
+	}
+	
+	public Long countBookmarked() {
+		return postDao.countBookmarked(principalService.getAuthPrincipal());
+	}
+	
 	public InsertRes insert(final PostInsertReq data) {
 		valInsert(data);
 
