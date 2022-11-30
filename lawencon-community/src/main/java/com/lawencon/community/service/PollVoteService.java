@@ -1,4 +1,5 @@
 package com.lawencon.community.service;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,15 +25,15 @@ public class PollVoteService extends BaseCoreService {
 	private UserDao userDao;
 	@Autowired
 	private PollOptionDao pollOptionDao;
-	
+
 	public Long countVote(final String pollId) {
 		return pollVoteDao.countPollVote(pollId);
 	}
-	
+
 	public Long countVoteByPollOption(final String pollOptionId) {
 		return pollVoteDao.countPollVoteByPollOption(pollOptionId);
 	}
-	
+
 	public Boolean isVoted(final String pollId) {
 		final String userId = principalService.getAuthPrincipal();
 		Boolean status = false;
@@ -41,7 +42,16 @@ public class PollVoteService extends BaseCoreService {
 		}
 		return status;
 	}
-	
+
+	public Boolean optionIsVoted(final String pollOptionId) {
+		final String userId = principalService.getAuthPrincipal();
+		Boolean status = false;
+		if (pollVoteDao.isVotedOption(pollOptionId, userId) > 0) {
+			status = true;
+		}
+		return status;
+	}
+
 	public InsertRes insert(final PollVoteInsertReq data) {
 		valInsert(data);
 
@@ -71,23 +81,21 @@ public class PollVoteService extends BaseCoreService {
 
 		return insertRes;
 	}
-	
+
 	private void valInsert(final PollVoteInsertReq data) {
 		valIdFkNotNull(data);
 		valFkFound(data);
 	}
 
 	private void valIdFkNotNull(final PollVoteInsertReq data) {
-		if (data.getUserId() == null) {
-			throw new RuntimeException("User id cannot be empty");
-		}
 		if (data.getPollOptionId() == null) {
-			throw new RuntimeException("Industry id cannot be empty");
+			throw new RuntimeException("Poll Option id cannot be empty");
 		}
 	}
 
 	private void valFkFound(final PollVoteInsertReq data) {
-		final User user = userDao.getByIdAndDetach(User.class, data.getUserId());
+		final String userId = principalService.getAuthPrincipal();
+		final User user = userDao.getByIdAndDetach(User.class, userId);
 		if (user == null) {
 			throw new RuntimeException("User not found");
 		}

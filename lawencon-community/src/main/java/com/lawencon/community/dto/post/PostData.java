@@ -17,6 +17,9 @@ public class PostData {
 	private String postContent;
 	private String postTypeId;
 	private String postTypeCode;
+	private Long countLike;
+	private Boolean isLiked;
+	private Boolean isBookmarked;
 	private String userId;
 	private String creatorName;
 	private String createdBy;

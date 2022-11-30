@@ -10,5 +10,5 @@ public class PollOptionData {
 	private String pollContent;
 	private String pollId;
 	private Boolean isActive;
-	
+	private Boolean isVoted;
 }

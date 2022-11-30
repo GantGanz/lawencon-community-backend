@@ -63,4 +63,22 @@ public class BookmarkDao extends AbstractJpaDao {
 		}
 		return total;
 	}
+	
+	public String getByUserAndPost(final String postId, final String userId) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT b.id ").append("FROM t_bookmark b ").append("WHERE b.is_active = TRUE ")
+				.append("AND b.post_id = :postId ").append(" AND b.user_id = :userId ");
+
+		String total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("postId", postId)
+					.setParameter("userId", userId).getSingleResult();
+			if (userObj != null) {
+				total = userObj.toString();
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
 }
