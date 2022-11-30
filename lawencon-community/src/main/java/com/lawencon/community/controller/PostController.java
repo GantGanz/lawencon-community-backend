@@ -106,4 +106,29 @@ public class PostController {
 		final PostRes result = postService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("count-all")
+	public ResponseEntity<Long> countAll() {
+		final Long res = postService.countAll();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("count-my-posts")
+	public ResponseEntity<Long> countMyPost() {
+		final Long res = postService.countMyPost();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("count-liked")
+	public ResponseEntity<Long> countLiked() {
+		final Long res = postService.countLiked();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("count-bookmarked")
+	public ResponseEntity<Long> countBookmarked() {
+		final Long res = postService.countBookmarked();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+
 }
