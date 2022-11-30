@@ -18,9 +18,8 @@ public class VerificationCodeUtil {
 	@Qualifier("verificationCodes")
 	private Map<String, VerificationCodes> verificationCodes;
 
-	private final LocalDateTime expiredDate = LocalDateTime.now().plusHours(1);
-
 	public void addVerificationCode(String email, String verificationCode) {
+		final LocalDateTime expiredDate = LocalDateTime.now().plusHours(1);
 		verificationCodes.put(email, new VerificationCodes(verificationCode, expiredDate));
 	}
 
