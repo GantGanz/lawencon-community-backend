@@ -181,19 +181,12 @@ public class LikeService extends BaseCoreService {
 	}
 
 	private void valIdFkNotNull(final LikeInsertReq data) {
-		if (data.getUserId() == null) {
-			throw new RuntimeException("User id cannot be empty");
-		}
 		if (data.getPostId() == null) {
-			throw new RuntimeException("Industry id cannot be empty");
+			throw new RuntimeException("Post id cannot be empty");
 		}
 	}
 
 	private void valFkFound(final LikeInsertReq data) {
-		final User user = userDao.getByIdAndDetach(User.class, data.getUserId());
-		if (user == null) {
-			throw new RuntimeException("User not found");
-		}
 		final Post post = postDao.getByIdAndDetach(Post.class, data.getPostId());
 		if (post == null) {
 			throw new RuntimeException("Post not found");

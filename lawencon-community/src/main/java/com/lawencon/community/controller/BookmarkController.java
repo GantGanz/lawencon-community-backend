@@ -1,8 +1,12 @@
 package com.lawencon.community.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,5 +60,19 @@ public class BookmarkController {
 	public ResponseEntity<Boolean> isBookmarked(@PathVariable("id") final String postId) {
 		final Boolean res = bookmarkService.isBookmarked(postId);
 		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+
+	@DeleteMapping("{id}")
+	public ResponseEntity<Boolean> delete(@PathVariable("id") final String bookmarkId) {
+		final Boolean res = bookmarkService.delete(bookmarkId);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+
+	@GetMapping("bookmarked-id/{id}")
+	public ResponseEntity<Map<String, Object>> getLikedId(@PathVariable("id") final String postId) {
+		final String res = bookmarkService.getByUserAndPost(postId);
+		final Map<String, Object> id = new HashMap<>();
+		id.put("id", res);
+		return new ResponseEntity<>(id, HttpStatus.OK);
 	}
 }

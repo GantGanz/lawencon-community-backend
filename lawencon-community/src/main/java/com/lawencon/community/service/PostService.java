@@ -57,6 +57,12 @@ public class PostService extends BaseCoreService {
 	private PollOptionDao pollOptionDao;
 	@Autowired
 	private PrincipalService principalService;
+	@Autowired
+	private LikeService likeService;
+	@Autowired
+	private PollVoteService pollVoteService;
+	@Autowired
+	private BookmarkService bookmarkService;
 
 	public Long countAll() {
 		return postDao.countAll();
@@ -200,6 +206,15 @@ public class PostService extends BaseCoreService {
 			postData.setPositionName(post.getUser().getPosition().getPositionName());
 			postData.setFileId(post.getUser().getFile().getId());
 
+			final Long contLike = likeService.countLike(post.getId());
+			postData.setCountLike(contLike);
+
+			final Boolean isLiked = likeService.isLiked(post.getId());
+			postData.setIsLiked(isLiked);
+
+			final Boolean isBookmarked = bookmarkService.isBookmarked(post.getId());
+			postData.setIsBookmarked(isBookmarked);	
+
 			final String postTypeCode = post.getPostType().getPostTypeCode();
 			postData.setPostTypeCode(postTypeCode);
 
@@ -213,6 +228,12 @@ public class PostService extends BaseCoreService {
 				pollData.setPostId(poll.getPost().getId());
 				pollData.setIsActive(poll.getIsActive());
 
+				final Long countVote = pollVoteService.countVote(poll.getId());
+				pollData.setCountVote(countVote);
+
+				final Boolean isVoted = pollVoteService.isVoted(poll.getId());
+				pollData.setIsVoted(isVoted);
+
 				final List<PollOption> pollOptions = pollOptionDao.getAllByPollId(pollData.getId());
 				final int pollOptionSize = pollOptions.size();
 				final List<PollOptionData> pollOptionDatas = new ArrayList<>();
@@ -224,6 +245,9 @@ public class PostService extends BaseCoreService {
 					pollOptionData.setPollContent(pollOption.getPollContent());
 					pollOptionData.setVersion(pollOption.getVersion());
 					pollOptionData.setIsActive(pollOption.getIsActive());
+
+					final Boolean optionIsVoted = pollVoteService.optionIsVoted(pollOption.getId());
+					pollOptionData.setIsVoted(optionIsVoted);
 
 					pollOptionDatas.add(pollOptionData);
 				}
@@ -666,7 +690,7 @@ public class PostService extends BaseCoreService {
 			final PostData postData = new PostData();
 			postData.setId(post.getId());
 			postData.setVersion(post.getVersion());
-			postData.setPostTitle(post.getId());
+			postData.setPostTitle(post.getPostTitle());
 			postData.setPostContent(post.getPostContent());
 			postData.setPostTypeId(post.getPostType().getId());
 			postData.setUserId(post.getUser().getId());
@@ -677,6 +701,13 @@ public class PostService extends BaseCoreService {
 			postData.setCompany(post.getUser().getCompany());
 			postData.setPositionName(post.getUser().getPosition().getPositionName());
 			postData.setFileId(post.getUser().getFile().getId());
+
+			final Long contLike = likeService.countLike(post.getId());
+			postData.setCountLike(contLike);
+
+			final Boolean isLiked = likeService.isLiked(post.getId());
+			postData.setIsLiked(isLiked);
+
 			final String postTypeCode = post.getPostType().getPostTypeCode();
 			postData.setPostTypeCode(postTypeCode);
 
@@ -690,7 +721,13 @@ public class PostService extends BaseCoreService {
 				pollData.setPostId(poll.getPost().getId());
 				pollData.setIsActive(poll.getIsActive());
 
-				final List<PollOption> pollOptions = pollOptionDao.getAllByPollId(post.getId());
+				final Long countVote = pollVoteService.countVote(poll.getId());
+				pollData.setCountVote(countVote);
+
+				final Boolean isVoted = pollVoteService.isVoted(poll.getId());
+				pollData.setIsVoted(isVoted);
+
+				final List<PollOption> pollOptions = pollOptionDao.getAllByPollId(pollData.getId());
 				final int pollOptionSize = pollOptions.size();
 				final List<PollOptionData> pollOptionDatas = new ArrayList<>();
 				for (int x = 0; x < pollOptionSize; x++) {
@@ -701,6 +738,9 @@ public class PostService extends BaseCoreService {
 					pollOptionData.setPollContent(pollOption.getPollContent());
 					pollOptionData.setVersion(pollOption.getVersion());
 					pollOptionData.setIsActive(pollOption.getIsActive());
+
+					final Boolean optionIsVoted = pollVoteService.optionIsVoted(pollOption.getId());
+					pollOptionData.setIsVoted(optionIsVoted);
 
 					pollOptionDatas.add(pollOptionData);
 				}
@@ -722,7 +762,6 @@ public class PostService extends BaseCoreService {
 				}
 				postData.setAttachmentPostDatas(attachmentPostDatas);
 			}
-
 			postDatas.add(postData);
 		}
 		final PostsRes postsRes = new PostsRes();
