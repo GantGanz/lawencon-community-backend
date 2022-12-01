@@ -188,7 +188,7 @@ public class PaymentActivityService extends BaseCoreService {
 
 		return paymentActivitiesRes;
 	}
-	
+
 	public PaymentActivitiesRes getAllByMemberId(final Integer offset, final Integer limit) {
 		final String userId = principalService.getAuthPrincipal();
 		final List<PaymentActivity> paymentActivities = paymentActivityDao.getAllByMemberId(userId, offset, limit);
@@ -244,7 +244,7 @@ public class PaymentActivityService extends BaseCoreService {
 	public Long countAllUnapproved() {
 		return paymentActivityDao.countAllUnapproved();
 	}
-	
+
 	public Long countAllApproved() {
 		return paymentActivityDao.countAllApproved();
 	}
@@ -252,7 +252,12 @@ public class PaymentActivityService extends BaseCoreService {
 	public BigDecimal getCreatorIncome() {
 		final String userId = principalService.getAuthPrincipal();
 		final BigDecimal multiplier = new BigDecimal("0.9");
-		return paymentActivityDao.getCreatorIncome(userId).multiply(multiplier);
+		final BigDecimal income = paymentActivityDao.getCreatorIncome(userId);
+		if (income == null) {
+			return new BigDecimal("0");
+		} else {
+			return income.multiply(multiplier);
+		}
 	}
 
 	public BigDecimal getSystemIncome() {
@@ -262,22 +267,22 @@ public class PaymentActivityService extends BaseCoreService {
 
 	public Boolean checkApproved(final String activityId) {
 		final String userId = principalService.getAuthPrincipal();
-		Boolean status = false; 
-		if(paymentActivityDao.checkApproved(userId, activityId) > 0) {
+		Boolean status = false;
+		if (paymentActivityDao.checkApproved(userId, activityId) > 0) {
 			status = true;
 		}
 		return status;
 	}
-	
+
 	public Boolean checkPaid(final String activityId) {
 		final String userId = principalService.getAuthPrincipal();
-		Boolean status = false; 
-		if(paymentActivityDao.checkPaid(userId, activityId) > 0) {
+		Boolean status = false;
+		if (paymentActivityDao.checkPaid(userId, activityId) > 0) {
 			status = true;
 		}
 		return status;
 	}
-	
+
 	private void valInsert(final PaymentActivityInsertReq data) {
 		valContentNotNull(data);
 		valIdFkNotNull(data);
@@ -295,7 +300,7 @@ public class PaymentActivityService extends BaseCoreService {
 			throw new RuntimeException("Extensions cannot be empty");
 		}
 	}
-	
+
 	private void valIdFkNotNull(final PaymentActivityInsertReq data) {
 		if (data.getActivityId() == null) {
 			throw new RuntimeException("Activity id cannot be empty");
