@@ -131,6 +131,9 @@ public class CommentService extends BaseCoreService {
 			commentData.setUserName(comment.getUser().getFullname());
 			commentData.setUserId(comment.getUser().getId());
 			commentData.setPostId(comment.getPost().getId());
+			commentData.setPositionName(comment.getUser().getPosition().getPositionName());
+			commentData.setCompany(comment.getUser().getCompany());
+			commentData.setCreatedAt(comment.getCreatedAt());
 			commentDatas.add(commentData);
 		}
 		final CommentsRes commentsRes = new CommentsRes();
@@ -150,6 +153,9 @@ public class CommentService extends BaseCoreService {
 			commentData.setUserName(comment.getUser().getFullname());
 			commentData.setUserId(comment.getUser().getId());
 			commentData.setCommentId(comment.getComment().getId());
+			commentData.setPositionName(comment.getUser().getPosition().getPositionName());
+			commentData.setCompany(comment.getUser().getCompany());
+			commentData.setCreatedAt(comment.getCreatedAt());
 			commentDatas.add(commentData);
 		}
 		final CommentsRes commentsRes = new CommentsRes();
@@ -167,6 +173,9 @@ public class CommentService extends BaseCoreService {
 		commentData.setUserId(comment.getUser().getId());
 		commentData.setPostId(comment.getPost().getId());
 		commentData.setCommentId(comment.getComment().getId());
+		commentData.setPositionName(comment.getUser().getPosition().getPositionName());
+		commentData.setCompany(comment.getUser().getCompany());
+		commentData.setCreatedAt(comment.getCreatedAt());
 
 		final CommentRes commentRes = new CommentRes();
 		commentRes.setData(commentData);
