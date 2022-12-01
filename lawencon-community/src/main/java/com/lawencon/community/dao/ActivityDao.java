@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.community.constant.ActivityTypeConstant;
+import com.lawencon.community.dto.report.ReportData;
 import com.lawencon.community.model.Activity;
 import com.lawencon.community.model.ActivityType;
 import com.lawencon.community.model.User;
@@ -364,4 +365,64 @@ public class ActivityDao extends AbstractJpaDao {
 		}
 		return total;
 	}
+	
+	public List<ReportData> getMemberActivity(final String userId, final String startDate, final String endDate) {
+		final StringBuilder query = new StringBuilder()
+				.append("SELECT ROW_NUMBER() OVER(), at.activity_type_name, a.title, a.start_at, COUNT(pa.user_id) ")
+				.append("FROM t_payment_activity pa ")
+				.append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
+				.append("INNER JOIN t_activity_type at ON a.activity_type_id = at.id ")
+				.append("INNER JOIN t_user uc ON a.created_by = uc.id ")
+				.append("WHERE a.created_at >= DATE(:startDate) AND a.created_at <= DATE(:endDate) ")
+				.append("AND pa.is_approved = TRUE AND a.created_by = :userId ")
+				.append("GROUP BY at.activity_type_name, a.title, a.start_at ")
+				.append("ORDER BY a.start_at DESC, at.activity_type_name, a.title ");
+		final List<?> result = createNativeQuery(query.toString())
+				.setParameter("startDate", startDate).setParameter("endDate", endDate).setParameter("userId", userId).getResultList();
+		final List<ReportData> data =  new ArrayList<>();
+		if(result != null && result.size() > 0) {
+			result.forEach(objCol -> {
+				final Object[] objArr = (Object[]) objCol;
+				final ReportData row = new ReportData();
+				row.setNo(Long.valueOf(objArr[0].toString()));
+				row.setActivityType(objArr[1].toString());
+				row.setTitle(objArr[2].toString());
+				row.setStartDate(Timestamp.valueOf(objArr[3].toString()).toLocalDateTime().toLocalDate());
+				row.setTotalParticipants(Integer.valueOf(objArr[4].toString()));
+				data.add(row);
+			});
+		}
+		return data;
+	}
+	
+	public List<ReportData> getActivitySuperAdmin(final String startDate, final String endDate) {
+		final StringBuilder query = new StringBuilder()
+				.append("SELECT ROW_NUMBER() OVER(), uc.fullname, a.provider, at.activity_type_name, a.title, a.start_at, COUNT(pa.user_id) ")
+				.append("FROM t_payment_activity pa ")
+				.append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
+				.append("INNER JOIN t_activity_type at ON a.activity_type_id = at.id ")
+				.append("INNER JOIN t_user uc ON a.created_by = uc.id ")
+				.append("WHERE a.created_at >= DATE(:startDate) AND a.created_at <= DATE(:endDate) AND pa.is_approved = TRUE ")
+				.append("GROUP BY uc.fullname, a.provider, at.activity_type_name, a.title, a.start_at ")
+				.append("ORDER BY a.start_at DESC, at.activity_type_name , a.title ");
+		final List<?> result = createNativeQuery(query.toString())
+				.setParameter("startDate", startDate).setParameter("endDate", endDate).getResultList();
+		final List<ReportData> data =  new ArrayList<>();
+		if(result != null && result.size() > 0) {
+			result.forEach(objCol -> {
+				final Object[] objArr = (Object[]) objCol;
+				final ReportData row = new ReportData();
+				row.setNo(Long.valueOf(objArr[0].toString()));
+				row.setMemberName(objArr[1].toString());
+				row.setProvider(objArr[2].toString());
+				row.setActivityType(objArr[3].toString());
+				row.setTitle(objArr[4].toString());
+				row.setStartDate(Timestamp.valueOf(objArr[5].toString()).toLocalDateTime().toLocalDate());
+				row.setTotalParticipants(Integer.valueOf(objArr[6].toString()));
+				data.add(row);
+			});
+		}
+		return data;
+	}
+
 }

@@ -1,5 +1,8 @@
 package com.lawencon.community.constant;
 
+import lombok.Getter;
+
+@Getter
 public enum RoleConstant {
 	SUPERADMIN("Super Admin", "sa"), ADMIN("Admin", "ADM"), MEMBER("Member", "MMB"), SYSTEM("System", "SYS");
 
@@ -9,13 +12,5 @@ public enum RoleConstant {
 	private RoleConstant(String roleName, String roleCode) {
 		this.roleName = roleName;
 		this.roleCode = roleCode;
-	}
-
-	public String getRoleName() {
-		return roleName;
-	}
-
-	public String getRoleCode() {
-		return roleCode;
 	}
 }

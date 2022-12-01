@@ -20,7 +20,6 @@ import com.lawencon.community.dto.bookmark.BookmarkRes;
 import com.lawencon.community.dto.bookmark.BookmarkUpdateReq;
 import com.lawencon.community.dto.bookmark.BookmarksRes;
 import com.lawencon.community.model.Bookmark;
-import com.lawencon.community.model.Like;
 import com.lawencon.community.model.Post;
 import com.lawencon.community.model.User;
 import com.lawencon.security.principal.PrincipalService;
