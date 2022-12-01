@@ -47,7 +47,7 @@
 					<textFieldExpression><![CDATA[$P{dateRange}]]></textFieldExpression>
 				</textField>
 				<image>
-					<reportElement x="480" y="24" width="50" height="50" uuid="0da07629-9127-4982-ad61-fe0a7de25788"/>
+					<reportElement x="494" y="24" width="50" height="50" uuid="0da07629-9127-4982-ad61-fe0a7de25788"/>
 					<imageExpression><![CDATA["https://github.com/GantGanz/zenith-backend/blob/main/lawencon-community/src/main/resources/email-template/assets/logo.png?raw=true"]]></imageExpression>
 				</image>
 			</frame>
@@ -197,10 +197,6 @@
 				</textElement>
 				<text><![CDATA[Grand Total Revenue]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="450" y="40" width="100" height="30" uuid="996d1c22-9071-4457-baa0-73018295e3d5"/>
-				<textFieldExpression><![CDATA[$V{grandTotal}]]></textFieldExpression>
-			</textField>
 		</band>
 	</summary>
 </jasperReport>
