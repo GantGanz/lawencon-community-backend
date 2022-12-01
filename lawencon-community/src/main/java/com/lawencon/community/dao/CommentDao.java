@@ -15,7 +15,7 @@ import com.lawencon.community.model.User;
 @Repository
 public class CommentDao extends AbstractJpaDao {
 
-	public List<Comment> getAllByPostId(final String postId) {
+	public List<Comment> getAllByPostId(final String postId, final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT c.id, c.ver, c.comment_content, u.fullname, c.post_id,")
 				.append("c.created_by, c.created_at, c.updated_at, c.is_active, u.id as user_id, f.id as file_id ")
@@ -24,7 +24,7 @@ public class CommentDao extends AbstractJpaDao {
 				.append("AND c.is_active = TRUE ").append("ORDER BY c.created_at DESC");
 
 		final String sql = str.toString();
-		final List<?> result = createNativeQuery(sql).setParameter("postId", postId).getResultList();
+		final List<?> result = createNativeQuery(sql, offset, limit).setParameter("postId", postId).getResultList();
 
 		final List<Comment> comments = new ArrayList<>();
 

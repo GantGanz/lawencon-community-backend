@@ -1,5 +1,8 @@
 package com.lawencon.community.constant;
 
+import lombok.Getter;
+
+@Getter
 public enum PostTypeConstant {
 	REGULAR("Regular", "REG"), POLLING("Polling", "POL"), PREMIUM("Premium", "PRE");
 
@@ -10,13 +13,4 @@ public enum PostTypeConstant {
 		this.postTypeName = postTypeName;
 		this.postTypeCode = postTypeCode;
 	}
-
-	public String getPostTypeName() {
-		return postTypeName;
-	}
-
-	public String getPostTypeCode() {
-		return postTypeCode;
-	}
-
 }
