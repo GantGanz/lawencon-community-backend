@@ -67,19 +67,19 @@ public class PostService extends BaseCoreService {
 	public Long countAll() {
 		return postDao.countAll();
 	}
-	
+
 	public Long countMyPost() {
 		return postDao.countMyPost(principalService.getAuthPrincipal());
 	}
-	
+
 	public Long countLiked() {
 		return postDao.countLiked(principalService.getAuthPrincipal());
 	}
-	
+
 	public Long countBookmarked() {
 		return postDao.countBookmarked(principalService.getAuthPrincipal());
 	}
-	
+
 	public InsertRes insert(final PostInsertReq data) {
 		valInsert(data);
 
@@ -213,7 +213,7 @@ public class PostService extends BaseCoreService {
 			postData.setIsLiked(isLiked);
 
 			final Boolean isBookmarked = bookmarkService.isBookmarked(post.getId());
-			postData.setIsBookmarked(isBookmarked);	
+			postData.setIsBookmarked(isBookmarked);
 
 			final String postTypeCode = post.getPostType().getPostTypeCode();
 			postData.setPostTypeCode(postTypeCode);
@@ -269,6 +269,7 @@ public class PostService extends BaseCoreService {
 				}
 				postData.setAttachmentPostDatas(attachmentPostDatas);
 			}
+
 			postDatas.add(postData);
 		}
 		final PostsRes postsRes = new PostsRes();
@@ -673,7 +674,6 @@ public class PostService extends BaseCoreService {
 				}
 				postData.setAttachmentPostDatas(attachmentPostDatas);
 			}
-
 			postDatas.add(postData);
 		}
 		final PostsRes postsRes = new PostsRes();
@@ -762,6 +762,7 @@ public class PostService extends BaseCoreService {
 				}
 				postData.setAttachmentPostDatas(attachmentPostDatas);
 			}
+
 			postDatas.add(postData);
 		}
 		final PostsRes postsRes = new PostsRes();
