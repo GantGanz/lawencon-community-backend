@@ -10,7 +10,9 @@
 	<field name="title" class="java.lang.String"/>
 	<field name="startDate" class="java.time.LocalDate"/>
 	<field name="totalIncome" class="java.math.BigDecimal"/>
-	<variable name="grandTotal" class="java.math.BigDecimal" calculation="Sum"/>
+	<variable name="grandTotal" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalIncome}]]></variableExpression>
+	</variable>
 	<variable name="totalIncome" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{totalIncome}]]></variableExpression>
 	</variable>
