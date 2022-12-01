@@ -120,8 +120,8 @@ public class CommentService extends BaseCoreService {
 		return res;
 	}
 
-	public CommentsRes getAllByPostId(final String id) {
-		final List<Comment> comments = commentDao.getAllByPostId(id);
+	public CommentsRes getAllByPostId(final String id, final Integer offset, final Integer limit) {
+		final List<Comment> comments = commentDao.getAllByPostId(id, offset, limit);
 		final List<CommentData> commentDatas = new ArrayList<>();
 		for (int i = 0; i < comments.size(); i++) {
 			final Comment comment = comments.get(i);
@@ -191,19 +191,12 @@ public class CommentService extends BaseCoreService {
 	}
 	
 	private void valIdFkNotNull(final CommentInsertReq data) {
-		if (data.getUserId() == null) {
-			throw new RuntimeException("User id cannot be empty");
-		}
 		if (data.getPostId() == null) {
-			throw new RuntimeException("Industry id cannot be empty");
+			throw new RuntimeException("Post id cannot be empty");
 		}
 	}
 
 	private void valFkFound(final CommentInsertReq data) {
-		final User user = userDao.getByIdAndDetach(User.class, data.getUserId());
-		if (user == null) {
-			throw new RuntimeException("User not found");
-		}
 		final Post post = postDao.getByIdAndDetach(Post.class, data.getPostId());
 		if (post == null) {
 			throw new RuntimeException("Post not found");

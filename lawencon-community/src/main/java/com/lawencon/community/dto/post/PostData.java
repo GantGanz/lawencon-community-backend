@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.lawencon.community.dto.attachmentpost.AttachmentPostData;
+import com.lawencon.community.dto.comment.CommentData;
 import com.lawencon.community.dto.poll.PollData;
 
 import lombok.Data;
@@ -30,5 +31,5 @@ public class PostData {
 	private LocalDateTime updatedAt;
 	private List<AttachmentPostData> attachmentPostDatas;
 	private PollData pollData;
-	
+	private List<CommentData> commentDatas;
 }
