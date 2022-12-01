@@ -185,6 +185,7 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 			userUpdate.setFullname(data.getFullname());
 			userUpdate.setCompany(data.getCompany());
 
+
 			if (data.getFileCodes() != null && !"".equals(data.getFileCodes())){
 				File fileUpdate = new File();
 				fileUpdate.setFileCodes(data.getFileCodes());
