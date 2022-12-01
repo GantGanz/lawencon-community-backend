@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.constant.PostTypeConstant;
 import com.lawencon.community.dao.AttachmentPostDao;
-import com.lawencon.community.dao.CommentDao;
 import com.lawencon.community.dao.FileDao;
 import com.lawencon.community.dao.PollDao;
 import com.lawencon.community.dao.PollOptionDao;
@@ -22,7 +21,6 @@ import com.lawencon.community.dto.UpdateDataRes;
 import com.lawencon.community.dto.UpdateRes;
 import com.lawencon.community.dto.attachmentpost.AttachmentPostData;
 import com.lawencon.community.dto.attachmentpost.AttachmentPostInsertReq;
-import com.lawencon.community.dto.comment.CommentData;
 import com.lawencon.community.dto.poll.PollData;
 import com.lawencon.community.dto.poll.PollInsertReq;
 import com.lawencon.community.dto.polloption.PollOptionData;
@@ -33,7 +31,6 @@ import com.lawencon.community.dto.post.PostRes;
 import com.lawencon.community.dto.post.PostUpdateReq;
 import com.lawencon.community.dto.post.PostsRes;
 import com.lawencon.community.model.AttachmentPost;
-import com.lawencon.community.model.Comment;
 import com.lawencon.community.model.File;
 import com.lawencon.community.model.Poll;
 import com.lawencon.community.model.PollOption;
@@ -58,8 +55,6 @@ public class PostService extends BaseCoreService {
 	private PollDao pollDao;
 	@Autowired
 	private PollOptionDao pollOptionDao;
-	@Autowired
-	private CommentDao commentDao;
 	@Autowired
 	private PrincipalService principalService;
 	@Autowired
@@ -274,22 +269,6 @@ public class PostService extends BaseCoreService {
 				}
 				postData.setAttachmentPostDatas(attachmentPostDatas);
 			}
-			final List<Comment> comments = commentDao.getAllByPostId(post.getId());
-			final List<CommentData> commentDatas = new ArrayList<>();
-			for (int c = 0; c < comments.size(); c++) {
-				final Comment comment = comments.get(c);
-				final CommentData commentData = new CommentData();
-				commentData.setId(comment.getId());
-				commentData.setCommentContent(comment.getCommentContent());
-				commentData.setUserName(comment.getUser().getFullname());
-				commentData.setUserId(comment.getUser().getId());
-				commentData.setFileId(comment.getUser().getFile().getId());
-				commentData.setPostId(comment.getPost().getId());
-				commentData.setCommentId(comment.getComment().getId());
-
-				commentDatas.add(commentData);
-			}
-			postData.setCommentDatas(commentDatas);
 
 			postDatas.add(postData);
 		}
@@ -493,22 +472,6 @@ public class PostService extends BaseCoreService {
 				}
 				postData.setAttachmentPostDatas(attachmentPostDatas);
 			}
-			final List<Comment> comments = commentDao.getAllByPostId(post.getId());
-			final List<CommentData> commentDatas = new ArrayList<>();
-			for (int c = 0; c < comments.size(); c++) {
-				final Comment comment = comments.get(c);
-				final CommentData commentData = new CommentData();
-				commentData.setId(comment.getId());
-				commentData.setCommentContent(comment.getCommentContent());
-				commentData.setUserName(comment.getUser().getFullname());
-				commentData.setUserId(comment.getUser().getId());
-				commentData.setFileId(comment.getUser().getFile().getId());
-				commentData.setPostId(comment.getPost().getId());
-				commentData.setCommentId(comment.getComment().getId());
-
-				commentDatas.add(commentData);
-			}
-			postData.setCommentDatas(commentDatas);
 
 			postDatas.add(postData);
 		}
@@ -711,22 +674,6 @@ public class PostService extends BaseCoreService {
 				}
 				postData.setAttachmentPostDatas(attachmentPostDatas);
 			}
-			final List<Comment> comments = commentDao.getAllByPostId(post.getId());
-			final List<CommentData> commentDatas = new ArrayList<>();
-			for (int c = 0; c < comments.size(); c++) {
-				final Comment comment = comments.get(c);
-				final CommentData commentData = new CommentData();
-				commentData.setId(comment.getId());
-				commentData.setCommentContent(comment.getCommentContent());
-				commentData.setUserName(comment.getUser().getFullname());
-				commentData.setUserId(comment.getUser().getId());
-				commentData.setFileId(comment.getUser().getFile().getId());
-				commentData.setPostId(comment.getPost().getId());
-				commentData.setCommentId(comment.getComment().getId());
-
-				commentDatas.add(commentData);
-			}
-			postData.setCommentDatas(commentDatas);
 			postDatas.add(postData);
 		}
 		final PostsRes postsRes = new PostsRes();
@@ -815,22 +762,6 @@ public class PostService extends BaseCoreService {
 				}
 				postData.setAttachmentPostDatas(attachmentPostDatas);
 			}
-			final List<Comment> comments = commentDao.getAllByPostId(post.getId());
-			final List<CommentData> commentDatas = new ArrayList<>();
-			for (int c = 0; c < comments.size(); c++) {
-				final Comment comment = comments.get(c);
-				final CommentData commentData = new CommentData();
-				commentData.setId(comment.getId());
-				commentData.setCommentContent(comment.getCommentContent());
-				commentData.setUserName(comment.getUser().getFullname());
-				commentData.setUserId(comment.getUser().getId());
-				commentData.setFileId(comment.getUser().getFile().getId());
-				commentData.setPostId(comment.getPost().getId());
-				commentData.setCommentId(comment.getComment().getId());
-
-				commentDatas.add(commentData);
-			}
-			postData.setCommentDatas(commentDatas);
 
 			postDatas.add(postData);
 		}
