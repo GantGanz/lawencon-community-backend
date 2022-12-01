@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.lawencon.base.AbstractJpaDao;
 import com.lawencon.community.model.Comment;
 import com.lawencon.community.model.File;
+import com.lawencon.community.model.Position;
 import com.lawencon.community.model.Post;
 import com.lawencon.community.model.User;
 
@@ -18,7 +19,7 @@ public class CommentDao extends AbstractJpaDao {
 	public List<Comment> getAllByPostId(final String postId, final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT c.id, c.ver, c.comment_content, u.fullname, c.post_id,")
-				.append("c.created_by, c.created_at, c.updated_at, c.is_active, u.id as user_id, f.id as file_id ")
+				.append("c.created_by, c.created_at, c.updated_at, c.is_active, u.id as user_id, f.id as file_id, u.company, p.position_name ")
 				.append("FROM t_comment c ").append("INNER JOIN t_user u ON u.id = c.created_by ")
 				.append("INNER JOIN t_file f ON f.id = u.file_id ").append("WHERE c.post_id = :postId ")
 				.append("AND c.is_active = TRUE ").append("ORDER BY c.created_at DESC");
@@ -44,6 +45,10 @@ public class CommentDao extends AbstractJpaDao {
 				file.setId(objArr[10].toString());
 				user.setFile(file);
 
+				user.setCompany(objArr[11].toString());
+				final Position position = new Position();
+				position.setPositionName(objArr[12].toString());
+				user.setPosition(position);
 				comment.setUser(user);
 
 				final Post post = new Post();
