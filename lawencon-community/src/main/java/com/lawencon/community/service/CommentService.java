@@ -120,8 +120,8 @@ public class CommentService extends BaseCoreService {
 		return res;
 	}
 
-	public CommentsRes getAllByPostId(final String id) {
-		final List<Comment> comments = commentDao.getAllByPostId(id);
+	public CommentsRes getAllByPostId(final String id, final Integer offset, final Integer limit) {
+		final List<Comment> comments = commentDao.getAllByPostId(id, offset, limit);
 		final List<CommentData> commentDatas = new ArrayList<>();
 		for (int i = 0; i < comments.size(); i++) {
 			final Comment comment = comments.get(i);
