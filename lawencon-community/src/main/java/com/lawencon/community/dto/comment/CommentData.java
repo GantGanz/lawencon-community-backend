@@ -9,6 +9,7 @@ public class CommentData {
 	private String commentContent;
 	private String userName;
 	private String userId;
+	private String fileId;
 	private String postId;
 	private String commentId;
 	
