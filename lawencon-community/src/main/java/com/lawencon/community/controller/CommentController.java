@@ -30,11 +30,12 @@ public class CommentController {
 	private CommentService commentService;
 
 	@GetMapping("post/{id}")
-	public ResponseEntity<CommentsRes> getAllByPostId(@PathVariable("id") final String id, @RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+	public ResponseEntity<CommentsRes> getAllByPostId(@PathVariable("id") final String id,
+			@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
 		final CommentsRes res = commentService.getAllByPostId(id, offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("comment/{id}")
 	public ResponseEntity<CommentsRes> getAllByCommentId(@PathVariable("id") final String id) {
 		final CommentsRes res = commentService.getAllByCommentId(id);
@@ -52,7 +53,7 @@ public class CommentController {
 		final UpdateRes res = commentService.update(data);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
+
 	@PutMapping("soft-delete")
 	public ResponseEntity<UpdateRes> softDelete(@RequestBody final CommentUpdateReq data) {
 		final UpdateRes res = commentService.softDelete(data);
@@ -64,7 +65,7 @@ public class CommentController {
 		final CommentRes result = commentService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("count-comment/{id}")
 	public ResponseEntity<Long> countComment(@PathVariable("id") final String postId) {
 		final Long res = commentService.countComment(postId);
