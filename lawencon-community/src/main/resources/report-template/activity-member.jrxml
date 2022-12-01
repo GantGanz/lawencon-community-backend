@@ -11,7 +11,7 @@
 	<field name="startDate" class="java.time.LocalDate"/>
 	<field name="totalParticipants" class="java.lang.Integer"/>
 	<variable name="totalParticipants" class="java.lang.Integer" calculation="Sum">
-		<variableExpression><![CDATA[$F{totalParticipants}]]></variableExpression>
+		<variableExpression><![CDATA[$F{totalParticipants}$F{totalParticipants}]]></variableExpression>
 	</variable>
 	<background>
 		<band/>
