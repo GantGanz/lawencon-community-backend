@@ -32,4 +32,5 @@ public class PostData {
 	private List<AttachmentPostData> attachmentPostDatas;
 	private PollData pollData;
 	private List<CommentData> commentDatas;
+	private Long countComment;
 }

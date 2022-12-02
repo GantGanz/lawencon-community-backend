@@ -63,7 +63,9 @@ public class PostService extends BaseCoreService {
 	private PollVoteService pollVoteService;
 	@Autowired
 	private BookmarkService bookmarkService;
-
+	@Autowired
+	private CommentService commentService;
+	
 	public Long countAll() {
 		return postDao.countAll();
 	}
@@ -205,9 +207,10 @@ public class PostService extends BaseCoreService {
 			postData.setCompany(post.getUser().getCompany());
 			postData.setPositionName(post.getUser().getPosition().getPositionName());
 			postData.setFileId(post.getUser().getFile().getId());
-
-			final Long contLike = likeService.countLike(post.getId());
-			postData.setCountLike(contLike);
+			postData.setCountComment(commentService.countComment(post.getId()));
+			
+			final Long countLike = likeService.countLike(post.getId());
+			postData.setCountLike(countLike);
 
 			final Boolean isLiked = likeService.isLiked(post.getId());
 			postData.setIsLiked(isLiked);
@@ -702,8 +705,8 @@ public class PostService extends BaseCoreService {
 			postData.setPositionName(post.getUser().getPosition().getPositionName());
 			postData.setFileId(post.getUser().getFile().getId());
 
-			final Long contLike = likeService.countLike(post.getId());
-			postData.setCountLike(contLike);
+			final Long countLike = likeService.countLike(post.getId());
+			postData.setCountLike(countLike);
 
 			final Boolean isLiked = likeService.isLiked(post.getId());
 			postData.setIsLiked(isLiked);
