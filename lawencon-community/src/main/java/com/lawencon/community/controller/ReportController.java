@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.constant.ReportConstant;
 import com.lawencon.community.dto.report.ReportData;
+import com.lawencon.community.dto.report.ReportsRes;
 import com.lawencon.community.dto.user.UserRes;
 import com.lawencon.community.service.ReportService;
 import com.lawencon.community.service.UserService;
@@ -45,6 +46,13 @@ public class ReportController {
 	}
 	
 	@GetMapping("member-income")
+	public ResponseEntity<ReportsRes> getAllMemberIncome(@RequestParam("startDate") final String startDate, @RequestParam("endDate") final String endDate) {
+		final UserRes user = userService.getById(principalService.getAuthPrincipal());
+		final ReportsRes res = reportService.getAllMemberIncome(user.getData().getId(), startDate, endDate);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("report-member-income")
 	public ResponseEntity<?> getMemberIncome(@RequestParam("startDate") final String startDate, @RequestParam("endDate") final String endDate) throws Exception {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());
 		final List<ReportData> data = reportService.getMemberIncome(user.getData().getId(), startDate,
@@ -85,6 +93,13 @@ public class ReportController {
 	}
 	
 	@GetMapping("activity-member")
+	public ResponseEntity<ReportsRes> getAllActivityMember(@RequestParam("startDate") final String startDate, @RequestParam("endDate") final String endDate) {
+		final UserRes user = userService.getById(principalService.getAuthPrincipal());
+		final ReportsRes res = reportService.getAllActivityMember(user.getData().getId() ,startDate, endDate);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("report-activity-member")
 	public ResponseEntity<?> getActivityReportMember(@RequestParam("startDate") final String startDate, @RequestParam("endDate") final String endDate) throws Exception {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());
 		final List<ReportData> data = reportService.getMemberActivity(user.getData().getId(), startDate,
@@ -108,6 +123,12 @@ public class ReportController {
 	}
 	
 	@GetMapping("activity-superadmin")
+	public ResponseEntity<ReportsRes> getAllActivitySuperAdmin(@RequestParam("startDate") final String startDate, @RequestParam("endDate") final String endDate) {
+		final ReportsRes res = reportService.getAllActivitySuperAdmin(startDate, endDate);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("report-activity-superadmin")
 	public ResponseEntity<?> getActivityReportSuperAdmin(@RequestParam("startDate") final String startDate, @RequestParam("endDate") final String endDate) throws Exception {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());
 		final List<ReportData> data = reportService.getActivitySuperAdmin(startDate, endDate);
