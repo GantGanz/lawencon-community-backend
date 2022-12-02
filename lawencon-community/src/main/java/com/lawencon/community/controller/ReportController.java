@@ -39,24 +39,27 @@ public class ReportController {
 	private ReportService reportService;
 
 	@GetMapping("count-member-income")
-	public ResponseEntity<Long> countMemberIncome(@RequestParam("start-date") final String startDate, @RequestParam("end-date") final String endDate) {
+	public ResponseEntity<Long> countMemberIncome(@RequestParam("start-date") final String startDate,
+			@RequestParam("end-date") final String endDate) {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());
 		final Long res = reportService.countMemberIncome(user.getData().getId(), startDate, endDate);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("member-income")
-	public ResponseEntity<ReportsRes> getAllMemberIncome(@RequestParam("start-date") final String startDate, @RequestParam("end-date") final String endDate) {
+	public ResponseEntity<ReportsRes> getAllMemberIncome(@RequestParam("start-date") final String startDate,
+			@RequestParam("end-date") final String endDate, @RequestParam("offset") final Integer offset,
+			@RequestParam("limit") final Integer limit) {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());
-		final ReportsRes res = reportService.getAllMemberIncome(user.getData().getId(), startDate, endDate);
+		final ReportsRes res = reportService.getAllMemberIncome(user.getData().getId(), startDate, endDate, offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("report-member-income")
-	public ResponseEntity<?> getMemberIncome(@RequestParam("start-date") final String startDate, @RequestParam("end-date") final String endDate) throws Exception {
+	public ResponseEntity<?> getMemberIncome(@RequestParam("start-date") final String startDate,
+			@RequestParam("end-date") final String endDate) throws Exception {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());
-		final List<ReportData> data = reportService.getMemberIncome(user.getData().getId(), startDate,
-				endDate);
+		final List<ReportData> data = reportService.getMemberIncome(user.getData().getId(), startDate, endDate);
 		final Map<String, Object> map = new HashMap<>();
 		map.put("reportTitle", ReportConstant.MEMBER_INCOME.getReportTitleEnum());
 		map.put("reportType", ReportConstant.MEMBER_INCOME.getReportTypeEnum() + user.getData().getEmail());
@@ -70,7 +73,9 @@ public class ReportController {
 	}
 
 	@GetMapping("superadmin-income")
-	public ResponseEntity<?> getSystemIncome(@RequestParam("start-date") final String startDate, @RequestParam("end-date") final String endDate) throws Exception {
+	public ResponseEntity<?> getSystemIncome(@RequestParam("start-date") final String startDate,
+			@RequestParam("end-date") final String endDate, @RequestParam("offset") final Integer offset,
+			@RequestParam("limit") final Integer limit) throws Exception {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());
 		final List<ReportData> data = reportService.getSystemIncome(startDate, endDate);
 		final Map<String, Object> map = new HashMap<>();
@@ -86,24 +91,27 @@ public class ReportController {
 	}
 
 	@GetMapping("count-activity-member")
-	public ResponseEntity<Long> countActivityMember(@RequestParam("start-date") final String startDate, @RequestParam("end-date") final String endDate) {
+	public ResponseEntity<Long> countActivityMember(@RequestParam("start-date") final String startDate,
+			@RequestParam("end-date") final String endDate) {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());
 		final Long res = reportService.countActivityMember(user.getData().getId(), startDate, endDate);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("activity-member")
-	public ResponseEntity<ReportsRes> getAllActivityMember(@RequestParam("start-date") final String startDate, @RequestParam("end-date") final String endDate) {
+	public ResponseEntity<ReportsRes> getAllActivityMember(@RequestParam("start-date") final String startDate,
+			@RequestParam("end-date") final String endDate, @RequestParam("offset") final Integer offset,
+			@RequestParam("limit") final Integer limit) {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());
-		final ReportsRes res = reportService.getAllActivityMember(user.getData().getId() ,startDate, endDate);
+		final ReportsRes res = reportService.getAllActivityMember(user.getData().getId(), startDate, endDate, offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("report-activity-member")
-	public ResponseEntity<?> getActivityReportMember(@RequestParam("start-date") final String startDate, @RequestParam("end-date") final String endDate) throws Exception {
+	public ResponseEntity<?> getActivityReportMember(@RequestParam("start-date") final String startDate,
+			@RequestParam("end-date") final String endDate) throws Exception {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());
-		final List<ReportData> data = reportService.getMemberActivity(user.getData().getId(), startDate,
-				endDate);
+		final List<ReportData> data = reportService.getMemberActivity(user.getData().getId(), startDate, endDate);
 		final Map<String, Object> map = new HashMap<>();
 		map.put("reportTitle", ReportConstant.ACTIVITY_MEMBER.getReportTitleEnum());
 		map.put("reportType", ReportConstant.ACTIVITY_MEMBER.getReportTypeEnum() + user.getData().getEmail());
@@ -117,19 +125,23 @@ public class ReportController {
 	}
 
 	@GetMapping("count-activity-superadmin")
-	public ResponseEntity<Long> countActivitySuperAdmin(@RequestParam("start-date") final String startDate, @RequestParam("end-date") final String endDate) {
+	public ResponseEntity<Long> countActivitySuperAdmin(@RequestParam("start-date") final String startDate,
+			@RequestParam("end-date") final String endDate) {
 		final Long res = reportService.countActivitySuperAdmin(startDate, endDate);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("activity-superadmin")
-	public ResponseEntity<ReportsRes> getAllActivitySuperAdmin(@RequestParam("start-date") final String startDate, @RequestParam("end-date") final String endDate) {
-		final ReportsRes res = reportService.getAllActivitySuperAdmin(startDate, endDate);
+	public ResponseEntity<ReportsRes> getAllActivitySuperAdmin(@RequestParam("start-date") final String startDate,
+			@RequestParam("end-date") final String endDate, @RequestParam("offset") final Integer offset,
+			@RequestParam("limit") final Integer limit) {
+		final ReportsRes res = reportService.getAllActivitySuperAdmin(startDate, endDate, offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("report-activity-superadmin")
-	public ResponseEntity<?> getActivityReportSuperAdmin(@RequestParam("start-date") final String startDate, @RequestParam("end-date") final String endDate) throws Exception {
+	public ResponseEntity<?> getActivityReportSuperAdmin(@RequestParam("start-date") final String startDate,
+			@RequestParam("end-date") final String endDate) throws Exception {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());
 		final List<ReportData> data = reportService.getActivitySuperAdmin(startDate, endDate);
 		final Map<String, Object> map = new HashMap<>();

@@ -24,8 +24,8 @@ public class ReportService extends BaseCoreService {
 		return paymentActivityDao.countMemberIncome(userId, startDate, endDate);
 	}
 	
-	public ReportsRes getAllMemberIncome(final String userId, final String startDate, final String endDate) {
-		final List<ReportData> reportDatas = paymentActivityDao.getMemberIncome(userId, startDate, endDate);
+	public ReportsRes getAllMemberIncome(final String userId, final String startDate, final String endDate, final Integer offset, final Integer limit) {
+		final List<ReportData> reportDatas = paymentActivityDao.getMemberIncomeLimit(userId, startDate, endDate, offset, limit);
 		final ReportsRes reportsRes = new ReportsRes();
 		reportsRes.setData(reportDatas);
 
@@ -44,8 +44,8 @@ public class ReportService extends BaseCoreService {
 		return activityDao.countActivityMember(userId, startDate, endDate);
 	}
 	
-	public ReportsRes getAllActivityMember(final String userId, final String startDate, final String endDate) {
-		final List<ReportData> reportDatas = activityDao.getMemberActivity(userId, startDate, endDate);
+	public ReportsRes getAllActivityMember(final String userId, final String startDate, final String endDate,final Integer offset, final Integer limit) {
+		final List<ReportData> reportDatas = activityDao.getMemberActivityLimit(userId, startDate, endDate, offset, limit);
 		final ReportsRes reportsRes = new ReportsRes();
 		reportsRes.setData(reportDatas);
 
@@ -60,8 +60,8 @@ public class ReportService extends BaseCoreService {
 		return activityDao.countActivitySuperAdmin(startDate, endDate);
 	}
 	
-	public ReportsRes getAllActivitySuperAdmin(final String startDate, final String endDate) {
-		final List<ReportData> reportDatas = activityDao.getActivitySuperAdmin(startDate, endDate);
+	public ReportsRes getAllActivitySuperAdmin(final String startDate, final String endDate, final Integer offset, final Integer limit) {
+		final List<ReportData> reportDatas = activityDao.getActivitySuperAdminLimit(startDate, endDate, offset, limit);
 		final ReportsRes reportsRes = new ReportsRes();
 		reportsRes.setData(reportDatas);
 
