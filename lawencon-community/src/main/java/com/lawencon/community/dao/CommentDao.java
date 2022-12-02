@@ -20,7 +20,7 @@ public class CommentDao extends AbstractJpaDao {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT c.id, c.ver, c.comment_content, u.fullname, c.post_id,")
 				.append("c.created_by, c.created_at, c.updated_at, c.is_active, u.id as user_id, f.id as file_id, u.company, p.position_name ")
-				.append("FROM t_comment c ").append("INNER JOIN t_user u ON u.id = c.created_by ")
+				.append("FROM t_comment c ").append("INNER JOIN t_user u ON u.id = c.created_by ").append("INNER JOIN t_position p ON p.id = u.position_id ")
 				.append("INNER JOIN t_file f ON f.id = u.file_id ").append("WHERE c.post_id = :postId ")
 				.append("AND c.is_active = TRUE ").append("ORDER BY c.created_at DESC");
 
