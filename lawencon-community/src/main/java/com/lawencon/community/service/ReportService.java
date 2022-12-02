@@ -10,6 +10,7 @@ import com.lawencon.base.BaseCoreService;
 import com.lawencon.community.dao.ActivityDao;
 import com.lawencon.community.dao.PaymentActivityDao;
 import com.lawencon.community.dto.report.ReportData;
+import com.lawencon.community.dto.report.ReportsRes;
 
 @Service
 public class ReportService extends BaseCoreService {
@@ -21,6 +22,14 @@ public class ReportService extends BaseCoreService {
 	
 	public Long countMemberIncome(final String userId, final String startDate, final String endDate) {
 		return paymentActivityDao.countMemberIncome(userId, startDate, endDate);
+	}
+	
+	public ReportsRes getAllMemberIncome(final String userId, final String startDate, final String endDate) {
+		final List<ReportData> reportDatas = paymentActivityDao.getMemberIncome(userId, startDate, endDate);
+		final ReportsRes reportsRes = new ReportsRes();
+		reportsRes.setData(reportDatas);
+
+		return reportsRes;
 	}
 	
 	public List<ReportData> getMemberIncome(final String userId, final String startDate, final String endDate){
@@ -35,12 +44,28 @@ public class ReportService extends BaseCoreService {
 		return activityDao.countActivityMember(userId, startDate, endDate);
 	}
 	
+	public ReportsRes getAllActivityMember(final String userId, final String startDate, final String endDate) {
+		final List<ReportData> reportDatas = activityDao.getMemberActivity(userId, startDate, endDate);
+		final ReportsRes reportsRes = new ReportsRes();
+		reportsRes.setData(reportDatas);
+
+		return reportsRes;
+	}
+	
 	public List<ReportData> getMemberActivity(final String userId, final String startDate, final String endDate){
 		return activityDao.getMemberActivity(userId, startDate, endDate);
 	}
 	
 	public Long countActivitySuperAdmin(final String startDate, final String endDate) {
 		return activityDao.countActivitySuperAdmin(startDate, endDate);
+	}
+	
+	public ReportsRes getAllActivitySuperAdmin(final String startDate, final String endDate) {
+		final List<ReportData> reportDatas = activityDao.getActivitySuperAdmin(startDate, endDate);
+		final ReportsRes reportsRes = new ReportsRes();
+		reportsRes.setData(reportDatas);
+
+		return reportsRes;
 	}
 	
 	public List<ReportData> getActivitySuperAdmin(final String startDate, final String endDate){
