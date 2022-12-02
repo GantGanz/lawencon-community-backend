@@ -1,4 +1,5 @@
 package com.lawencon.community.service;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class CommentService extends BaseCoreService {
 	private PostDao postDao;
 	@Autowired
 	private PrincipalService principalService;
-	
+
 	public InsertRes insert(final CommentInsertReq data) {
 		valInsert(data);
 
@@ -43,11 +44,11 @@ public class CommentService extends BaseCoreService {
 		final String userId = principalService.getAuthPrincipal();
 		final User user = userDao.getById(User.class, userId);
 		commentInsert.setUser(user);
-		
-		if(data.getPostId() != null) {			
+
+		if (data.getPostId() != null) {
 			final Post post = postDao.getById(Post.class, data.getPostId());
 			commentInsert.setPost(post);
-		}else {
+		} else {
 			final Comment comment = commentDao.getById(Comment.class, data.getCommentId());
 			commentInsert.setComment(comment);
 		}
@@ -95,7 +96,7 @@ public class CommentService extends BaseCoreService {
 		res.setMessage("Update success");
 		return res;
 	}
-	
+
 	public UpdateRes softDelete(final CommentUpdateReq data) {
 		valUpdate(data);
 		Comment comment = commentDao.getByIdAndDetach(Comment.class, data.getId());
@@ -130,6 +131,7 @@ public class CommentService extends BaseCoreService {
 			commentData.setCommentContent(comment.getCommentContent());
 			commentData.setUserName(comment.getUser().getFullname());
 			commentData.setUserId(comment.getUser().getId());
+			commentData.setFileId(comment.getUser().getFile().getId());
 			commentData.setPostId(comment.getPost().getId());
 			commentData.setPositionName(comment.getUser().getPosition().getPositionName());
 			commentData.setCompany(comment.getUser().getCompany());
@@ -141,7 +143,7 @@ public class CommentService extends BaseCoreService {
 
 		return commentsRes;
 	}
-	
+
 	public CommentsRes getAllByCommentId(final String id) {
 		final List<Comment> comments = commentDao.getAllByCommentId(id);
 		final List<CommentData> commentDatas = new ArrayList<>();
@@ -182,11 +184,11 @@ public class CommentService extends BaseCoreService {
 
 		return commentRes;
 	}
-	
+
 	public Long countComment(final String postId) {
 		return commentDao.countComment(postId);
 	}
-	
+
 	private void valInsert(final CommentInsertReq data) {
 		valContentNotNull(data);
 		valIdFkNotNull(data);
@@ -198,7 +200,7 @@ public class CommentService extends BaseCoreService {
 			throw new RuntimeException("Content cannot be empty");
 		}
 	}
-	
+
 	private void valIdFkNotNull(final CommentInsertReq data) {
 		if (data.getPostId() == null) {
 			throw new RuntimeException("Post id cannot be empty");
