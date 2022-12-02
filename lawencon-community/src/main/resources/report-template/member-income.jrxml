@@ -183,7 +183,7 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="84">
+		<band height="111">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<textField pattern="Rp #,##0.###;¤(#,##0.###-)">
 				<reportElement x="444" y="0" width="110" height="30" uuid="628f70c3-dcd4-4fe3-9881-66aa0b740770"/>
