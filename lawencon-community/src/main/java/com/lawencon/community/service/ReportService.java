@@ -19,6 +19,10 @@ public class ReportService extends BaseCoreService {
 	@Autowired
 	private ActivityDao activityDao;
 	
+	public Long countMemberIncome(final String userId, final String startDate, final String endDate) {
+		return paymentActivityDao.countMemberIncome(userId, startDate, endDate);
+	}
+	
 	public List<ReportData> getMemberIncome(final String userId, final String startDate, final String endDate){
 		return paymentActivityDao.getMemberIncome(userId, startDate, endDate);
 	}
@@ -27,8 +31,16 @@ public class ReportService extends BaseCoreService {
 		return paymentActivityDao.getSystemIncome(startDate, endDate);
 	}
 	
+	public Long countActivityMember(final String userId, final String startDate, final String endDate) {
+		return activityDao.countActivityMember(userId, startDate, endDate);
+	}
+	
 	public List<ReportData> getMemberActivity(final String userId, final String startDate, final String endDate){
 		return activityDao.getMemberActivity(userId, startDate, endDate);
+	}
+	
+	public Long countActivitySuperAdmin(final String startDate, final String endDate) {
+		return activityDao.countActivitySuperAdmin(startDate, endDate);
 	}
 	
 	public List<ReportData> getActivitySuperAdmin(final String startDate, final String endDate){

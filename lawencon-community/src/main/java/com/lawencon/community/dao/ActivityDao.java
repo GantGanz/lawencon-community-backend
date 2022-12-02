@@ -344,7 +344,7 @@ public class ActivityDao extends AbstractJpaDao {
 
 		return activities;
 	}
-	
+
 	public Long countMyActivity(final String userId, final String activityTypeCode) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT COUNT(a.id) ").append("FROM t_activity a ")
@@ -354,8 +354,7 @@ public class ActivityDao extends AbstractJpaDao {
 
 		Long total = null;
 		try {
-			final Object userObj = createNativeQuery(str.toString())
-					.setParameter("activityTypeCode", activityTypeCode)
+			final Object userObj = createNativeQuery(str.toString()).setParameter("activityTypeCode", activityTypeCode)
 					.setParameter("userId", userId).getSingleResult();
 			if (userObj != null) {
 				total = Long.valueOf(userObj.toString());
@@ -365,22 +364,44 @@ public class ActivityDao extends AbstractJpaDao {
 		}
 		return total;
 	}
-	
+
+	public Long countActivityMember(final String userId, final String startDate, final String endDate) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT COUNT(a.id) ").append("FROM t_payment_activity pa ")
+				.append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
+				.append("INNER JOIN t_activity_type at ON a.activity_type_id = at.id ")
+				.append("INNER JOIN t_user uc ON a.created_by = uc.id ")
+				.append("WHERE a.created_at >= DATE(:startDate) AND a.created_at <= DATE(:endDate) ")
+				.append("AND pa.is_approved = TRUE AND a.created_by = :userId ")
+				.append("GROUP BY at.activity_type_name, a.title, a.start_at ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("startDate", startDate)
+					.setParameter("endDate", endDate).setParameter("userId", userId).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
+
 	public List<ReportData> getMemberActivity(final String userId, final String startDate, final String endDate) {
 		final StringBuilder query = new StringBuilder()
 				.append("SELECT ROW_NUMBER() OVER(), at.activity_type_name, a.title, a.start_at, COUNT(pa.user_id) ")
-				.append("FROM t_payment_activity pa ")
-				.append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
+				.append("FROM t_payment_activity pa ").append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
 				.append("INNER JOIN t_activity_type at ON a.activity_type_id = at.id ")
 				.append("INNER JOIN t_user uc ON a.created_by = uc.id ")
 				.append("WHERE a.created_at >= DATE(:startDate) AND a.created_at <= DATE(:endDate) ")
 				.append("AND pa.is_approved = TRUE AND a.created_by = :userId ")
 				.append("GROUP BY at.activity_type_name, a.title, a.start_at ")
 				.append("ORDER BY a.start_at DESC, at.activity_type_name, a.title ");
-		final List<?> result = createNativeQuery(query.toString())
-				.setParameter("startDate", startDate).setParameter("endDate", endDate).setParameter("userId", userId).getResultList();
-		final List<ReportData> data =  new ArrayList<>();
-		if(result != null && result.size() > 0) {
+		final List<?> result = createNativeQuery(query.toString()).setParameter("startDate", startDate)
+				.setParameter("endDate", endDate).setParameter("userId", userId).getResultList();
+		final List<ReportData> data = new ArrayList<>();
+		if (result != null && result.size() > 0) {
 			result.forEach(objCol -> {
 				final Object[] objArr = (Object[]) objCol;
 				final ReportData row = new ReportData();
@@ -394,21 +415,42 @@ public class ActivityDao extends AbstractJpaDao {
 		}
 		return data;
 	}
-	
-	public List<ReportData> getActivitySuperAdmin(final String startDate, final String endDate) {
-		final StringBuilder query = new StringBuilder()
-				.append("SELECT ROW_NUMBER() OVER(), uc.fullname, a.provider, at.activity_type_name, a.title, a.start_at, COUNT(pa.user_id) ")
-				.append("FROM t_payment_activity pa ")
+
+	public Long countActivitySuperAdmin(final String startDate, final String endDate) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT COUNT(a.id) ").append("FROM t_payment_activity pa ")
 				.append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
+				.append("INNER JOIN t_activity_type at ON a.activity_type_id = at.id ")
+				.append("INNER JOIN t_user uc ON a.created_by = uc.id ")
+				.append("WHERE a.created_at >= DATE(:startDate) AND a.created_at <= DATE(:endDate) AND pa.is_approved = TRUE ")
+				.append("GROUP BY uc.fullname, a.provider, at.activity_type_name, a.title, a.start_at ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("startDate", startDate)
+					.setParameter("endDate", endDate).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
+
+	public List<ReportData> getActivitySuperAdmin(final String startDate, final String endDate) {
+		final StringBuilder query = new StringBuilder().append(
+				"SELECT ROW_NUMBER() OVER(), uc.fullname, a.provider, at.activity_type_name, a.title, a.start_at, COUNT(pa.user_id) ")
+				.append("FROM t_payment_activity pa ").append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
 				.append("INNER JOIN t_activity_type at ON a.activity_type_id = at.id ")
 				.append("INNER JOIN t_user uc ON a.created_by = uc.id ")
 				.append("WHERE a.created_at >= DATE(:startDate) AND a.created_at <= DATE(:endDate) AND pa.is_approved = TRUE ")
 				.append("GROUP BY uc.fullname, a.provider, at.activity_type_name, a.title, a.start_at ")
 				.append("ORDER BY a.start_at DESC, at.activity_type_name , a.title ");
-		final List<?> result = createNativeQuery(query.toString())
-				.setParameter("startDate", startDate).setParameter("endDate", endDate).getResultList();
-		final List<ReportData> data =  new ArrayList<>();
-		if(result != null && result.size() > 0) {
+		final List<?> result = createNativeQuery(query.toString()).setParameter("startDate", startDate)
+				.setParameter("endDate", endDate).getResultList();
+		final List<ReportData> data = new ArrayList<>();
+		if (result != null && result.size() > 0) {
 			result.forEach(objCol -> {
 				final Object[] objArr = (Object[]) objCol;
 				final ReportData row = new ReportData();
