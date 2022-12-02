@@ -25,8 +25,8 @@ public class PaymentActivityDao extends AbstractJpaDao {
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
 				.append("INNER JOIN t_activity a ON a.id = p.activity_id  ")
 				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
-				.append("WHERE p.is_approved = TRUE ")
-				.append("ORDER BY p.created_at DESC ").append("LIMIT :limit OFFSET :offset");
+				.append("WHERE p.is_approved = TRUE ").append("ORDER BY p.created_at DESC ")
+				.append("LIMIT :limit OFFSET :offset");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql).setParameter("offset", offset).setParameter("limit", limit)
@@ -58,7 +58,7 @@ public class PaymentActivityDao extends AbstractJpaDao {
 				final Activity activity = new Activity();
 				activity.setId(objArr[7].toString());
 				activity.setActivityTitle(objArr[8].toString());
-				
+
 				final ActivityType activityType = new ActivityType();
 				activityType.setActivityTypeName(objArr[11].toString());
 				activity.setActivityType(activityType);
@@ -115,7 +115,7 @@ public class PaymentActivityDao extends AbstractJpaDao {
 				final Activity activity = new Activity();
 				activity.setId(objArr[7].toString());
 				activity.setActivityTitle(objArr[8].toString());
-				
+
 				final ActivityType activityType = new ActivityType();
 				activityType.setActivityTypeName(objArr[11].toString());
 				activity.setActivityType(activityType);
@@ -171,7 +171,7 @@ public class PaymentActivityDao extends AbstractJpaDao {
 				final Activity activity = new Activity();
 				activity.setId(objArr[7].toString());
 				activity.setActivityTitle(objArr[8].toString());
-				
+
 				final ActivityType activityType = new ActivityType();
 				activityType.setActivityTypeName(objArr[11].toString());
 				activity.setActivityType(activityType);
@@ -194,7 +194,8 @@ public class PaymentActivityDao extends AbstractJpaDao {
 				.append("p.created_at, p.activity_id, a.title, p.ver, p.updated_at, at.activity_type_name, u.email ")
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
 				.append("INNER JOIN t_activity a ON a.id = p.activity_id  ")
-				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ").append("WHERE p.created_by = :userId ").append("p.is_approved = TRUE")
+				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
+				.append("WHERE p.created_by = :userId ").append("p.is_approved = TRUE")
 				.append("ORDER BY p.created_at DESC ").append("LIMIT :limit OFFSET :offset");
 
 		final String sql = str.toString();
@@ -227,7 +228,7 @@ public class PaymentActivityDao extends AbstractJpaDao {
 				final Activity activity = new Activity();
 				activity.setId(objArr[7].toString());
 				activity.setActivityTitle(objArr[8].toString());
-				
+
 				final ActivityType activityType = new ActivityType();
 				activityType.setActivityTypeName(objArr[11].toString());
 				activity.setActivityType(activityType);
@@ -246,7 +247,9 @@ public class PaymentActivityDao extends AbstractJpaDao {
 
 	public BigDecimal getCreatorIncome(final String userId) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT SUM(nominal) ").append("FROM t_payment_activity p ").append("INNER JOIN t_activity a ON a.id = p.activity_id ").append("WHERE a.created_by = :userId ").append("AND p.is_approved = TRUE");
+		str.append("SELECT SUM(nominal) ").append("FROM t_payment_activity p ")
+				.append("INNER JOIN t_activity a ON a.id = p.activity_id ").append("WHERE a.created_by = :userId ")
+				.append("AND p.is_approved = TRUE");
 
 		BigDecimal totalIncome = null;
 		try {
@@ -260,10 +263,11 @@ public class PaymentActivityDao extends AbstractJpaDao {
 		}
 		return totalIncome;
 	}
-	
+
 	public BigDecimal getSystemIncome() {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT SUM(nominal) ").append("FROM t_payment_activity p ").append("INNER JOIN t_activity a ON a.id = p.activity_id ").append("WHERE p.is_approved = TRUE");
+		str.append("SELECT SUM(nominal) ").append("FROM t_payment_activity p ")
+				.append("INNER JOIN t_activity a ON a.id = p.activity_id ").append("WHERE p.is_approved = TRUE");
 
 		BigDecimal totalIncome = null;
 		try {
@@ -309,7 +313,7 @@ public class PaymentActivityDao extends AbstractJpaDao {
 		}
 		return total;
 	}
-	
+
 	public Long checkApproved(final String userId, final String activityId) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT count(p.id) ").append("FROM t_payment_activity p ").append("WHERE p.is_approved = TRUE ")
@@ -317,7 +321,8 @@ public class PaymentActivityDao extends AbstractJpaDao {
 
 		Long total = null;
 		try {
-			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).setParameter("activityId", activityId).getSingleResult();
+			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId)
+					.setParameter("activityId", activityId).getSingleResult();
 			if (userObj != null) {
 				total = Long.valueOf(userObj.toString());
 			}
@@ -329,11 +334,13 @@ public class PaymentActivityDao extends AbstractJpaDao {
 
 	public Long checkPaid(final String userId, final String activityId) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT count(p.id) ").append("FROM t_payment_activity p ").append("WHERE p.user_id = :userId ").append("AND p.activity_id = :activityId ");
+		str.append("SELECT count(p.id) ").append("FROM t_payment_activity p ").append("WHERE p.user_id = :userId ")
+				.append("AND p.activity_id = :activityId ");
 
 		Long total = null;
 		try {
-			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).setParameter("activityId", activityId).getSingleResult();
+			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId)
+					.setParameter("activityId", activityId).getSingleResult();
 			if (userObj != null) {
 				total = Long.valueOf(userObj.toString());
 			}
@@ -342,22 +349,21 @@ public class PaymentActivityDao extends AbstractJpaDao {
 		}
 		return total;
 	}
-	
+
 	public List<ReportData> getMemberIncome(final String userId, final String startDate, final String endDate) {
-		final StringBuilder query = new StringBuilder()
-				.append("SELECT ROW_NUMBER() OVER(), at.activity_type_name, a.title, a.start_at, (0.9*COUNT(pa.user_id) * a.fee) ")
-				.append("FROM t_payment_activity pa ")
-				.append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
+		final StringBuilder query = new StringBuilder().append(
+				"SELECT ROW_NUMBER() OVER(), at.activity_type_name, a.title, a.start_at, (0.9*COUNT(pa.user_id) * a.fee) ")
+				.append("FROM t_payment_activity pa ").append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
 				.append("INNER JOIN t_activity_type at ON a.activity_type_id = at.id ")
 				.append("INNER JOIN t_user uc ON a.created_by = uc.id ")
 				.append("WHERE a.created_at >= DATE(:startDate) AND a.created_at <= DATE(:endDate) ")
 				.append("AND pa.is_approved = TRUE AND a.created_by = :userId ")
 				.append("GROUP BY at.activity_type_name, a.title, a.start_at, a.fee ")
 				.append("ORDER BY a.start_at DESC, at.activity_type_name, a.title ");
-		final List<?> result = createNativeQuery(query.toString())
-				.setParameter("startDate", startDate).setParameter("endDate", endDate).setParameter("userId", userId).getResultList();
-		final List<ReportData> data =  new ArrayList<>();
-		if(result != null && result.size() > 0) {
+		final List<?> result = createNativeQuery(query.toString()).setParameter("startDate", startDate)
+				.setParameter("endDate", endDate).setParameter("userId", userId).getResultList();
+		final List<ReportData> data = new ArrayList<>();
+		if (result != null && result.size() > 0) {
 			result.forEach(objCol -> {
 				final Object[] objArr = (Object[]) objCol;
 				final ReportData row = new ReportData();
@@ -365,28 +371,27 @@ public class PaymentActivityDao extends AbstractJpaDao {
 				row.setActivityType(objArr[1].toString());
 				row.setTitle(objArr[2].toString());
 				row.setStartDate(Timestamp.valueOf(objArr[3].toString()).toLocalDateTime().toLocalDate());
-				final BigDecimal bd = new BigDecimal(objArr[4].toString());				
+				final BigDecimal bd = new BigDecimal(objArr[4].toString());
 				row.setTotalIncome(bd);
 				data.add(row);
 			});
 		}
 		return data;
 	}
-	
+
 	public List<ReportData> getSystemIncome(final String startDate, final String endDate) {
-		final StringBuilder query = new StringBuilder()
-				.append("SELECT ROW_NUMBER() OVER(), uc.fullname, a.provider, at.activity_type_name, a.title, a.start_at, (0.9*COUNT(pa.user_id)*a.fee) ")
-				.append("FROM t_payment_activity pa ")
-				.append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
+		final StringBuilder query = new StringBuilder().append(
+				"SELECT ROW_NUMBER() OVER(), uc.fullname, a.provider, at.activity_type_name, a.title, a.start_at, (0.9*COUNT(pa.user_id)*a.fee) ")
+				.append("FROM t_payment_activity pa ").append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
 				.append("INNER JOIN t_activity_type at ON a.activity_type_id = at.id ")
 				.append("INNER JOIN t_user uc ON a.created_by = uc.id ")
 				.append("WHERE a.created_at >= DATE(:startDate) AND a.created_at <= DATE(:endDate) AND pa.is_approved = TRUE ")
 				.append("GROUP BY uc.fullname, a.provider, at.activity_type_name, a.title, a.start_at, a.fee ")
 				.append("ORDER BY a.start_at DESC, at.activity_type_name, a.title ");
-		final List<?> result = createNativeQuery(query.toString())
-				.setParameter("startDate", startDate).setParameter("endDate", endDate).getResultList();
-		final List<ReportData> data =  new ArrayList<>();
-		if(result != null && result.size() > 0) {
+		final List<?> result = createNativeQuery(query.toString()).setParameter("startDate", startDate)
+				.setParameter("endDate", endDate).getResultList();
+		final List<ReportData> data = new ArrayList<>();
+		if (result != null && result.size() > 0) {
 			result.forEach(objCol -> {
 				final Object[] objArr = (Object[]) objCol;
 				final ReportData row = new ReportData();
@@ -401,6 +406,29 @@ public class PaymentActivityDao extends AbstractJpaDao {
 			});
 		}
 		return data;
+	}
+
+	public Long countMemberIncome(final String userId, final String startDate, final String endDate) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT COUNT(a.id) ").append("FROM t_payment_activity pa ")
+				.append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
+				.append("INNER JOIN t_activity_type at ON a.activity_type_id = at.id ")
+				.append("INNER JOIN t_user uc ON a.created_by = uc.id ")
+				.append("WHERE a.created_at >= DATE(:startDate) AND a.created_at <= DATE(:endDate) ")
+				.append("AND pa.is_approved = TRUE AND a.created_by = :userId ")
+				.append("GROUP BY at.activity_type_name, a.title, a.start_at, a.fee ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("startDate", startDate)
+					.setParameter("endDate", endDate).setParameter("userId", userId).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
 	}
 
 }
