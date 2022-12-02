@@ -392,10 +392,11 @@ public class PostDao extends AbstractJpaDao {
 	public List<Post> getAllBookmarked(final String userId, final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT p.id, p.ver, p.post_title, p.post_content, u.fullname, p.created_by, ").append(
-				"p.created_at, p.updated_at, p.is_active, pt.post_type_code, pt.id as ptid, u.company, p.position_name, u.file_id  ")
+				"p.created_at, p.updated_at, p.is_active, pt.post_type_code, pt.id as ptid, u.company, po.position_name, u.file_id  ")
 				.append("FROM t_post p ").append("INNER JOIN t_post_type pt ON pt.id = p.post_type_id ")
 				.append("INNER JOIN t_bookmark b ON b.post_id = p.id ")
 				.append("INNER JOIN t_user u ON u.id = b.user_id ")
+				.append("INNER JOIN t_position po ON po.id = u.position_id ")
 				.append("WHERE b.user_id = :userId ").append("AND p.is_active = TRUE ")
 				.append("AND b.is_active = TRUE ").append("ORDER BY p.created_at DESC");
 
