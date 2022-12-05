@@ -449,10 +449,10 @@ public class PostDao extends AbstractJpaDao {
 
 	public List<Post> getAllLiked(final String userId, final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT p.id, p.ver, p.post_title, p.post_content, u.fullname, p.created_by, p.created_at, ").append(
-				"p.updated_at, p.is_active, pt.post_type_code, pt.id as ptid, u.company, po.position_name, u.file_id ")
+		str.append("SELECT p.id, p.ver, p.post_title, p.post_content, up.fullname, p.created_by, p.created_at, ").append(
+				"p.updated_at, p.is_active, pt.post_type_code, pt.id as ptid, up.company, po.position_name, up.file_id ")
 				.append("FROM t_post p ").append("INNER JOIN t_post_type pt ON pt.id = p.post_type_id ")
-				.append("INNER JOIN t_like l ON l.post_id = p.id ").append("INNER JOIN t_user u ON u.id = l.user_id ")
+				.append("INNER JOIN t_like l ON l.post_id = p.id ").append("INNER JOIN t_user u ON u.id = l.user_id ").append("INNER JOIN t_user up ON up.id = p.user_id ")
 				.append("INNER JOIN t_position po ON po.id = u.position_id ").append("WHERE u.id = :userId ")
 				.append("AND p.is_active = TRUE ").append("AND l.is_active = TRUE ")
 				.append("ORDER BY p.created_at DESC");
