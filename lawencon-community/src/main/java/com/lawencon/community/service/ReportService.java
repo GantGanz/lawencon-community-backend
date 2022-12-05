@@ -36,6 +36,18 @@ public class ReportService extends BaseCoreService {
 		return paymentActivityDao.getMemberIncome(userId, startDate, endDate);
 	}
 	
+	public Long countSuperAdminIncome(final String startDate, final String endDate) {
+		return paymentActivityDao.countSuperAdminIncome(startDate, endDate);
+	}
+	
+	public ReportsRes getAllSuperAdminIncome(final String startDate, final String endDate, final Integer offset, final Integer limit) {
+		final List<ReportData> reportDatas = paymentActivityDao.getSystemIncomeLimit(startDate, endDate, offset, limit);
+		final ReportsRes reportsRes = new ReportsRes();
+		reportsRes.setData(reportDatas);
+
+		return reportsRes;
+	}
+	
 	public List<ReportData> getSystemIncome(final String startDate, final String endDate){
 		return paymentActivityDao.getSystemIncome(startDate, endDate);
 	}
