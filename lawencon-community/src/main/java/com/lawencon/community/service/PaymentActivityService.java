@@ -39,7 +39,7 @@ public class PaymentActivityService extends BaseCoreService {
 	private FileDao fileDao;
 	@Autowired
 	private PrincipalService principalService;
-
+	
 	public InsertRes insert(final PaymentActivityInsertReq data) {
 		valInsert(data);
 
@@ -278,6 +278,15 @@ public class PaymentActivityService extends BaseCoreService {
 		final String userId = principalService.getAuthPrincipal();
 		Boolean status = false;
 		if (paymentActivityDao.checkPaid(userId, activityId) > 0) {
+			status = true;
+		}
+		return status;
+	}
+	
+	public Boolean checkRejected(final String activityId) {
+		final String userId = principalService.getAuthPrincipal();
+		Boolean status = false;
+		if (paymentActivityDao.checkRejected(userId, activityId) > 0) {
 			status = true;
 		}
 		return status;

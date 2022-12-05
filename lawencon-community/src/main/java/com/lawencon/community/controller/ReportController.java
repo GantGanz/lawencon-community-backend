@@ -71,11 +71,25 @@ public class ReportController {
 		return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF)
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"").body(out);
 	}
+	
+	@GetMapping("count-superadmin-income")
+	public ResponseEntity<Long> countSuperAdminIncome(@RequestParam("start-date") final String startDate,
+			@RequestParam("end-date") final String endDate) {
+		final Long res = reportService.countSuperAdminIncome(startDate, endDate);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
 
 	@GetMapping("superadmin-income")
-	public ResponseEntity<?> getSystemIncome(@RequestParam("start-date") final String startDate,
+	public ResponseEntity<ReportsRes> getAllSuperAdminIncome(@RequestParam("start-date") final String startDate,
 			@RequestParam("end-date") final String endDate, @RequestParam("offset") final Integer offset,
-			@RequestParam("limit") final Integer limit) throws Exception {
+			@RequestParam("limit") final Integer limit) {
+		final ReportsRes res = reportService.getAllSuperAdminIncome(startDate, endDate, offset, limit);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+
+	@GetMapping("report-superadmin-income")
+	public ResponseEntity<?> getSystemIncome(@RequestParam("start-date") final String startDate,
+			@RequestParam("end-date") final String endDate) throws Exception {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());
 		final List<ReportData> data = reportService.getSystemIncome(startDate, endDate);
 		final Map<String, Object> map = new HashMap<>();

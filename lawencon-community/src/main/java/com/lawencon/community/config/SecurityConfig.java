@@ -29,9 +29,6 @@ public class SecurityConfig {
 		matchers.add(new AntPathRequestMatcher("/positions/**", HttpMethod.GET.name()));
 		matchers.add(new AntPathRequestMatcher("/industries/**", HttpMethod.GET.name()));
 		matchers.add(new AntPathRequestMatcher("/files/**", HttpMethod.GET.name()));
-//		matchers.add(new AntPathRequestMatcher("/reports/report-member-income", HttpMethod.GET.name()));
-//		matchers.add(new AntPathRequestMatcher("/reports/report-activity-member", HttpMethod.GET.name()));
-//		matchers.add(new AntPathRequestMatcher("/reports/report-activity-superadmin", HttpMethod.GET.name()));
 		matchers.add(new AntPathRequestMatcher("/swagger-ui/**", HttpMethod.GET.name()));
 		matchers.add(new AntPathRequestMatcher("/v3/**", HttpMethod.GET.name()));
 		return matchers;
