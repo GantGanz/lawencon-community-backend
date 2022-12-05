@@ -46,6 +46,8 @@ public class ActivityService extends BaseCoreService {
 	private FileDao fileDao;
 	@Autowired
 	private PrincipalService principalService;
+	@Autowired
+	private PaymentActivityService paymentActivityService;
 	
 	public Long countMyEvent() {
 		return activityDao.countMyActivity(principalService.getAuthPrincipal(), ActivityTypeConstant.EVENT.getActivityTypeCode());
@@ -163,7 +165,17 @@ public class ActivityService extends BaseCoreService {
 			activityData.setCreatedBy(activity.getCreatedBy());
 			activityData.setCreatedAt(activity.getCreatedAt());
 			activityData.setUpdatedAt(activity.getUpdatedAt());
-
+			
+			if(paymentActivityService.checkRejected(activity.getId())) {				
+				activityData.setPaymentStatus("Rejected");
+			}else if(paymentActivityService.checkApproved(activity.getId())) {
+				activityData.setPaymentStatus("Approved");
+			}else if(paymentActivityService.checkPaid(activity.getId())) {
+				activityData.setPaymentStatus("Pending");
+			}else {
+				activityData.setPaymentStatus("-");
+			}
+			
 			final List<AttachmentActivity> attachmentActivities = attachmentActivityDao.getAllById(activity.getId());
 			final int attachmentActivitySize = attachmentActivities.size();
 			final List<AttachmentActivityData> attachmentActivityDatas = new ArrayList<>();
@@ -207,6 +219,16 @@ public class ActivityService extends BaseCoreService {
 			activityData.setCreatedAt(activity.getCreatedAt());
 			activityData.setUpdatedAt(activity.getUpdatedAt());
 
+			if(paymentActivityService.checkRejected(activity.getId())) {				
+				activityData.setPaymentStatus("Rejected");
+			}else if(paymentActivityService.checkApproved(activity.getId())) {
+				activityData.setPaymentStatus("Approved");
+			}else if(paymentActivityService.checkPaid(activity.getId())) {
+				activityData.setPaymentStatus("Pending");
+			}else {
+				activityData.setPaymentStatus("-");
+			}
+			
 			final List<AttachmentActivity> attachmentActivities = attachmentActivityDao.getAllById(activity.getId());
 			final int attachmentActivitySize = attachmentActivities.size();
 			final List<AttachmentActivityData> attachmentActivityDatas = new ArrayList<>();
