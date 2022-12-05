@@ -28,5 +28,5 @@ public class ActivityData {
 	private LocalDateTime updatedAt;
 	private Boolean isActive;
 	private List<AttachmentActivityData> attachmentActivityDatas;
-	
+	private String paymentStatus;
 }
