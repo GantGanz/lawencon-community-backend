@@ -407,6 +407,35 @@ public class PaymentActivityDao extends AbstractJpaDao {
 		}
 		return data;
 	}
+	
+	public List<ReportData> getSystemIncomeLimit(final String startDate, final String endDate, final Integer offset, final Integer limit) {
+		final StringBuilder query = new StringBuilder().append(
+				"SELECT ROW_NUMBER() OVER(), at.activity_type_name, uc.fullname, a.start_at, (0.9*COUNT(pa.user_id) * a.fee) ")
+				.append("FROM t_payment_activity pa ").append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
+				.append("INNER JOIN t_activity_type at ON a.activity_type_id = at.id ")
+				.append("INNER JOIN t_user uc ON a.created_by = uc.id ")
+				.append("WHERE a.start_at >= DATE(:startDate) AND a.start_at <= DATE(:endDate) ")
+				.append("AND pa.is_approved = TRUE ")
+				.append("GROUP BY at.activity_type_name, a.fee ")
+				.append("ORDER BY a.start_at DESC, at.activity_type_name, a.title ");
+		final List<?> result = createNativeQuery(query.toString(), offset, limit).setParameter("startDate", startDate)
+				.setParameter("endDate", endDate).getResultList();
+		final List<ReportData> data = new ArrayList<>();
+		if (result != null && result.size() > 0) {
+			result.forEach(objCol -> {
+				final Object[] objArr = (Object[]) objCol;
+				final ReportData row = new ReportData();
+				row.setNo(Long.valueOf(objArr[0].toString()));
+				row.setActivityType(objArr[1].toString());
+				row.setMemberName(objArr[2].toString());
+				row.setStartDate(Timestamp.valueOf(objArr[3].toString()).toLocalDateTime().toLocalDate());
+				final BigDecimal bd = new BigDecimal(objArr[4].toString());
+				row.setTotalIncome(bd);
+				data.add(row);
+			});
+		}
+		return data;
+	}
 
 	public List<ReportData> getSystemIncome(final String startDate, final String endDate) {
 		final StringBuilder query = new StringBuilder().append(
@@ -450,6 +479,28 @@ public class PaymentActivityDao extends AbstractJpaDao {
 		try {
 			final Object userObj = createNativeQuery(str.toString()).setParameter("startDate", startDate)
 					.setParameter("endDate", endDate).setParameter("userId", userId).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
+	
+	public Long countSuperAdminIncome(final String startDate, final String endDate) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT COUNT(DISTINCT(a.id)) ").append("FROM t_payment_activity pa ")
+				.append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
+				.append("INNER JOIN t_activity_type at ON a.activity_type_id = at.id ")
+				.append("INNER JOIN t_user uc ON a.created_by = uc.id ")
+				.append("WHERE a.start_at >= DATE(:startDate) AND a.start_at <= DATE(:endDate) ")
+				.append("AND pa.is_approved = TRUE ").append("GROUP BY at.activity_type_name, uc.email ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("startDate", startDate)
+					.setParameter("endDate", endDate).getSingleResult();
 			if (userObj != null) {
 				total = Long.valueOf(userObj.toString());
 			}
