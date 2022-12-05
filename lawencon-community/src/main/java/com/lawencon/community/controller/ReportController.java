@@ -87,7 +87,7 @@ public class ReportController {
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
-	@GetMapping("superadmin-income")
+	@GetMapping("report-superadmin-income")
 	public ResponseEntity<?> getSystemIncome(@RequestParam("start-date") final String startDate,
 			@RequestParam("end-date") final String endDate, @RequestParam("offset") final Integer offset,
 			@RequestParam("limit") final Integer limit) throws Exception {

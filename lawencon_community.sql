@@ -517,3 +517,6 @@ INSERT INTO t_payment_premium (id, nominal, is_approved, user_id, file_id, creat
 ('18', 200000, false, '18', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '18', now()),
 ('19', 200000, false, '19', '2c77dd06-6557-48b2-a0e0-3d8245dd40f9', '19', now()),
 ('20', 200000, false, '20', 'd45027a8-a2e2-46a9-b2c2-4f4fd2310d7c', '20', now());
+
+
+SELECT ROW_NUMBER() OVER(), at.activity_type_name, uc.fullname, (0.9*COUNT(pa.user_id) * a.fee) FROM t_payment_activity pa INNER JOIN t_activity a ON pa.activity_id = a.id INNER JOIN t_activity_type at ON a.activity_type_id = at.id INNER JOIN t_user uc ON a.created_by = uc.id WHERE a.start_at >= DATE('2000-01-01') AND a.start_at <= DATE("3000-01-01") AND pa.is_approved = TRUE GROUP BY at.activity_type_name, a.fee, uc.fullname, a.start_at ORDER BY a.start_at DESC, at.activity_type_name;
