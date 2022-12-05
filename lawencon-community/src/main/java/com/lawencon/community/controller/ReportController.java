@@ -89,8 +89,7 @@ public class ReportController {
 
 	@GetMapping("report-superadmin-income")
 	public ResponseEntity<?> getSystemIncome(@RequestParam("start-date") final String startDate,
-			@RequestParam("end-date") final String endDate, @RequestParam("offset") final Integer offset,
-			@RequestParam("limit") final Integer limit) throws Exception {
+			@RequestParam("end-date") final String endDate) throws Exception {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());
 		final List<ReportData> data = reportService.getSystemIncome(startDate, endDate);
 		final Map<String, Object> map = new HashMap<>();

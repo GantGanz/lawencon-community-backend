@@ -452,10 +452,11 @@ public class PaymentActivityDao extends AbstractJpaDao {
 	public List<ReportData> getSystemIncomeLimit(final String startDate, final String endDate, final Integer offset,
 			final Integer limit) {
 		final StringBuilder query = new StringBuilder()
-				.append("SELECT ROW_NUMBER() OVER(), fullname, activity_type, SUM(fee) ").append("FROM ")
-				.append("SELECT (0.9COUNT(pa.user_id) a.fee) as fee, uc.fullname as fullname, at.activity_type_name as activity_type ")
+				.append("SELECT ROW_NUMBER() OVER(), fullname, activity_type, SUM(fee) ").append("FROM (")
+				.append("SELECT (0.9*COUNT(pa.user_id)* a.fee) as fee, uc.fullname as fullname, at.activity_type_name as activity_type ")
 				.append("FROM t_payment_activity pa INNER JOIN t_activity a ON pa.activity_id = a.id  ")
 				.append("INNER JOIN t_activity_type at ON a.activity_type_id = at.id ")
+				.append("INNER JOIN t_user uc ON a.created_by = uc.id ")
 				.append("WHERE a.start_at >= DATE(:startDate) AND a.start_at <= DATE(:endDate) ")
 				.append("AND pa.is_approved = TRUE ").append("GROUP BY a.fee, uc.fullname, at.activity_type_name ")
 				.append(") AS t ").append("GROUP BY t.fullname, t.activity_type ");
@@ -479,10 +480,11 @@ public class PaymentActivityDao extends AbstractJpaDao {
 
 	public List<ReportData> getSystemIncome(final String startDate, final String endDate) {
 		final StringBuilder query = new StringBuilder()
-				.append("SELECT ROW_NUMBER() OVER(), fullname, activity_type, SUM(fee) ").append("FROM ")
-				.append("SELECT (0.9COUNT(pa.user_id) a.fee) as fee, uc.fullname as fullname, at.activity_type_name as activity_type ")
+				.append("SELECT ROW_NUMBER() OVER(), fullname, activity_type, SUM(fee) ").append("FROM (")
+				.append("SELECT (0.9*COUNT(pa.user_id)* a.fee) as fee, uc.fullname as fullname, at.activity_type_name as activity_type ")
 				.append("FROM t_payment_activity pa INNER JOIN t_activity a ON pa.activity_id = a.id  ")
 				.append("INNER JOIN t_activity_type at ON a.activity_type_id = at.id ")
+				.append("INNER JOIN t_user uc ON a.created_by = uc.id ")
 				.append("WHERE a.start_at >= DATE(:startDate) AND a.start_at <= DATE(:endDate) ")
 				.append("AND pa.is_approved = TRUE ").append("GROUP BY a.fee, uc.fullname, at.activity_type_name ")
 				.append(") AS t ").append("GROUP BY t.fullname, t.activity_type ");
@@ -506,10 +508,11 @@ public class PaymentActivityDao extends AbstractJpaDao {
 	public Long countSuperAdminIncome(final String startDate, final String endDate) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT COUNT (*) FROM (").append("SELECT ROW_NUMBER() OVER(), fullname, activity_type, SUM(fee) ")
-				.append("FROM ")
-				.append("SELECT (0.9COUNT(pa.user_id) a.fee) as fee, uc.fullname as fullname, at.activity_type_name as activity_type ")
+				.append("FROM (")
+				.append("SELECT (0.9*COUNT(pa.user_id)* a.fee) as fee, uc.fullname as fullname, at.activity_type_name as activity_type ")
 				.append("FROM t_payment_activity pa INNER JOIN t_activity a ON pa.activity_id = a.id  ")
 				.append("INNER JOIN t_activity_type at ON a.activity_type_id = at.id ")
+				.append("INNER JOIN t_user uc ON a.created_by = uc.id ")
 				.append("WHERE a.start_at >= DATE(:startDate) AND a.start_at <= DATE(:endDate) ")
 				.append("AND pa.is_approved = TRUE ").append("GROUP BY a.fee, uc.fullname, at.activity_type_name ")
 				.append(") AS t ").append("GROUP BY t.fullname, t.activity_type ").append(") AS sum ");
