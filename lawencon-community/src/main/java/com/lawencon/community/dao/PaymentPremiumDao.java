@@ -154,10 +154,14 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 	public Long countAllUnapproved() {
 		final StringBuilder str = new StringBuilder();
 <<<<<<< HEAD
+<<<<<<< HEAD
 		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_approved = FALSE AND p.is_active = TRUE");
 =======
 		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_approved = FALSE AND p.is_active = TRUE ");
 >>>>>>> 8813fdf3672953dc6271e1434e1fbb43d8c39dcf
+=======
+		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_approved = FALSE AND p.is_active = TRUE ");
+>>>>>>> 17e533ab3c02380f2b8cfe2eddd7f1f638a21ff1
 
 		Long total = null;
 		try {
