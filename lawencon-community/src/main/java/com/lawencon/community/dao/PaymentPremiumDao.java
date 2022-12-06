@@ -110,7 +110,7 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 		str.append(
 				"SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, p.created_at, u.email, p.ver, p.updated_at ")
 				.append("FROM t_payment_premium p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE p.is_approved = FALSE ").append("ORDER BY p.created_at DESC ")
+				.append("WHERE p.is_approved = FALSE OR p.is_active = FALSE ").append("ORDER BY p.created_at DESC ")
 				.append("LIMIT :limit OFFSET :offset");
 		;
 
