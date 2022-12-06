@@ -103,9 +103,61 @@ public class PaymentActivityService extends BaseCoreService {
 		res.setMessage("Approve success");
 		return res;
 	}
+	
+	public UpdateRes reject(final PaymentActivityUpdateReq data) {
+		valUpdate(data);
+		PaymentActivity paymentActivity = paymentActivityDao.getByIdAndDetach(PaymentActivity.class, data.getId());
+		paymentActivity.setIsActive(false);
+		paymentActivity.setVersion(data.getVersion());
+
+		try {
+			begin();
+			paymentActivity = paymentActivityDao.saveAndFlush(paymentActivity);
+			commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new RuntimeException("Reject failed");
+		}
+		final UpdateDataRes dataRes = new UpdateDataRes();
+		dataRes.setVersion(paymentActivity.getVersion());
+
+		final UpdateRes res = new UpdateRes();
+		res.setData(dataRes);
+		res.setMessage("Reject success");
+		return res;
+	}
 
 	public PaymentActivitiesRes getAllApproved(final Integer offset, final Integer limit) {
 		final List<PaymentActivity> paymentActivities = paymentActivityDao.getAllApproved(offset, limit);
+		final List<PaymentActivityData> paymentActivityDatas = new ArrayList<>();
+		for (int i = 0; i < paymentActivities.size(); i++) {
+			final PaymentActivity paymentActivity = paymentActivities.get(i);
+			final PaymentActivityData paymentActivityData = new PaymentActivityData();
+			paymentActivityData.setId(paymentActivity.getId());
+			paymentActivityData.setVersion(paymentActivity.getVersion());
+			paymentActivityData.setNominal(paymentActivity.getNominal());
+			paymentActivityData.setIsApproved(paymentActivity.getIsApproved());
+			paymentActivityData.setFileId(paymentActivity.getFile().getId());
+			paymentActivityData.setUserId(paymentActivity.getUser().getId());
+			paymentActivityData.setFullname(paymentActivity.getUser().getFullname());
+			paymentActivityData.setEmail(paymentActivity.getUser().getEmail());
+			paymentActivityData.setActivityId(paymentActivity.getActivity().getId());
+			paymentActivityData.setActivityTitle(paymentActivity.getActivity().getActivityTitle());
+			paymentActivityData.setActivityType(paymentActivity.getActivity().getActivityType().getActivityTypeName());
+			paymentActivityData.setCreatedAt(paymentActivity.getCreatedAt());
+			paymentActivityData.setUpdatedAt(paymentActivity.getUpdatedAt());
+
+			paymentActivityDatas.add(paymentActivityData);
+		}
+		final PaymentActivitiesRes paymentActivitiesRes = new PaymentActivitiesRes();
+		paymentActivitiesRes.setData(paymentActivityDatas);
+
+		return paymentActivitiesRes;
+	}
+	
+	public PaymentActivitiesRes getAllRejected(final Integer offset, final Integer limit) {
+		final List<PaymentActivity> paymentActivities = paymentActivityDao.getAllRejected(offset, limit);
 		final List<PaymentActivityData> paymentActivityDatas = new ArrayList<>();
 		for (int i = 0; i < paymentActivities.size(); i++) {
 			final PaymentActivity paymentActivity = paymentActivities.get(i);
@@ -247,6 +299,10 @@ public class PaymentActivityService extends BaseCoreService {
 
 	public Long countAllApproved() {
 		return paymentActivityDao.countAllApproved();
+	}
+	
+	public Long countAllRejected() {
+		return paymentActivityDao.countAllRejected();
 	}
 
 	public BigDecimal getCreatorIncome() {
