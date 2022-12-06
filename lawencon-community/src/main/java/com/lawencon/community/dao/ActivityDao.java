@@ -25,7 +25,7 @@ public class ActivityDao extends AbstractJpaDao {
 				.append("FROM t_activity a ").append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_user u ON u.id = a.created_by ")
 				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ")
-				.append("ORDER BY a.created_at DESC");
+				.append("AND a.start_at >= NOW() AND a.start_at <= NOW() ").append("ORDER BY a.created_at DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql, offset, limit)
@@ -132,7 +132,6 @@ public class ActivityDao extends AbstractJpaDao {
 				.append("FROM t_activity a ").append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_user u ON u.id = a.created_by ")
 				.append("WHERE at.activity_type_code = :activityTypeCode ")
-				.append("AND a.start_at >= NOW() AND a.start_at <= NOW() ")
 				.append("AND a.created_by = :userId ").append("ORDER BY a.is_active DESC, a.created_at DESC");
 
 		final String sql = str.toString();
@@ -187,7 +186,7 @@ public class ActivityDao extends AbstractJpaDao {
 				.append("FROM t_activity a ").append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_user u ON u.id = a.created_by ")
 				.append("WHERE at.activity_type_code = :activityTypeCode ")
-				.append("AND a.created_by = :userId ").append("ORDER BY a.created_at DESC");
+				.append("AND a.created_by = :userId ").append("ORDER BY a.is_active DESC, a.created_at DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql, offset, limit)
