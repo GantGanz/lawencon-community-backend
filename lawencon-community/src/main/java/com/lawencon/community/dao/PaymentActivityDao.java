@@ -139,7 +139,7 @@ public class PaymentActivityDao extends AbstractJpaDao {
 				.append("FROM t_payment_activity p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
 				.append("INNER JOIN t_activity a ON a.id = p.activity_id  ")
 				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
-				.append("WHERE p.is_approved = FALSE OR p.is_active = FALSE ").append("ORDER BY p.created_at DESC ")
+				.append("WHERE p.is_approved = FALSE AND p.is_active = TRUE ").append("ORDER BY p.created_at DESC ")
 				.append("LIMIT :limit OFFSET :offset");
 
 		final String sql = str.toString();
@@ -341,7 +341,7 @@ public class PaymentActivityDao extends AbstractJpaDao {
 
 	public Long countAllUnapproved() {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT count(p.id) ").append("FROM t_payment_activity p ").append("WHERE p.is_approved = FALSE ");
+		str.append("SELECT count(p.id) ").append("FROM t_payment_activity p ").append("WHERE p.is_approved = FALSE AND p.is_active = TRUE ");
 
 		Long total = null;
 		try {
