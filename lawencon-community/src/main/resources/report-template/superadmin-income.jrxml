@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="productivity.member.report" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a9f35397-826c-4ccf-9f3f-0f3326fdeebc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="productivity.member.report" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a9f35397-826c-4ccf-9f3f-0f3326fdeebc">
+	<property name="net.sf.jasperreports.print.create.bookmarks" value="false"/>
 	<parameter name="reportTitle" class="java.lang.String"/>
 	<parameter name="reportType" class="java.lang.String"/>
 	<parameter name="company" class="java.lang.String"/>
@@ -19,9 +20,9 @@
 		<band/>
 	</background>
 	<title>
-		<band height="98">
+		<band height="88">
 			<frame>
-				<reportElement mode="Opaque" x="-20" y="2" width="595" height="92" backcolor="#FFFFFF" uuid="57f2bef5-4518-4166-a222-d34f0ef6e4a4"/>
+				<reportElement mode="Opaque" x="-20" y="-9" width="595" height="92" backcolor="#FFFFFF" uuid="57f2bef5-4518-4166-a222-d34f0ef6e4a4"/>
 				<box bottomPadding="0">
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -30,28 +31,28 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textField textAdjust="StretchHeight">
-					<reportElement x="100" y="16" width="400" height="30" forecolor="#050000" uuid="53ffafc6-117b-458d-bfd1-fe6a132d7bbf"/>
-					<textElement textAlignment="Center">
-						<font size="18" isBold="true"/>
+					<reportElement x="120" y="10" width="414" height="30" forecolor="#050000" uuid="53ffafc6-117b-458d-bfd1-fe6a132d7bbf"/>
+					<textElement textAlignment="Center" markup="html">
+						<font size="20" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{company}]]></textFieldExpression>
 				</textField>
 				<image isUsingCache="false">
-					<reportElement x="20" y="14" width="70" height="64" uuid="d07f4590-88b1-42aa-93d0-fdf8e367712f">
+					<reportElement x="40" y="7" width="80" height="80" uuid="d07f4590-88b1-42aa-93d0-fdf8e367712f">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
 						<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					</reportElement>
 					<imageExpression><![CDATA["https://github.com/GantGanz/zenith-backend/blob/main/lawencon-community/src/main/resources/email-template/assets/logo.png?raw=true"]]></imageExpression>
 				</image>
 				<staticText>
-					<reportElement x="100" y="50" width="400" height="30" uuid="0310625b-d91b-4091-830a-9e8683309651"/>
+					<reportElement x="120" y="46" width="414" height="20" uuid="0310625b-d91b-4091-830a-9e8683309651"/>
 					<textElement textAlignment="Center">
 						<font size="12"/>
 					</textElement>
-					<text><![CDATA[JL. Pemuda No: 31-37, Jakarta]]></text>
+					<text><![CDATA[Pakuwon Tower 22nd floor Jl Casablanca Kav 88, Jakarta12870]]></text>
 				</staticText>
 				<line>
-					<reportElement x="0" y="92" width="595" height="1" forecolor="#050000" uuid="906b3bf4-82a2-4854-958f-67357078bb3a"/>
+					<reportElement x="0" y="92" width="595" height="1" forecolor="#000000" uuid="906b3bf4-82a2-4854-958f-67357078bb3a"/>
 					<graphicElement>
 						<pen lineWidth="2.0" lineColor="#000000"/>
 					</graphicElement>
@@ -62,29 +63,39 @@
 						<pen lineColor="#000000"/>
 					</graphicElement>
 				</line>
+				<staticText>
+					<reportElement x="120" y="66" width="414" height="20" uuid="ad076ec5-2a46-45b9-a1e4-a7728c3a614b"/>
+					<textElement textAlignment="Center">
+						<font size="12"/>
+					</textElement>
+					<text><![CDATA[Telp.021-011-056 Email: zenith@gmail.com ]]></text>
+				</staticText>
 			</frame>
 		</band>
 	</title>
 	<pageHeader>
 		<band height="73">
 			<textField textAdjust="StretchHeight">
-				<reportElement x="374" y="6" width="180" height="20" forecolor="#050000" uuid="f45f7684-d674-416a-849b-a6d5345973d7"/>
+				<reportElement x="374" y="6" width="180" height="20" forecolor="#050000" uuid="f45f7684-d674-416a-849b-a6d5345973d7">
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Right">
 					<font size="14" isBold="false"/>
+					<paragraph rightIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Type : "+$P{reportType}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="40" width="238" height="20" forecolor="#050000" uuid="21d829e3-0fde-4bd8-9775-2ac4d1f59e30"/>
+				<reportElement x="0" y="35" width="310" height="20" forecolor="#050000" uuid="21d829e3-0fde-4bd8-9775-2ac4d1f59e30"/>
 				<textElement textAlignment="Left">
 					<font size="14" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA["Range Date : "+$P{dateRange}]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Page">
-				<reportElement x="0" y="6" width="234" height="34" forecolor="#050000" backcolor="#050000" uuid="465361a5-a256-4c96-b2a4-7411690a149c"/>
+				<reportElement x="0" y="6" width="310" height="24" forecolor="#050000" backcolor="#050000" uuid="465361a5-a256-4c96-b2a4-7411690a149c"/>
 				<textElement>
-					<font size="22" isBold="true"/>
+					<font size="18" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{reportTitle}]]></textFieldExpression>
 			</textField>
@@ -160,7 +171,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="52">
+		<band height="32">
 			<textField textAdjust="StretchHeight">
 				<reportElement x="310" y="0" width="109" height="20" uuid="e6bd496c-0942-453e-a191-ac711968f348">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee39f886-a415-4814-aba7-2f6771db4e59"/>
@@ -178,7 +189,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{activityType}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight" pattern="Rp #,##0.###;¤(#,##0.###-)">
+			<textField textAdjust="StretchHeight" pattern="IDR #,##0.###;¤(#,##0.###-)">
 				<reportElement x="420" y="0" width="133" height="20" uuid="6a95bf8f-9249-4666-acf5-ef019bfb945e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="10f84506-bd64-4beb-9b10-e91da6b2c16e"/>
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
@@ -215,6 +226,7 @@
 			<textField textAdjust="StretchHeight">
 				<reportElement x="0" y="0" width="40" height="20" uuid="11ce7f73-68fb-4bad-b365-ea8c14181e7b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6201114d-a018-4276-9148-0c709c5595ea"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -224,6 +236,7 @@
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Top">
 					<font size="12"/>
+					<paragraph leftIndent="0"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
 			</textField>
@@ -235,9 +248,9 @@
 	<pageFooter>
 		<band height="24">
 			<frame>
-				<reportElement x="0" y="0" width="554" height="24" uuid="34496409-b822-488c-9bf6-622013174164"/>
+				<reportElement x="0" y="0" width="555" height="24" uuid="34496409-b822-488c-9bf6-622013174164"/>
 				<textField>
-					<reportElement x="0" y="6" width="180" height="13" uuid="0f532be5-bf94-407c-a975-128886603e73">
+					<reportElement x="1" y="6" width="180" height="13" uuid="0f532be5-bf94-407c-a975-128886603e73">
 						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 					</reportElement>
 					<textElement markup="html">
@@ -246,24 +259,33 @@
 					<textFieldExpression><![CDATA[new SimpleDateFormat("EEEEE dd MMMMM yyyy HH:mm:ss").format(new Date())]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement mode="Opaque" x="336" y="6" width="174" height="13" backcolor="#FFFFFF" uuid="8fd0d837-1c7c-451f-be72-8d97cf7be8c1"/>
+					<reportElement mode="Opaque" x="340" y="6" width="174" height="13" backcolor="#FFFFFF" uuid="8fd0d837-1c7c-451f-be72-8d97cf7be8c1"/>
 					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 				</textField>
 				<textField evaluationTime="Report">
-					<reportElement mode="Opaque" x="514" y="6" width="40" height="13" backcolor="#FFFFFF" uuid="6193e432-586d-4f60-910c-e89c39b50bcb"/>
+					<reportElement mode="Opaque" x="516" y="6" width="39" height="13" backcolor="#FFFFFF" uuid="6193e432-586d-4f60-910c-e89c39b50bcb">
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left">
+						<paragraph rightIndent="0"/>
+					</textElement>
 					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="41">
+		<band height="31">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
-			<textField pattern="Rp #,##0.###;¤(#,##0.###-)">
-				<reportElement x="444" y="0" width="110" height="30" uuid="628f70c3-dcd4-4fe3-9881-66aa0b740770"/>
+			<textField pattern="IDR #.##0.###;¤(#,##0.###-)">
+				<reportElement x="444" y="0" width="110" height="30" uuid="628f70c3-dcd4-4fe3-9881-66aa0b740770">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="18" isBold="true" isUnderline="true"/>
+					<font size="16" isBold="true" isUnderline="true"/>
+					<paragraph rightIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{totalIncome}]]></textFieldExpression>
 			</textField>
