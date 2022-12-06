@@ -252,6 +252,15 @@ public class PaymentPremiumService extends BaseCoreService {
 		return status;
 	}
 	
+	public Boolean checkReject() {
+		final String userId = principalService.getAuthPrincipal();
+		Boolean status = false; 
+		if(paymentPremiumDao.checkReject(userId) > 0) {
+			status = true;
+		}
+		return status;
+	}
+	
 	private void valInsert(final PaymentPremiumInsertReq data) {
 		valContentNotNull(data);
 	}
