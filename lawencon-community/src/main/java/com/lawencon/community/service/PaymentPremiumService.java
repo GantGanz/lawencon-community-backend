@@ -246,7 +246,7 @@ public class PaymentPremiumService extends BaseCoreService {
 	public Boolean checkPaid() {
 		final String userId = principalService.getAuthPrincipal();
 		Boolean status = false; 
-		if(paymentPremiumDao.checkPaid(userId) > 0) {
+		if(paymentPremiumDao.checkPending(userId) > 0) {
 			status = true;
 		}
 		return status;

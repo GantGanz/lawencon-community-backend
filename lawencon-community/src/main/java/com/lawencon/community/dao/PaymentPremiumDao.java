@@ -203,7 +203,6 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_approved = TRUE ")
 				.append("AND p.user_id = :userId");
-
 		Long total = null;
 		try {
 			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
@@ -216,10 +215,9 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 		return total;
 	}
 
-	public Long checkPaid(final String userId) {
+	public Long checkPending(final String userId) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.user_id = :userId");
-
+		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_approved = FALSE ").append("WHERE p.user_id = :userId").append("AND p.is_active = TRUE ");
 		Long total = null;
 		try {
 			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
@@ -235,7 +233,21 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 	public Long checkReject(final String userId) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.user_id = :userId ").append("AND p.is_active = FALSE ");
-
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
+	
+	public Long countTotalPayment(final String userId) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.user_id = :userId ");
 		Long total = null;
 		try {
 			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
