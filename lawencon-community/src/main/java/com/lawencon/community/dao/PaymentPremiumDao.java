@@ -59,7 +59,7 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 
 		return paymentPremiums;
 	}
-	
+
 	public List<PaymentPremium> getAllRejected(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append(
@@ -182,7 +182,7 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 		}
 		return total;
 	}
-	
+
 	public Long countAllRejected() {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_active = FALSE ");
