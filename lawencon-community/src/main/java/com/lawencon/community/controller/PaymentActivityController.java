@@ -43,6 +43,12 @@ public class PaymentActivityController {
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
+	@GetMapping("count-rejected")
+	public ResponseEntity<Long> countAllRejected() {
+		final Long res = paymentActivityService.countAllRejected();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
 	@GetMapping("creator-income")
 	public ResponseEntity<BigDecimal> getCreatorIncome() {
 		final BigDecimal res = paymentActivityService.getCreatorIncome();
@@ -67,6 +73,12 @@ public class PaymentActivityController {
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
+	@GetMapping("rejected")
+	public ResponseEntity<PaymentActivitiesRes> getAllRejected(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+		final PaymentActivitiesRes res = paymentActivityService.getAllRejected(offset, limit);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
 	@GetMapping("user")
 	public ResponseEntity<PaymentActivitiesRes> getAllByCreatorId() {
 		final PaymentActivitiesRes res = paymentActivityService.getAllByCreatorId();
@@ -86,8 +98,14 @@ public class PaymentActivityController {
 	}
 
 	@PutMapping
-	public ResponseEntity<UpdateRes> update(@RequestBody final PaymentActivityUpdateReq data) {
+	public ResponseEntity<UpdateRes> approve(@RequestBody final PaymentActivityUpdateReq data) {
 		final UpdateRes res = paymentActivityService.approve(data);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@PutMapping("reject")
+	public ResponseEntity<UpdateRes> reject(@RequestBody final PaymentActivityUpdateReq data) {
+		final UpdateRes res = paymentActivityService.reject(data);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 

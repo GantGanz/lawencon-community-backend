@@ -99,9 +99,61 @@ public class PaymentPremiumService extends BaseCoreService {
 		res.setMessage("Approve success");
 		return res;
 	}
+	
+	public UpdateRes reject(final PaymentPremiumUpdateReq data) {
+		valUpdate(data);
+		PaymentPremium paymentPremium = paymentPremiumDao.getByIdAndDetach(PaymentPremium.class, data.getId());
+		paymentPremium.setIsActive(false);
+		paymentPremium.setVersion(data.getVersion());
+
+		final User userUpdate = userDao.getByIdAndDetach(User.class, paymentPremium.getUser().getId());
+		userUpdate.setIsPremium(true);
+		try {
+			begin();
+			paymentPremium = paymentPremiumDao.saveAndFlush(paymentPremium);
+			userDao.saveAndFlush(userUpdate);
+			commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			throw new RuntimeException("Reject failed");
+		}
+		final UpdateDataRes dataRes = new UpdateDataRes();
+		dataRes.setVersion(paymentPremium.getVersion());
+
+		final UpdateRes res = new UpdateRes();
+		res.setData(dataRes);
+		res.setMessage("Reject success");
+		return res;
+	}
 
 	public PaymentPremiumsRes getAllApproved(final Integer offset, final Integer limit) {
 		final List<PaymentPremium> paymentPremiums = paymentPremiumDao.getAllApproved(offset, limit);
+		final List<PaymentPremiumData> paymentPremiumDatas = new ArrayList<>();
+		for (int i = 0; i < paymentPremiums.size(); i++) {
+			final PaymentPremium paymentPremium = paymentPremiums.get(i);
+			final PaymentPremiumData paymentPremiumData = new PaymentPremiumData();
+			paymentPremiumData.setId(paymentPremium.getId());
+			paymentPremiumData.setVersion(paymentPremium.getVersion());
+			paymentPremiumData.setNominal(paymentPremium.getNominal());
+			paymentPremiumData.setIsApproved(paymentPremium.getIsApproved());
+			paymentPremiumData.setFileId(paymentPremium.getFile().getId());
+			paymentPremiumData.setUserId(paymentPremium.getUser().getId());
+			paymentPremiumData.setFullname(paymentPremium.getUser().getFullname());
+			paymentPremiumData.setEmail(paymentPremium.getUser().getEmail());
+			paymentPremiumData.setCreatedAt(paymentPremium.getCreatedAt());
+			paymentPremiumData.setUpdatedAt(paymentPremium.getUpdatedAt());
+
+			paymentPremiumDatas.add(paymentPremiumData);
+		}
+		final PaymentPremiumsRes paymentPremiumsRes = new PaymentPremiumsRes();
+		paymentPremiumsRes.setData(paymentPremiumDatas);
+
+		return paymentPremiumsRes;
+	}
+	
+	public PaymentPremiumsRes getAllRejected(final Integer offset, final Integer limit) {
+		final List<PaymentPremium> paymentPremiums = paymentPremiumDao.getAllRejected(offset, limit);
 		final List<PaymentPremiumData> paymentPremiumDatas = new ArrayList<>();
 		for (int i = 0; i < paymentPremiums.size(); i++) {
 			final PaymentPremium paymentPremium = paymentPremiums.get(i);
@@ -178,6 +230,10 @@ public class PaymentPremiumService extends BaseCoreService {
 		return paymentPremiumDao.countAllApproved();
 	}
 	
+	public Long countAllRejected() {
+		return paymentPremiumDao.countAllRejected();
+	}
+	
 	public Boolean checkStatus() {
 		final String userId = principalService.getAuthPrincipal();
 		Boolean status = false; 
@@ -190,7 +246,16 @@ public class PaymentPremiumService extends BaseCoreService {
 	public Boolean checkPaid() {
 		final String userId = principalService.getAuthPrincipal();
 		Boolean status = false; 
-		if(paymentPremiumDao.checkPaid(userId) > 0) {
+		if(paymentPremiumDao.checkPending(userId) > 0) {
+			status = true;
+		}
+		return status;
+	}
+	
+	public Boolean checkReject() {
+		final String userId = principalService.getAuthPrincipal();
+		Boolean status = false; 
+		if(paymentPremiumDao.checkReject(userId) > 0) {
 			status = true;
 		}
 		return status;

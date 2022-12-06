@@ -41,6 +41,12 @@ public class PaymentPremiumController {
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
+	@GetMapping("count-rejected")
+	public ResponseEntity<Long> countAllRejected() {
+		final Long res = paymentPremiumService.countAllRejected();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
 	@GetMapping("approved")
 	public ResponseEntity<PaymentPremiumsRes> getAllApproved(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
 		final PaymentPremiumsRes res = paymentPremiumService.getAllApproved(offset, limit);
@@ -52,6 +58,12 @@ public class PaymentPremiumController {
 		final PaymentPremiumsRes res = paymentPremiumService.getAllUnapproved(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
+	
+	@GetMapping("rejected")
+	public ResponseEntity<PaymentPremiumsRes> getAllRejected(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+		final PaymentPremiumsRes res = paymentPremiumService.getAllRejected(offset, limit);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
 
 	@PostMapping
 	public ResponseEntity<InsertRes> insert(@RequestBody final PaymentPremiumInsertReq data) {
@@ -60,8 +72,14 @@ public class PaymentPremiumController {
 	}
 
 	@PutMapping
-	public ResponseEntity<UpdateRes> update(@RequestBody final PaymentPremiumUpdateReq data) {
+	public ResponseEntity<UpdateRes> approve(@RequestBody final PaymentPremiumUpdateReq data) {
 		final UpdateRes res = paymentPremiumService.approve(data);
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@PutMapping("reject")
+	public ResponseEntity<UpdateRes> reject(@RequestBody final PaymentPremiumUpdateReq data) {
+		final UpdateRes res = paymentPremiumService.reject(data);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
@@ -80,6 +98,12 @@ public class PaymentPremiumController {
 	@GetMapping("paid")
 	public ResponseEntity<Boolean> checkPending() {
 		final Boolean result = paymentPremiumService.checkPaid();
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	
+	@GetMapping("reject")
+	public ResponseEntity<Boolean> checkReject() {
+		final Boolean result = paymentPremiumService.checkReject();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }

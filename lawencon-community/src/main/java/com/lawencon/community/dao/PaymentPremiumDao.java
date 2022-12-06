@@ -60,12 +60,57 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 		return paymentPremiums;
 	}
 
+	public List<PaymentPremium> getAllRejected(final Integer offset, final Integer limit) {
+		final StringBuilder str = new StringBuilder();
+		str.append(
+				"SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, p.created_at, u.email, p.ver, p.updated_at ")
+				.append("FROM t_payment_premium p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
+				.append("WHERE p.is_active = FALSE ").append("ORDER BY p.created_at DESC ")
+				.append("LIMIT :limit OFFSET :offset");
+
+		final String sql = str.toString();
+		final List<?> result = createNativeQuery(sql).setParameter("offset", offset).setParameter("limit", limit)
+				.getResultList();
+
+		final List<PaymentPremium> paymentPremiums = new ArrayList<>();
+
+		if (result != null && result.size() > 0) {
+			result.forEach(resultObj -> {
+				final Object[] objArr = (Object[]) resultObj;
+				final PaymentPremium paymentPremium = new PaymentPremium();
+				paymentPremium.setId(objArr[0].toString());
+				final BigDecimal bd = new BigDecimal(objArr[1].toString());
+				paymentPremium.setNominal(bd);
+				paymentPremium.setIsApproved(Boolean.valueOf(objArr[2].toString()));
+
+				final File file = new File();
+				file.setId(objArr[3].toString());
+				paymentPremium.setFile(file);
+
+				final User user = new User();
+				user.setId(objArr[4].toString());
+				user.setFullname(objArr[5].toString());
+				user.setEmail(objArr[7].toString());
+				paymentPremium.setUser(user);
+
+				paymentPremium.setCreatedAt(Timestamp.valueOf(objArr[6].toString()).toLocalDateTime());
+				paymentPremium.setVersion(Integer.valueOf(objArr[8].toString()));
+				if (objArr[9] != null) {
+					paymentPremium.setUpdatedAt(Timestamp.valueOf(objArr[9].toString()).toLocalDateTime());
+				}
+				paymentPremiums.add(paymentPremium);
+			});
+		}
+
+		return paymentPremiums;
+	}
+
 	public List<PaymentPremium> getAllUnapproved(final Integer offset, final Integer limit) {
 		final StringBuilder str = new StringBuilder();
 		str.append(
 				"SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, p.created_at, u.email, p.ver, p.updated_at ")
 				.append("FROM t_payment_premium p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE p.is_approved = FALSE ").append("ORDER BY p.created_at DESC ")
+				.append("WHERE p.is_approved = FALSE AND p.is_active = TRUE ").append("ORDER BY p.created_at DESC ")
 				.append("LIMIT :limit OFFSET :offset");
 		;
 
@@ -108,7 +153,15 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 
 	public Long countAllUnapproved() {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_approved = FALSE ");
+<<<<<<< HEAD
+<<<<<<< HEAD
+		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_approved = FALSE AND p.is_active = TRUE");
+=======
+		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_approved = FALSE AND p.is_active = TRUE ");
+>>>>>>> 8813fdf3672953dc6271e1434e1fbb43d8c39dcf
+=======
+		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_approved = FALSE AND p.is_active = TRUE ");
+>>>>>>> 17e533ab3c02380f2b8cfe2eddd7f1f638a21ff1
 
 		Long total = null;
 		try {
@@ -138,11 +191,26 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 		return total;
 	}
 
+	public Long countAllRejected() {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_active = FALSE ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
+
 	public Long checkStatus(final String userId) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_approved = TRUE ")
 				.append("AND p.user_id = :userId");
-
 		Long total = null;
 		try {
 			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
@@ -155,10 +223,39 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 		return total;
 	}
 
-	public Long checkPaid(final String userId) {
+	public Long checkPending(final String userId) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.user_id = :userId");
-
+		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_approved = FALSE ").append("WHERE p.user_id = :userId").append("AND p.is_active = TRUE ");
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
+	
+	public Long checkReject(final String userId) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.user_id = :userId ").append("AND p.is_active = FALSE ");
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
+	
+	public Long countTotalPayment(final String userId) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.user_id = :userId ");
 		Long total = null;
 		try {
 			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
