@@ -100,4 +100,10 @@ public class PaymentPremiumController {
 		final Boolean result = paymentPremiumService.checkPaid();
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+	
+	@GetMapping("reject")
+	public ResponseEntity<Boolean> checkReject() {
+		final Boolean result = paymentPremiumService.checkReject();
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
 }
