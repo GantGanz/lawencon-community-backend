@@ -65,7 +65,7 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 		str.append(
 				"SELECT p.id, p.nominal, p.is_approved, p.file_id, p.user_id, u.fullname, p.created_at, u.email, p.ver, p.updated_at ")
 				.append("FROM t_payment_premium p ").append("INNER JOIN t_user u ON u.id = p.created_by ")
-				.append("WHERE p.is_active = TRUE ").append("ORDER BY p.created_at DESC ")
+				.append("WHERE p.is_active = FALSE ").append("ORDER BY p.created_at DESC ")
 				.append("LIMIT :limit OFFSET :offset");
 
 		final String sql = str.toString();
@@ -153,7 +153,7 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 
 	public Long countAllUnapproved() {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_approved = FALSE AND p.is_active = TRUE");
+		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_approved = FALSE AND p.is_active = TRUE ");
 
 		Long total = null;
 		try {
@@ -185,7 +185,7 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 
 	public Long countAllRejected() {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_active = TRUE ");
+		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_active = FALSE ");
 
 		Long total = null;
 		try {
