@@ -165,6 +165,7 @@ public class ActivityService extends BaseCoreService {
 			activityData.setCreatedBy(activity.getCreatedBy());
 			activityData.setCreatedAt(activity.getCreatedAt());
 			activityData.setUpdatedAt(activity.getUpdatedAt());
+			activityData.setIsActive(activity.getIsActive());
 			
 			if(paymentActivityService.checkRejected(activity.getId())) {				
 				activityData.setPaymentStatus("Rejected");
@@ -218,7 +219,8 @@ public class ActivityService extends BaseCoreService {
 			activityData.setCreatedBy(activity.getCreatedBy());
 			activityData.setCreatedAt(activity.getCreatedAt());
 			activityData.setUpdatedAt(activity.getUpdatedAt());
-
+			activityData.setIsActive(activity.getIsActive());
+			
 			if(paymentActivityService.checkRejected(activity.getId())) {				
 				activityData.setPaymentStatus("Rejected");
 			}else if(paymentActivityService.checkApproved(activity.getId())) {
@@ -272,7 +274,8 @@ public class ActivityService extends BaseCoreService {
 			activityData.setCreatedBy(activity.getCreatedBy());
 			activityData.setCreatedAt(activity.getCreatedAt());
 			activityData.setUpdatedAt(activity.getUpdatedAt());
-
+			activityData.setIsActive(activity.getIsActive());
+			
 			final List<AttachmentActivity> attachmentActivities = attachmentActivityDao.getAllById(activity.getId());
 			final int attachmentActivitySize = attachmentActivities.size();
 			final List<AttachmentActivityData> attachmentActivityDatas = new ArrayList<>();
@@ -316,7 +319,8 @@ public class ActivityService extends BaseCoreService {
 			activityData.setCreatedBy(activity.getCreatedBy());
 			activityData.setCreatedAt(activity.getCreatedAt());
 			activityData.setUpdatedAt(activity.getUpdatedAt());
-
+			activityData.setIsActive(activity.getIsActive());
+			
 			final List<AttachmentActivity> attachmentActivities = attachmentActivityDao.getAllById(activity.getId());
 			final int attachmentActivitySize = attachmentActivities.size();
 			final List<AttachmentActivityData> attachmentActivityDatas = new ArrayList<>();
@@ -360,7 +364,8 @@ public class ActivityService extends BaseCoreService {
 			activityData.setCreatedBy(activity.getCreatedBy());
 			activityData.setCreatedAt(activity.getCreatedAt());
 			activityData.setUpdatedAt(activity.getUpdatedAt());
-
+			activityData.setIsActive(activity.getIsActive());
+			
 			final List<AttachmentActivity> attachmentActivities = attachmentActivityDao.getAllById(activity.getId());
 			final int attachmentActivitySize = attachmentActivities.size();
 			final List<AttachmentActivityData> attachmentActivityDatas = new ArrayList<>();
@@ -404,7 +409,8 @@ public class ActivityService extends BaseCoreService {
 			activityData.setCreatedBy(activity.getCreatedBy());
 			activityData.setCreatedAt(activity.getCreatedAt());
 			activityData.setUpdatedAt(activity.getUpdatedAt());
-
+			activityData.setIsActive(activity.getIsActive());
+			
 			final List<AttachmentActivity> attachmentActivities = attachmentActivityDao.getAllById(activity.getId());
 			final int attachmentActivitySize = attachmentActivities.size();
 			final List<AttachmentActivityData> attachmentActivityDatas = new ArrayList<>();
@@ -444,7 +450,8 @@ public class ActivityService extends BaseCoreService {
 		activityData.setCreatedBy(activity.getCreatedBy());
 		activityData.setCreatedAt(activity.getCreatedAt());
 		activityData.setUpdatedAt(activity.getUpdatedAt());
-
+		activityData.setIsActive(activity.getIsActive());
+		
 		final List<AttachmentActivity> attachmentActivities = attachmentActivityDao.getAllById(activity.getId());
 		final int attachmentActivitySize = attachmentActivities.size();
 		final List<AttachmentActivityData> attachmentActivityDatas = new ArrayList<>();
