@@ -408,7 +408,7 @@ public class PaymentActivityDao extends AbstractJpaDao {
 	public Long checkPaid(final String userId, final String activityId) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT count(p.id) ").append("FROM t_payment_activity p ").append("WHERE p.user_id = :userId ")
-				.append("AND p.activity_id = :activityId ");
+				.append("AND p.activity_id = :activityId ").append("WHERE p.is_approved = FALSE ").append("AND p.is_active = TRUE ");
 
 		Long total = null;
 		try {
