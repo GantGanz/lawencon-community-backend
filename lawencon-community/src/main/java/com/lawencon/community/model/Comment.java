@@ -31,7 +31,7 @@ public class Comment extends BaseEntity {
 	@JoinColumn(name = "post_id", nullable = false)
 	private Post post;
 
-	@OneToOne
-	@JoinColumn(name = "comment_id", nullable = false)
-	private Comment comment;
+//	@OneToOne
+//	@JoinColumn(name = "comment_id", nullable = false)
+//	private Comment comment;
 }

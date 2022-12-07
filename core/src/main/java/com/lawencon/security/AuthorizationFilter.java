@@ -99,7 +99,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 		try {
 			response.setStatus(401);
 			Map<String, Object> map = new HashMap<>();
-			map.put("message", "Invalid token");
+			map.put("message", "Session Expired");
 			response.getWriter().append(objectMapper.writeValueAsString(map));
 		} catch (IOException e) {
 			e.printStackTrace();
