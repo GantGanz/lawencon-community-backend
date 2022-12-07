@@ -153,15 +153,8 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 
 	public Long countAllUnapproved() {
 		final StringBuilder str = new StringBuilder();
-
-		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_approved = FALSE AND p.is_active = TRUE");
-//=======
-//		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_approved = FALSE AND p.is_active = TRUE ");
-//>>>>>>> 8813fdf3672953dc6271e1434e1fbb43d8c39dcf
-//=======
-//		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_approved = FALSE AND p.is_active = TRUE ");
-//>>>>>>> 17e533ab3c02380f2b8cfe2eddd7f1f638a21ff1
-
+		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ")
+				.append("WHERE p.is_approved = FALSE AND p.is_active = TRUE");
 		Long total = null;
 		try {
 			final Object userObj = createNativeQuery(str.toString()).getSingleResult();
@@ -224,7 +217,8 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 
 	public Long checkPending(final String userId) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_approved = FALSE ").append("WHERE p.user_id = :userId").append("AND p.is_active = TRUE ");
+		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.is_approved = FALSE ")
+				.append("AND p.user_id = :userId ").append("AND p.is_active = TRUE ");
 		Long total = null;
 		try {
 			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
@@ -236,10 +230,11 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 		}
 		return total;
 	}
-	
+
 	public Long checkReject(final String userId) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.user_id = :userId ").append("AND p.is_active = FALSE ");
+		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.user_id = :userId ")
+				.append("AND p.is_active = FALSE ");
 		Long total = null;
 		try {
 			final Object userObj = createNativeQuery(str.toString()).setParameter("userId", userId).getSingleResult();
@@ -251,7 +246,7 @@ public class PaymentPremiumDao extends AbstractJpaDao {
 		}
 		return total;
 	}
-	
+
 	public Long countTotalPayment(final String userId) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT count(p.id) ").append("FROM t_payment_premium p ").append("WHERE p.user_id = :userId ");

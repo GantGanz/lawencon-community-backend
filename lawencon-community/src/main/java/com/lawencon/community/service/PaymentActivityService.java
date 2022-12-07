@@ -39,7 +39,7 @@ public class PaymentActivityService extends BaseCoreService {
 	private FileDao fileDao;
 	@Autowired
 	private PrincipalService principalService;
-	
+
 	public InsertRes insert(final PaymentActivityInsertReq data) {
 		valInsert(data);
 
@@ -75,7 +75,6 @@ public class PaymentActivityService extends BaseCoreService {
 
 		final InsertRes insertRes = new InsertRes();
 		insertRes.setData(dataRes);
-		insertRes.setMessage("Payment Activity created");
 
 		return insertRes;
 	}
@@ -103,7 +102,7 @@ public class PaymentActivityService extends BaseCoreService {
 		res.setMessage("Approve success");
 		return res;
 	}
-	
+
 	public UpdateRes reject(final PaymentActivityUpdateReq data) {
 		valUpdate(data);
 		PaymentActivity paymentActivity = paymentActivityDao.getByIdAndDetach(PaymentActivity.class, data.getId());
@@ -155,7 +154,7 @@ public class PaymentActivityService extends BaseCoreService {
 
 		return paymentActivitiesRes;
 	}
-	
+
 	public PaymentActivitiesRes getAllRejected(final Integer offset, final Integer limit) {
 		final List<PaymentActivity> paymentActivities = paymentActivityDao.getAllRejected(offset, limit);
 		final List<PaymentActivityData> paymentActivityDatas = new ArrayList<>();
@@ -300,7 +299,7 @@ public class PaymentActivityService extends BaseCoreService {
 	public Long countAllApproved() {
 		return paymentActivityDao.countAllApproved();
 	}
-	
+
 	public Long countAllRejected() {
 		return paymentActivityDao.countAllRejected();
 	}
@@ -338,7 +337,7 @@ public class PaymentActivityService extends BaseCoreService {
 		}
 		return status;
 	}
-	
+
 	public Boolean checkRejected(final String activityId) {
 		final String userId = principalService.getAuthPrincipal();
 		Boolean status = false;
@@ -358,10 +357,10 @@ public class PaymentActivityService extends BaseCoreService {
 		if (data.getNominal() == null) {
 			throw new RuntimeException("Nominal cannot be empty");
 		}
-		if (data.getFileCodes() == null) {
+		if (data.getFileCodes() == null || "".equals(data.getFileCodes())) {
 			throw new RuntimeException("File Codes cannot be empty");
 		}
-		if (data.getExtensions() == null) {
+		if (data.getExtensions() == null || "".equals(data.getExtensions())) {
 			throw new RuntimeException("Extensions cannot be empty");
 		}
 	}
