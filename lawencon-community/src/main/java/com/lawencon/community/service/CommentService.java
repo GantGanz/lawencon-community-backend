@@ -67,7 +67,6 @@ public class CommentService extends BaseCoreService {
 
 		final InsertRes insertRes = new InsertRes();
 		insertRes.setData(dataRes);
-		insertRes.setMessage("Comment created");
 
 		return insertRes;
 	}

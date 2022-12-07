@@ -157,7 +157,6 @@ public class PostService extends BaseCoreService {
 
 		final InsertRes insertRes = new InsertRes();
 		insertRes.setData(dataRes);
-		insertRes.setMessage("post created");
 
 		return insertRes;
 	}
