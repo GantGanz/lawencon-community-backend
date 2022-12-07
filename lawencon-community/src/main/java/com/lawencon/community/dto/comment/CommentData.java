@@ -17,5 +17,5 @@ public class CommentData {
 	private LocalDateTime createdAt;
 	private String positionName;
 	private String company;
-	
+	private Integer version;
 }

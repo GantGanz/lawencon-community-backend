@@ -45,13 +45,8 @@ public class CommentService extends BaseCoreService {
 		final User user = userDao.getById(User.class, userId);
 		commentInsert.setUser(user);
 
-		if (data.getPostId() != null) {
-			final Post post = postDao.getById(Post.class, data.getPostId());
-			commentInsert.setPost(post);
-		} else {
-			final Comment comment = commentDao.getById(Comment.class, data.getCommentId());
-			commentInsert.setComment(comment);
-		}
+		final Post post = postDao.getById(Post.class, data.getPostId());
+		commentInsert.setPost(post);
 
 		try {
 			begin();
@@ -92,7 +87,6 @@ public class CommentService extends BaseCoreService {
 
 		final UpdateRes res = new UpdateRes();
 		res.setData(dataRes);
-		res.setMessage("Update success");
 		return res;
 	}
 
@@ -135,6 +129,7 @@ public class CommentService extends BaseCoreService {
 			commentData.setPositionName(comment.getUser().getPosition().getPositionName());
 			commentData.setCompany(comment.getUser().getCompany());
 			commentData.setCreatedAt(comment.getCreatedAt());
+			commentData.setVersion(comment.getVersion());
 			commentDatas.add(commentData);
 		}
 		final CommentsRes commentsRes = new CommentsRes();
@@ -153,7 +148,6 @@ public class CommentService extends BaseCoreService {
 			commentData.setCommentContent(comment.getCommentContent());
 			commentData.setUserName(comment.getUser().getFullname());
 			commentData.setUserId(comment.getUser().getId());
-			commentData.setCommentId(comment.getComment().getId());
 			commentData.setPositionName(comment.getUser().getPosition().getPositionName());
 			commentData.setCompany(comment.getUser().getCompany());
 			commentData.setCreatedAt(comment.getCreatedAt());
@@ -172,11 +166,12 @@ public class CommentService extends BaseCoreService {
 		commentData.setCommentContent(comment.getCommentContent());
 		commentData.setUserName(comment.getUser().getFullname());
 		commentData.setUserId(comment.getUser().getId());
+		commentData.setFileId(comment.getUser().getFile().getId());
 		commentData.setPostId(comment.getPost().getId());
-		commentData.setCommentId(comment.getComment().getId());
 		commentData.setPositionName(comment.getUser().getPosition().getPositionName());
 		commentData.setCompany(comment.getUser().getCompany());
 		commentData.setCreatedAt(comment.getCreatedAt());
+		commentData.setVersion(comment.getVersion());
 
 		final CommentRes commentRes = new CommentRes();
 		commentRes.setData(commentData);
