@@ -9,12 +9,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lawencon.community.constant.ReportConstant;
+import com.lawencon.community.constant.RoleStaticConstant;
 import com.lawencon.community.dto.report.ReportData;
 import com.lawencon.community.dto.report.ReportsRes;
 import com.lawencon.community.dto.user.UserRes;
@@ -39,6 +41,7 @@ public class ReportController {
 	private ReportService reportService;
 
 	@GetMapping("count-member-income")
+	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.MMB +"')")
 	public ResponseEntity<Long> countMemberIncome(@RequestParam("start-date") final String startDate,
 			@RequestParam("end-date") final String endDate) {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());
@@ -47,6 +50,7 @@ public class ReportController {
 	}
 
 	@GetMapping("member-income")
+	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.MMB +"')")
 	public ResponseEntity<ReportsRes> getAllMemberIncome(@RequestParam("start-date") final String startDate,
 			@RequestParam("end-date") final String endDate, @RequestParam("offset") final Integer offset,
 			@RequestParam("limit") final Integer limit) {
@@ -56,6 +60,7 @@ public class ReportController {
 	}
 
 	@GetMapping("report-member-income")
+	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.MMB +"')")
 	public ResponseEntity<?> getMemberIncome(@RequestParam("start-date") final String startDate,
 			@RequestParam("end-date") final String endDate) throws Exception {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());
@@ -73,6 +78,7 @@ public class ReportController {
 	}
 	
 	@GetMapping("count-superadmin-income")
+@PreAuthorize("hasAuthority('"+ RoleStaticConstant.SA +"')")
 	public ResponseEntity<Long> countSuperAdminIncome(@RequestParam("start-date") final String startDate,
 			@RequestParam("end-date") final String endDate) {
 		final Long res = reportService.countSuperAdminIncome(startDate, endDate);
@@ -80,6 +86,7 @@ public class ReportController {
 	}
 
 	@GetMapping("superadmin-income")
+@PreAuthorize("hasAuthority('"+ RoleStaticConstant.SA +"')")
 	public ResponseEntity<ReportsRes> getAllSuperAdminIncome(@RequestParam("start-date") final String startDate,
 			@RequestParam("end-date") final String endDate, @RequestParam("offset") final Integer offset,
 			@RequestParam("limit") final Integer limit) {
@@ -88,6 +95,7 @@ public class ReportController {
 	}
 
 	@GetMapping("report-superadmin-income")
+@PreAuthorize("hasAuthority('"+ RoleStaticConstant.SA +"')")
 	public ResponseEntity<?> getSystemIncome(@RequestParam("start-date") final String startDate,
 			@RequestParam("end-date") final String endDate) throws Exception {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());
@@ -105,6 +113,7 @@ public class ReportController {
 	}
 
 	@GetMapping("count-activity-member")
+	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.MMB +"')")
 	public ResponseEntity<Long> countActivityMember(@RequestParam("start-date") final String startDate,
 			@RequestParam("end-date") final String endDate) {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());
@@ -113,6 +122,7 @@ public class ReportController {
 	}
 
 	@GetMapping("activity-member")
+	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.MMB +"')")
 	public ResponseEntity<ReportsRes> getAllActivityMember(@RequestParam("start-date") final String startDate,
 			@RequestParam("end-date") final String endDate, @RequestParam("offset") final Integer offset,
 			@RequestParam("limit") final Integer limit) {
@@ -122,6 +132,7 @@ public class ReportController {
 	}
 
 	@GetMapping("report-activity-member")
+	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.MMB +"')")
 	public ResponseEntity<?> getActivityReportMember(@RequestParam("start-date") final String startDate,
 			@RequestParam("end-date") final String endDate) throws Exception {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());
@@ -139,6 +150,7 @@ public class ReportController {
 	}
 
 	@GetMapping("count-activity-superadmin")
+@PreAuthorize("hasAuthority('"+ RoleStaticConstant.SA +"')")
 	public ResponseEntity<Long> countActivitySuperAdmin(@RequestParam("start-date") final String startDate,
 			@RequestParam("end-date") final String endDate) {
 		final Long res = reportService.countActivitySuperAdmin(startDate, endDate);
@@ -146,6 +158,7 @@ public class ReportController {
 	}
 
 	@GetMapping("activity-superadmin")
+@PreAuthorize("hasAuthority('"+ RoleStaticConstant.SA +"')")
 	public ResponseEntity<ReportsRes> getAllActivitySuperAdmin(@RequestParam("start-date") final String startDate,
 			@RequestParam("end-date") final String endDate, @RequestParam("offset") final Integer offset,
 			@RequestParam("limit") final Integer limit) {
@@ -154,6 +167,7 @@ public class ReportController {
 	}
 
 	@GetMapping("report-activity-superadmin")
+@PreAuthorize("hasAuthority('"+ RoleStaticConstant.SA +"')")
 	public ResponseEntity<?> getActivityReportSuperAdmin(@RequestParam("start-date") final String startDate,
 			@RequestParam("end-date") final String endDate) throws Exception {
 		final UserRes user = userService.getById(principalService.getAuthPrincipal());

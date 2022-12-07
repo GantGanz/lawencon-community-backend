@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum RoleConstant {
-	SUPERADMIN("Super Admin", "sa"), ADMIN("Admin", "ADM"), MEMBER("Member", "MMB"), SYSTEM("System", "SYS");
+	SUPERADMIN("Super Admin", "SA"), ADMIN("Admin", "ADM"), MEMBER("Member", "MMB"), SYSTEM("System", "SYS");
 
 	private final String roleName;
 	private final String roleCode;
