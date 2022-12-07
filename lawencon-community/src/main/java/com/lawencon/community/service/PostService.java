@@ -65,7 +65,7 @@ public class PostService extends BaseCoreService {
 	private BookmarkService bookmarkService;
 	@Autowired
 	private CommentService commentService;
-	
+
 	public Long countAll() {
 		return postDao.countAll();
 	}
@@ -207,7 +207,7 @@ public class PostService extends BaseCoreService {
 			postData.setPositionName(post.getUser().getPosition().getPositionName());
 			postData.setFileId(post.getUser().getFile().getId());
 			postData.setCountComment(commentService.countComment(post.getId()));
-			
+
 			final Long countLike = likeService.countLike(post.getId());
 			postData.setCountLike(countLike);
 
@@ -250,6 +250,9 @@ public class PostService extends BaseCoreService {
 
 					final Boolean optionIsVoted = pollVoteService.optionIsVoted(pollOption.getId());
 					pollOptionData.setIsVoted(optionIsVoted);
+
+					final Long countOptionVote = pollVoteService.countVoteByPollOption(pollOption.getId());
+					pollOptionData.setCountVote(countOptionVote);
 
 					pollOptionDatas.add(pollOptionData);
 				}
@@ -429,7 +432,7 @@ public class PostService extends BaseCoreService {
 			postData.setPositionName(post.getUser().getPosition().getPositionName());
 			postData.setFileId(post.getUser().getFile().getId());
 			postData.setCountComment(commentService.countComment(post.getId()));
-			
+
 			final Long countLike = likeService.countLike(post.getId());
 			postData.setCountLike(countLike);
 
@@ -472,6 +475,9 @@ public class PostService extends BaseCoreService {
 
 					final Boolean optionIsVoted = pollVoteService.optionIsVoted(pollOption.getId());
 					pollOptionData.setIsVoted(optionIsVoted);
+
+					final Long countOptionVote = pollVoteService.countVoteByPollOption(pollOption.getId());
+					pollOptionData.setCountVote(countOptionVote);
 
 					pollOptionDatas.add(pollOptionData);
 				}
@@ -651,7 +657,7 @@ public class PostService extends BaseCoreService {
 			postData.setPositionName(post.getUser().getPosition().getPositionName());
 			postData.setFileId(post.getUser().getFile().getId());
 			postData.setCountComment(commentService.countComment(post.getId()));
-			
+
 			final Long countLike = likeService.countLike(post.getId());
 			postData.setCountLike(countLike);
 
@@ -694,6 +700,9 @@ public class PostService extends BaseCoreService {
 
 					final Boolean optionIsVoted = pollVoteService.optionIsVoted(pollOption.getId());
 					pollOptionData.setIsVoted(optionIsVoted);
+
+					final Long countOptionVote = pollVoteService.countVoteByPollOption(pollOption.getId());
+					pollOptionData.setCountVote(countOptionVote);
 
 					pollOptionDatas.add(pollOptionData);
 				}
@@ -744,7 +753,7 @@ public class PostService extends BaseCoreService {
 			postData.setPositionName(post.getUser().getPosition().getPositionName());
 			postData.setFileId(post.getUser().getFile().getId());
 			postData.setCountComment(commentService.countComment(post.getId()));
-			
+
 			final Long countLike = likeService.countLike(post.getId());
 			postData.setCountLike(countLike);
 
@@ -787,6 +796,9 @@ public class PostService extends BaseCoreService {
 
 					final Boolean optionIsVoted = pollVoteService.optionIsVoted(pollOption.getId());
 					pollOptionData.setIsVoted(optionIsVoted);
+
+					final Long countOptionVote = pollVoteService.countVoteByPollOption(pollOption.getId());
+					pollOptionData.setCountVote(countOptionVote);
 
 					pollOptionDatas.add(pollOptionData);
 				}
