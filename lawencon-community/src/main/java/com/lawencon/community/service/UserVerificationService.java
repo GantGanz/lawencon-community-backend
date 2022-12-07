@@ -44,7 +44,6 @@ public class UserVerificationService extends BaseCoreService {
 		verificationCodeUtil.validateVerificationCode(email, verificationCode);
 
 		final InsertRes insertRes = new InsertRes();
-		insertRes.setMessage("Validate Success");
 		return insertRes;
 	}
 }
