@@ -458,7 +458,7 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="555" height="24" uuid="5a1ee65c-0ca1-4bd4-a1a6-2060d9dae4aa">
+				<reportElement positionType="FixRelativeToBottom" x="0" y="238" width="555" height="24" uuid="5a1ee65c-0ca1-4bd4-a1a6-2060d9dae4aa">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textField>
