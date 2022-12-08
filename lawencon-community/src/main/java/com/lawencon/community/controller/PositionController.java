@@ -40,7 +40,6 @@ public class PositionController {
 	}
 
 	@GetMapping("active")
-	@PreAuthorize("hasAuthority('" + RoleStaticConstant.MMB + "')")
 	public ResponseEntity<PositionsRes> getAllActive() {
 		final PositionsRes res = positionService.getAllActive();
 		return new ResponseEntity<>(res, HttpStatus.OK);
