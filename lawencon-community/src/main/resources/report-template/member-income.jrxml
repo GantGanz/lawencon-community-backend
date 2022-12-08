@@ -247,7 +247,7 @@
 			<frame>
 				<reportElement x="0" y="0" width="555" height="20" uuid="cff09a3d-45ab-4b55-b999-d24f25c188cc"/>
 				<textField>
-					<reportElement mode="Opaque" x="3" y="4" width="510" height="13" backcolor="#FFFFFF" uuid="8fd0d837-1c7c-451f-be72-8d97cf7be8c1"/>
+					<reportElement mode="Opaque" x="320" y="4" width="192" height="13" backcolor="#FFFFFF" uuid="8fd0d837-1c7c-451f-be72-8d97cf7be8c1"/>
 					<textElement textAlignment="Right"/>
 					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
 				</textField>
@@ -261,10 +261,10 @@
 					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="1" y="4" width="180" height="13" uuid="0f532be5-bf94-407c-a975-128886603e73">
+					<reportElement x="1" y="6" width="180" height="13" uuid="07d1b515-f8fd-4535-b38b-e9cd8c74e977">
 						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 					</reportElement>
-					<textElement>
+					<textElement markup="html">
 						<paragraph leftIndent="3"/>
 					</textElement>
 					<textFieldExpression><![CDATA[new SimpleDateFormat("EEEEE dd MMMMM yyyy HH:mm:ss").format(new Date())]]></textFieldExpression>
@@ -273,7 +273,7 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="30">
+		<band height="110">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<textField pattern="Rp #,##0.###;¤(#,##0.###-)">
 				<reportElement x="444" y="0" width="110" height="30" uuid="628f70c3-dcd4-4fe3-9881-66aa0b740770">
