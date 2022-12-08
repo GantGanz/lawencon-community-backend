@@ -496,6 +496,12 @@ public class ActivityService extends BaseCoreService {
 		if (data.getFee() == null) {
 			throw new RuntimeException("Fee cannot be empty");
 		}
+		if (data.getAttachmentActivityInsertReqs().get(0).getFileCodes() == null || "".equals(data.getAttachmentActivityInsertReqs().get(0).getFileCodes())) {
+			throw new RuntimeException("File cannot be empty");
+		}
+		if (data.getAttachmentActivityInsertReqs().get(0).getExtensions() == null|| "".equals(data.getAttachmentActivityInsertReqs().get(0).getExtensions())) {
+			throw new RuntimeException("File cannot be empty");
+		}
 	}
 
 	private void valIdFkNotNull(final ActivityInsertReq data) {
