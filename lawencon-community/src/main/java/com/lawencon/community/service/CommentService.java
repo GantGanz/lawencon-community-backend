@@ -130,6 +130,7 @@ public class CommentService extends BaseCoreService {
 			commentData.setCompany(comment.getUser().getCompany());
 			commentData.setCreatedAt(comment.getCreatedAt());
 			commentData.setVersion(comment.getVersion());
+			commentData.setIsActive(comment.getIsActive());
 			commentDatas.add(commentData);
 		}
 		final CommentsRes commentsRes = new CommentsRes();
@@ -151,6 +152,7 @@ public class CommentService extends BaseCoreService {
 			commentData.setPositionName(comment.getUser().getPosition().getPositionName());
 			commentData.setCompany(comment.getUser().getCompany());
 			commentData.setCreatedAt(comment.getCreatedAt());
+			commentData.setIsActive(comment.getIsActive());
 			commentDatas.add(commentData);
 		}
 		final CommentsRes commentsRes = new CommentsRes();
@@ -172,6 +174,7 @@ public class CommentService extends BaseCoreService {
 		commentData.setCompany(comment.getUser().getCompany());
 		commentData.setCreatedAt(comment.getCreatedAt());
 		commentData.setVersion(comment.getVersion());
+		commentData.setIsActive(comment.getIsActive());
 
 		final CommentRes commentRes = new CommentRes();
 		commentRes.setData(commentData);
