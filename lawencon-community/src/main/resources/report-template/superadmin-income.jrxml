@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="productivity.member.report" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="a9f35397-826c-4ccf-9f3f-0f3326fdeebc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="productivity.member.report" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="a9f35397-826c-4ccf-9f3f-0f3326fdeebc">
 	<property name="net.sf.jasperreports.print.create.bookmarks" value="false"/>
 	<parameter name="reportTitle" class="java.lang.String"/>
 	<parameter name="reportType" class="java.lang.String"/>
@@ -354,7 +354,7 @@
 					<text><![CDATA[Telp.021-011-056 Email: zenith@gmail.com ]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="260" y="9" width="100" height="30" uuid="aef4b4ed-b06b-42ef-aa1c-c38fe8e5acdc"/>
+					<reportElement x="260" y="10" width="100" height="30" uuid="aef4b4ed-b06b-42ef-aa1c-c38fe8e5acdc"/>
 					<textElement textAlignment="Center">
 						<font size="20" isBold="true"/>
 					</textElement>
@@ -363,6 +363,13 @@
 			</frame>
 			<frame>
 				<reportElement x="0" y="91" width="554" height="70" uuid="8553e139-4244-4ea9-a788-dbb2e1e9c94f"/>
+				<textField evaluationTime="Page">
+					<reportElement x="0" y="6" width="310" height="24" forecolor="#050000" backcolor="#050000" uuid="818e2f8d-7954-420d-9ded-9db59e69c241"/>
+					<textElement>
+						<font size="18" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{reportTitle}]]></textFieldExpression>
+				</textField>
 				<textField textAdjust="StretchHeight">
 					<reportElement x="374" y="6" width="180" height="20" forecolor="#050000" uuid="a02e7097-cb89-403d-ad0b-8013e0405c6b">
 						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
@@ -379,13 +386,6 @@
 						<font size="14" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Range Date : "+$P{dateRange}]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Page">
-					<reportElement x="0" y="6" width="310" height="24" forecolor="#050000" backcolor="#050000" uuid="818e2f8d-7954-420d-9ded-9db59e69c241"/>
-					<textElement>
-						<font size="18" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{reportTitle}]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>
@@ -458,7 +458,7 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="0" y="236" width="555" height="24" uuid="5a1ee65c-0ca1-4bd4-a1a6-2060d9dae4aa"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="236" width="555" height="24" uuid="5a1ee65c-0ca1-4bd4-a1a6-2060d9dae4aa"/>
 				<textField>
 					<reportElement x="1" y="6" width="180" height="13" uuid="08ca1b15-897a-4591-bcc1-506ed18214b8">
 						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
