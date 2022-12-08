@@ -3,12 +3,10 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="productivity.member.report" language="javascript" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a9f35397-826c-4ccf-9f3f-0f3326fdeebc">
 	<parameter name="reportTitle" class="java.lang.String"/>
 	<parameter name="reportType" class="java.lang.String"/>
-	<parameter name="company" class="java.lang.String"/>
 	<parameter name="dateRange" class="java.lang.String"/>
 	<field name="no" class="java.lang.Long"/>
 	<field name="activityType" class="java.lang.String"/>
 	<field name="title" class="java.lang.String"/>
-	<field name="startDate" class="java.time.LocalDate"/>
 	<field name="totalIncome" class="java.math.BigDecimal"/>
 	<variable name="totalIncome" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{totalIncome}]]></variableExpression>

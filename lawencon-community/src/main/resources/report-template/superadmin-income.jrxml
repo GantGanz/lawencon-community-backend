@@ -4,7 +4,6 @@
 	<property name="net.sf.jasperreports.print.create.bookmarks" value="false"/>
 	<parameter name="reportTitle" class="java.lang.String"/>
 	<parameter name="reportType" class="java.lang.String"/>
-	<parameter name="company" class="java.lang.String"/>
 	<parameter name="dateRange" class="java.lang.String"/>
 	<field name="no" class="java.lang.Long"/>
 	<field name="activityType" class="java.lang.String"/>
@@ -178,7 +177,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20">
+		<band height="52">
 			<frame>
 				<reportElement x="0" y="0" width="555" height="20" uuid="be297f78-111a-45db-9410-aaaf40a1efdc"/>
 				<textField textAdjust="StretchHeight">
