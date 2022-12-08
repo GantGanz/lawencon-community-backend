@@ -40,7 +40,6 @@ public class IndustryController {
 	}
 
 	@GetMapping("active")
-	@PreAuthorize("hasAuthority('" + RoleStaticConstant.MMB + "')")
 	public ResponseEntity<IndustriesRes> getAllActive() {
 		final IndustriesRes res = industryService.getAllActive();
 		return new ResponseEntity<>(res, HttpStatus.OK);

@@ -32,114 +32,118 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 public class PaymentActivityController {
 	@Autowired
 	private PaymentActivityService paymentActivityService;
-	
+
 	@GetMapping("count")
-	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.ADM +"')")
+	@PreAuthorize("hasAuthority('" + RoleStaticConstant.ADM + "')")
 	public ResponseEntity<Long> countAllUnapproved() {
 		final Long res = paymentActivityService.countAllUnapproved();
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("count-approved")
-	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.ADM +"')")
+	@PreAuthorize("hasAuthority('" + RoleStaticConstant.ADM + "')")
 	public ResponseEntity<Long> countAllApproved() {
 		final Long res = paymentActivityService.countAllApproved();
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("count-rejected")
-	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.ADM +"')")
+	@PreAuthorize("hasAuthority('" + RoleStaticConstant.ADM + "')")
 	public ResponseEntity<Long> countAllRejected() {
 		final Long res = paymentActivityService.countAllRejected();
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("creator-income")
-	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.MMB +"')")
+	@PreAuthorize("hasAuthority('" + RoleStaticConstant.MMB + "')")
 	public ResponseEntity<BigDecimal> getCreatorIncome() {
 		final BigDecimal res = paymentActivityService.getCreatorIncome();
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("system-income")
-@PreAuthorize("hasAuthority('"+ RoleStaticConstant.SA +"')")
+	@PreAuthorize("hasAuthority('" + RoleStaticConstant.SA + "')")
 	public ResponseEntity<BigDecimal> getSystemIncome() {
 		final BigDecimal res = paymentActivityService.getSystemIncome();
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("approved")
-	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.ADM +"')")
-	public ResponseEntity<PaymentActivitiesRes> getAllApproved(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+	@PreAuthorize("hasAuthority('" + RoleStaticConstant.ADM + "')")
+	public ResponseEntity<PaymentActivitiesRes> getAllApproved(@RequestParam("offset") final Integer offset,
+			@RequestParam("limit") final Integer limit) {
 		final PaymentActivitiesRes res = paymentActivityService.getAllApproved(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
 	@GetMapping("unapproved")
-	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.ADM +"')")
-	public ResponseEntity<PaymentActivitiesRes> getAllUnapproved(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+	@PreAuthorize("hasAuthority('" + RoleStaticConstant.ADM + "')")
+	public ResponseEntity<PaymentActivitiesRes> getAllUnapproved(@RequestParam("offset") final Integer offset,
+			@RequestParam("limit") final Integer limit) {
 		final PaymentActivitiesRes res = paymentActivityService.getAllUnapproved(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("rejected")
-	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.ADM +"')")
-	public ResponseEntity<PaymentActivitiesRes> getAllRejected(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+	@PreAuthorize("hasAuthority('" + RoleStaticConstant.ADM + "')")
+	public ResponseEntity<PaymentActivitiesRes> getAllRejected(@RequestParam("offset") final Integer offset,
+			@RequestParam("limit") final Integer limit) {
 		final PaymentActivitiesRes res = paymentActivityService.getAllRejected(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("user")
-	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.ADM +"')")
+	@PreAuthorize("hasAuthority('" + RoleStaticConstant.ADM + "')")
 	public ResponseEntity<PaymentActivitiesRes> getAllByCreatorId() {
 		final PaymentActivitiesRes res = paymentActivityService.getAllByCreatorId();
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("member")
-	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.ADM +"')")
-	public ResponseEntity<PaymentActivitiesRes> getAllByMemberId(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
+	@PreAuthorize("hasAuthority('" + RoleStaticConstant.ADM + "')")
+	public ResponseEntity<PaymentActivitiesRes> getAllByMemberId(@RequestParam("offset") final Integer offset,
+			@RequestParam("limit") final Integer limit) {
 		final PaymentActivitiesRes res = paymentActivityService.getAllByMemberId(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
 	@PostMapping
-	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.MMB +"')")
+	@PreAuthorize("hasAuthority('" + RoleStaticConstant.MMB + "')")
 	public ResponseEntity<InsertRes> insert(@RequestBody final PaymentActivityInsertReq data) {
 		final InsertRes res = paymentActivityService.insert(data);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
 	@PutMapping
-	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.ADM +"')")
+	@PreAuthorize("hasAuthority('" + RoleStaticConstant.ADM + "')")
 	public ResponseEntity<UpdateRes> approve(@RequestBody final PaymentActivityUpdateReq data) {
 		final UpdateRes res = paymentActivityService.approve(data);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
+
 	@PutMapping("reject")
-	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.ADM +"')")
+	@PreAuthorize("hasAuthority('" + RoleStaticConstant.ADM + "')")
 	public ResponseEntity<UpdateRes> reject(@RequestBody final PaymentActivityUpdateReq data) {
 		final UpdateRes res = paymentActivityService.reject(data);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 
 	@GetMapping("{id}")
-	@PreAuthorize("hasAnyAuthority('"+ RoleStaticConstant.ADM +"', '"+ RoleStaticConstant.MMB +"')")
+	@PreAuthorize("hasAnyAuthority('" + RoleStaticConstant.ADM + "', '" + RoleStaticConstant.MMB + "')")
 	public ResponseEntity<PaymentActivityRes> getById(@PathVariable("id") final String id) {
 		final PaymentActivityRes result = paymentActivityService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("status/{id}")
-	@PreAuthorize("hasAnyAuthority('"+ RoleStaticConstant.ADM +"', '"+ RoleStaticConstant.MMB +"')")
+	@PreAuthorize("hasAnyAuthority('" + RoleStaticConstant.ADM + "', '" + RoleStaticConstant.MMB + "')")
 	public ResponseEntity<Boolean> checkStatus(@PathVariable("id") final String id) {
 		final Boolean result = paymentActivityService.checkApproved(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("paid/{id}")
-	@PreAuthorize("hasAuthority('ADM', 'MMB')")
+	@PreAuthorize("hasAnyAuthority('" + RoleStaticConstant.ADM + "', '" + RoleStaticConstant.MMB + "')")
 	public ResponseEntity<Boolean> checkPending(@PathVariable("id") final String id) {
 		final Boolean result = paymentActivityService.checkPaid(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);
