@@ -60,7 +60,7 @@ public class IndustryController {
 	}
 
 	@GetMapping("{id}")
-	@PreAuthorize("hasAnyAuthority('SA', 'MMB')")
+	@PreAuthorize("hasAnyAuthority('" + RoleStaticConstant.SA + "', '" + RoleStaticConstant.MMB + "')")
 	public ResponseEntity<IndustryRes> getById(@PathVariable("id") final String id) {
 		final IndustryRes result = industryService.getById(id);
 		return new ResponseEntity<>(result, HttpStatus.OK);

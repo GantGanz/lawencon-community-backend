@@ -18,4 +18,5 @@ public class CommentData {
 	private String positionName;
 	private String company;
 	private Integer version;
+	private Boolean isActive;
 }
