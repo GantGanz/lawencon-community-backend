@@ -189,7 +189,7 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{activityType}]]></textFieldExpression>
 			</textField>
-			<textField textAdjust="StretchHeight" pattern="IDR #.##0.###;¤(#.##0.###-)">
+			<textField textAdjust="StretchHeight" pattern="IDR #,##0.###;¤(#,##0.###-)">
 				<reportElement x="420" y="0" width="133" height="20" uuid="6a95bf8f-9249-4666-acf5-ef019bfb945e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="10f84506-bd64-4beb-9b10-e91da6b2c16e"/>
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
@@ -256,7 +256,7 @@
 					<textElement markup="html">
 						<paragraph leftIndent="3"/>
 					</textElement>
-					<textFieldExpression><![CDATA[new SimpleDateFormat("EEEEE dd MMMMM yyyy HH:mm:ss").format(new Date())]]></textFieldExpression>
+					<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy HH:mm:ss").format(new java.util.Date())]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement mode="Opaque" x="340" y="6" width="174" height="13" backcolor="#FFFFFF" uuid="8fd0d837-1c7c-451f-be72-8d97cf7be8c1"/>
@@ -278,7 +278,7 @@
 	<summary>
 		<band height="31">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
-			<textField pattern="IDR #.##0.###;¤(#.##0.###-)">
+			<textField pattern="IDR #,##0.###;¤(#,##0.###-)">
 				<reportElement x="444" y="0" width="110" height="30" uuid="628f70c3-dcd4-4fe3-9881-66aa0b740770">
 					<property name="com.jaspersoft.studio.unit.spacingBefore" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>

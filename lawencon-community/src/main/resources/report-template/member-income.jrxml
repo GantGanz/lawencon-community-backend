@@ -172,7 +172,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="31">
+		<band height="21">
 			<textField textAdjust="StretchHeight" pattern="Rp #,##0.###;¤(#,##0.###-)">
 				<reportElement x="408" y="0" width="146" height="20" uuid="eb7d18a6-b111-49fa-93da-c5ac58cc3bd5">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="10f84506-bd64-4beb-9b10-e91da6b2c16e"/>
@@ -255,7 +255,7 @@
 					<textElement>
 						<paragraph leftIndent="3"/>
 					</textElement>
-					<textFieldExpression><![CDATA[new SimpleDateFormat("EEEEE dd MMMMM yyyy HH:mm:ss").format(new Date())]]></textFieldExpression>
+					<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy HH:mm:ss").format(new java.util.Date())]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement mode="Opaque" x="320" y="4" width="192" height="13" backcolor="#FFFFFF" uuid="8fd0d837-1c7c-451f-be72-8d97cf7be8c1"/>
