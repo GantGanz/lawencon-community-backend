@@ -186,7 +186,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="30">
+		<band height="21">
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="3026b932-c485-409e-a139-04c96d628e48"/>
 			</line>

@@ -302,7 +302,7 @@
 					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 				</textField>
 				<textField>
-					<reportElement x="0" y="4" width="180" height="13" uuid="0f532be5-bf94-407c-a975-128886603e73">
+					<reportElement x="0" y="4" width="220" height="13" uuid="0f532be5-bf94-407c-a975-128886603e73">
 						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 					</reportElement>
 					<textElement>
