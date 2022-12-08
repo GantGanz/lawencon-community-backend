@@ -107,4 +107,32 @@ public class ActivityController {
 		final Long res = activityService.countMyEvent();
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
+	
+	@GetMapping("count-course")
+	@PreAuthorize("hasAuthority('" + RoleStaticConstant.MMB + "')")
+	public ResponseEntity<Long> countCourse() {
+		final Long res = activityService.countCourse();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("count-event")
+	@PreAuthorize("hasAuthority('" + RoleStaticConstant.MMB + "')")
+	public ResponseEntity<Long> countEvent() {
+		final Long res = activityService.countEvent();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("count-joined-event")
+	@PreAuthorize("hasAuthority('" + RoleStaticConstant.MMB + "')")
+	public ResponseEntity<Long> countJoinedEvent() {
+		final Long res = activityService.countJoinedEvent();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
+	
+	@GetMapping("count-joined-course")
+	@PreAuthorize("hasAuthority('" + RoleStaticConstant.MMB + "')")
+	public ResponseEntity<Long> countJoinedCourse() {
+		final Long res = activityService.countJoinedCourse();
+		return new ResponseEntity<>(res, HttpStatus.OK);
+	}
 }

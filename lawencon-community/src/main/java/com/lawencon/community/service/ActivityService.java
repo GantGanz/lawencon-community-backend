@@ -56,6 +56,22 @@ public class ActivityService extends BaseCoreService {
 	public Long countMyCourse() {
 		return activityDao.countMyActivity(principalService.getAuthPrincipal(), ActivityTypeConstant.COURSE.getActivityTypeCode());
 	}
+	
+	public Long countEvent() {
+		return activityDao.countActivity(ActivityTypeConstant.EVENT.getActivityTypeCode());
+	}
+	
+	public Long countCourse() {
+		return activityDao.countActivity(ActivityTypeConstant.COURSE.getActivityTypeCode());
+	}
+	
+	public Long countJoinedEvent() {
+		return activityDao.countJoinedActivity(principalService.getAuthPrincipal(), ActivityTypeConstant.EVENT.getActivityTypeCode());
+	}
+	
+	public Long countJoinedCourse() {
+		return activityDao.countJoinedActivity(principalService.getAuthPrincipal(), ActivityTypeConstant.COURSE.getActivityTypeCode());
+	}
 
 	public InsertRes insert(final ActivityInsertReq data) {
 		valInsert(data);

@@ -364,6 +364,49 @@ public class ActivityDao extends AbstractJpaDao {
 		}
 		return total;
 	}
+	
+	public Long countActivity(final String activityTypeCode) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT COUNT(a.id) ").append("FROM t_activity a ")
+				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
+				.append("INNER JOIN t_user u ON u.id = a.created_by ")
+				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND a.is_active = TRUE ")
+				.append("AND a.start_at >= NOW() ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("activityTypeCode", activityTypeCode)
+					.getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
+	
+	public Long countJoinedActivity(final String userId, final String activityTypeCode) {
+		final StringBuilder str = new StringBuilder();
+		str.append("SELECT COUNT(a.id) ")
+		.append("FROM t_activity a ").append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
+		.append("INNER JOIN t_payment_activity pa ON pa.activity_id = a.id ")
+		.append("INNER JOIN t_user u ON u.id = pa.user_id ")
+		.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND pa.is_approved = TRUE ")
+		.append("AND u.id = :userId ");
+
+		Long total = null;
+		try {
+			final Object userObj = createNativeQuery(str.toString()).setParameter("activityTypeCode", activityTypeCode)
+					.setParameter("userId", userId).getSingleResult();
+			if (userObj != null) {
+				total = Long.valueOf(userObj.toString());
+			}
+		} catch (final Exception e) {
+			e.printStackTrace();
+		}
+		return total;
+	}
 
 	public Long countActivityMember(final String userId, final String startDate, final String endDate) {
 		final StringBuilder str = new StringBuilder();
