@@ -154,7 +154,7 @@
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="12" isBold="true"/>
-						<paragraph leftIndent="3" rightIndent="0"/>
+						<paragraph leftIndent="5" rightIndent="0"/>
 					</textElement>
 					<text><![CDATA[Member Name]]></text>
 				</staticText>
@@ -436,7 +436,7 @@
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="12" isBold="true"/>
-						<paragraph leftIndent="3" rightIndent="0"/>
+						<paragraph leftIndent="5" rightIndent="0"/>
 					</textElement>
 					<text><![CDATA[Member Name]]></text>
 				</staticText>
@@ -458,7 +458,9 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="236" width="555" height="24" uuid="5a1ee65c-0ca1-4bd4-a1a6-2060d9dae4aa"/>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="0" width="555" height="24" uuid="5a1ee65c-0ca1-4bd4-a1a6-2060d9dae4aa">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
 				<textField>
 					<reportElement x="1" y="6" width="180" height="13" uuid="08ca1b15-897a-4591-bcc1-506ed18214b8">
 						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
