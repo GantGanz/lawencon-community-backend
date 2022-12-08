@@ -30,13 +30,6 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textField textAdjust="StretchHeight">
-					<reportElement x="120" y="10" width="414" height="30" forecolor="#050000" uuid="53ffafc6-117b-458d-bfd1-fe6a132d7bbf"/>
-					<textElement textAlignment="Center" markup="html">
-						<font size="20" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{company}]]></textFieldExpression>
-				</textField>
 				<image isUsingCache="false">
 					<reportElement x="40" y="7" width="80" height="80" uuid="d07f4590-88b1-42aa-93d0-fdf8e367712f">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -69,6 +62,13 @@
 						<font size="12"/>
 					</textElement>
 					<text><![CDATA[Telp.021-011-056 Email: zenith@gmail.com ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="260" y="9" width="100" height="30" uuid="e68b5098-fdee-4d2f-9c43-ed2216ec06db"/>
+					<textElement textAlignment="Center">
+						<font size="20" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Zenith]]></text>
 				</staticText>
 			</frame>
 		</band>

@@ -20,13 +20,6 @@
 		<band height="82">
 			<frame>
 				<reportElement mode="Opaque" x="-20" y="-14" width="595" height="92" backcolor="#FFFFFF" uuid="57f2bef5-4518-4166-a222-d34f0ef6e4a4"/>
-				<textField textAdjust="StretchHeight">
-					<reportElement x="120" y="14" width="414" height="28" forecolor="#000000" uuid="53ffafc6-117b-458d-bfd1-fe6a132d7bbf"/>
-					<textElement textAlignment="Center">
-						<font size="20" isBold="true"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{company}]]></textFieldExpression>
-				</textField>
 				<image>
 					<reportElement x="30" y="6" width="80" height="80" uuid="323aebf2-1703-4178-82e2-1a0649854eff">
 						<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -60,6 +53,13 @@
 						<pen lineWidth="2.0" lineColor="#000000"/>
 					</graphicElement>
 				</line>
+				<staticText>
+					<reportElement x="260" y="9" width="100" height="30" uuid="ce9d2110-2732-44c3-bea0-129d788d8e5f"/>
+					<textElement textAlignment="Center">
+						<font size="20" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Zenith]]></text>
+				</staticText>
 			</frame>
 		</band>
 	</title>
@@ -293,7 +293,7 @@
 				</textField>
 				<textField>
 					<reportElement x="0" y="4" width="180" height="13" uuid="0f532be5-bf94-407c-a975-128886603e73"/>
-					<textFieldExpression><![CDATA[new SimpleDateFormat("EEEEE dd MMMMM yyyy HH:mm:ss").format(new Date())]]></textFieldExpression>
+					<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy HH:mm:ss").format(new java.util.Date())]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
