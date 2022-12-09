@@ -283,31 +283,32 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="50">
+		<band height="35">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
-			<textField pattern="Rp #,##0.###;¤(#,##0.###-)">
-				<reportElement x="444" y="0" width="110" height="30" uuid="628f70c3-dcd4-4fe3-9881-66aa0b740770">
-					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
-				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Middle" markup="rtf">
-					<font size="16" isBold="true" isUnderline="true"/>
-					<paragraph rightIndent="3"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{totalIncome}]]></textFieldExpression>
-			</textField>
 			<staticText>
-				<reportElement x="320" y="0" width="124" height="30" forecolor="#000000" uuid="0718d623-f03d-4c21-8b4c-50957b7f01e5"/>
+				<reportElement x="319" y="3" width="124" height="30" forecolor="#000000" uuid="0718d623-f03d-4c21-8b4c-50957b7f01e5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Grand Total Revenue]]></text>
 			</staticText>
+			<textField pattern="IDR #,##0.###;¤(#,##0.###-)">
+				<reportElement x="445" y="2" width="110" height="30" uuid="6f7116f0-13e5-4c68-86d2-e2055c663063">
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="16" isBold="true" isUnderline="true"/>
+					<paragraph rightIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{totalIncome}]]></textFieldExpression>
+			</textField>
 		</band>
 	</summary>
 	<noData>
-		<band height="228">
+		<band height="250">
 			<frame>
-				<reportElement mode="Opaque" x="-20" y="-10" width="595" height="92" backcolor="#FFFFFF" uuid="c4f93e6c-355d-486a-a84c-58c87a5ee34b"/>
+				<reportElement mode="Opaque" x="-20" y="4" width="595" height="92" backcolor="#FFFFFF" uuid="c4f93e6c-355d-486a-a84c-58c87a5ee34b"/>
 				<image>
 					<reportElement x="40" y="6" width="80" height="80" uuid="031ed377-a8c4-4523-9679-42c0b98a9dc3">
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -352,7 +353,7 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="0" y="90" width="554" height="60" uuid="969e837f-35e2-4f0f-809e-98c895ea3773"/>
+				<reportElement x="0" y="104" width="554" height="60" uuid="969e837f-35e2-4f0f-809e-98c895ea3773"/>
 				<textField>
 					<reportElement x="0" y="10" width="340" height="25" forecolor="#000000" uuid="9945c200-66c2-435e-8fab-80c8ad721da4">
 						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -385,7 +386,7 @@
 				</textField>
 			</frame>
 			<frame>
-				<reportElement x="0" y="170" width="554" height="20" uuid="bb719db9-6095-4d29-b1dc-533787f1ea32"/>
+				<reportElement x="0" y="180" width="554" height="20" uuid="bb719db9-6095-4d29-b1dc-533787f1ea32"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -458,32 +459,6 @@
 					</textElement>
 					<text><![CDATA[Title]]></text>
 				</staticText>
-			</frame>
-			<frame>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="208" width="555" height="20" uuid="036eaf01-c687-4641-b37b-3c8bfad3d9ce"/>
-				<textField>
-					<reportElement x="0" y="4" width="220" height="13" uuid="dcd39aa6-4850-4873-ab74-06034f283eeb">
-						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
-					</reportElement>
-					<textElement>
-						<paragraph leftIndent="3"/>
-					</textElement>
-					<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy HH:mm:ss").format(new java.util.Date())]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement mode="Opaque" x="320" y="4" width="192" height="13" backcolor="#FFFFFF" uuid="521a334d-9495-4711-9211-902e095a4c1e"/>
-					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Report">
-					<reportElement mode="Opaque" x="514" y="4" width="41" height="13" backcolor="#FFFFFF" uuid="80bac073-d128-4a66-afb5-966eed7253f9">
-						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
-					</reportElement>
-					<textElement textAlignment="Left">
-						<paragraph rightIndent="0"/>
-					</textElement>
-					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-				</textField>
 			</frame>
 		</band>
 	</noData>
