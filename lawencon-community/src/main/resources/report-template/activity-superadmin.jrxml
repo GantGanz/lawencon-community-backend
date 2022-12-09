@@ -3,7 +3,6 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="productivity.member.report" pageWidth="595" pageHeight="842" whenNoDataType="NoDataSection" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a9f35397-826c-4ccf-9f3f-0f3326fdeebc">
 	<parameter name="reportTitle" class="java.lang.String"/>
 	<parameter name="reportType" class="java.lang.String"/>
-	<parameter name="company" class="java.lang.String"/>
 	<parameter name="dateRange" class="java.lang.String"/>
 	<field name="no" class="java.lang.Long"/>
 	<field name="activityType" class="java.lang.String"/>
@@ -438,7 +437,7 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="0" y="110" width="554" height="64" uuid="5f364586-e218-4f79-9a30-26b67d6c282a"/>
+				<reportElement x="0" y="103" width="554" height="64" uuid="5f364586-e218-4f79-9a30-26b67d6c282a"/>
 				<textField>
 					<reportElement x="0" y="12" width="360" height="25" forecolor="#000000" uuid="903abc17-bece-43fe-a94f-d986e18b649a">
 						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -468,27 +467,6 @@
 						<paragraph leftIndent="3"/>
 					</textElement>
 					<textFieldExpression><![CDATA["Range Date : "+$P{dateRange}]]></textFieldExpression>
-				</textField>
-			</frame>
-			<frame>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="275" width="555" height="20" uuid="1d54e2c1-747f-4488-b508-03c3a8599c56"/>
-				<textField>
-					<reportElement mode="Opaque" x="0" y="4" width="510" height="13" backcolor="#FFFFFF" uuid="7e91445a-f9dd-4f31-b58e-f9b63ef86293"/>
-					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Report">
-					<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#FFFFFF" uuid="117d7d2b-a0fa-4305-9eea-7a5dabd3f806"/>
-					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="0" y="4" width="220" height="13" uuid="ded73e29-ea2e-407c-bb38-bdc02ff70bbf">
-						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
-					</reportElement>
-					<textElement>
-						<paragraph leftIndent="3"/>
-					</textElement>
-					<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy HH:mm:ss").format(new java.util.Date())]]></textFieldExpression>
 				</textField>
 			</frame>
 			<frame>

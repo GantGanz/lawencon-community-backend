@@ -177,7 +177,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="23">
+		<band height="20">
 			<frame>
 				<reportElement x="0" y="0" width="554" height="20" uuid="2a7249a7-1f5f-4ab9-8f9e-68fa7dcc9fc4"/>
 				<textField textAdjust="StretchHeight" pattern="Rp #,##0.###;¤(#,##0.###-)">
