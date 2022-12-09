@@ -25,12 +25,13 @@
                                 <tr>
                                     <td align="center"
                                         style="padding: 10px; background-color: #ffff; border-bottom: 1px solid #f4f4f4;">
-                                        <img style="display: none" /><img src="https://raw.githubusercontent.com/GantGanz/zenith-backend/main/lawencon-community/src/main/resources/email-template/assets/logo.png"
-                                            class="CToWUd" data-bit="iit" />
+                                        <img style="display: none;" /><img
+                                            src="https://raw.githubusercontent.com/GantGanz/zenith-backend/main/lawencon-community/src/main/resources/email-template/assets/logo.png"
+                                            class="CToWUd" data-bit="iit" style="width: 60px; height: 55px;" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td align="center" style="padding: 10px 55px 0px 55px; color: #002242;">
+                                    <td align="center" style="padding: 0px 55px 0px 55px; color: #002242;">
                                         <p style="font-size: 25px; font-weight:500">
                                             Zenith Verification Code
                                         </p>
@@ -38,12 +39,13 @@
                                 </tr>
                                 <tr>
                                     <td align="center" style="padding: 5px 40px 5px 40px">
+                                        <img style="display: none;" />
                                         <img src="https://raw.githubusercontent.com/GantGanz/zenith-backend/main/lawencon-community/src/main/resources/email-template/assets/email-icon.png"
-                                            style="display: block; border: 0px;" />
+                                            style="display: block; border: 0px; width: 140px; height: 140px;" />
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td align="left" style="padding: 10px 55px 0px 55px; color: #505050;">
+                                    <td align="left" style="padding: 0px 55px 0px 55px; color: #505050;">
                                         <p>
                                             Hello,<br /><br />
                                             Thanks for signup with us. First, you need to confirm your account. Here is
@@ -89,4 +91,5 @@
         </table>
     </div>
 </body>
+
 </html>

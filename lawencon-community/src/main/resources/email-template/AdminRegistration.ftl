@@ -25,9 +25,9 @@
                                 <tr>
                                     <td align="center"
                                         style="padding: 10px; background-color: #ffff; border-bottom: 1px solid #f4f4f4;">
-                                        <img style="display: none" /><img
+                                        <img style="display: none;" /><img
                                             src="https://raw.githubusercontent.com/GantGanz/zenith-backend/main/lawencon-community/src/main/resources/email-template/assets/logo.png"
-                                            style="width: 60px" class="CToWUd" data-bit="iit" />
+                                            class="CToWUd" data-bit="iit" style="width: 60px; height: 55px;" />
                                     </td>
                                 </tr>
                                 <tr>
