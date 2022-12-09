@@ -20,8 +20,8 @@
                 <tr>
                     <td align="center">
                         <table align="center" cellpadding="0" cellspacing="0" width="600"
-                            style="border-collapse: separate; border-radius: 8px;" bgcolor="#FFFFFF">
-                            <tbody>
+                            style="border-collapse: separate; border-radius: 20px;" bgcolor="#FFFFFF">
+                            <tbody style="border-radius: 8px;">
                                 <tr>
                                     <td align="center"
                                         style="padding: 10px; background-color: #ffff; border-bottom: 1px solid #f4f4f4;">
@@ -38,6 +38,13 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td align="center" style="padding: 5px 40px 5px 40px">
+                                        <img style="display: none;" />
+                                        <img src="https://raw.githubusercontent.com/GantGanz/zenith-backend/main/lawencon-community/src/main/resources/email-template/assets/email-icon.png"
+                                            style="display: block; border: 0px; width: 140px; height: 140px;" />
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td align="left" style="padding: 10px 55px 0px 55px; color: #505050;">
                                         <p>
                                             Welcome to Zenith team. Here is
@@ -46,11 +53,11 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td align="left" style="padding: 0px 150px 10px 150px">
-                                        <p style="text-align: center; font-size: 16px;  border-radius: 5px;">
-                                            <b style="color: #002242;">Email : ${code}</b>
+                                    <td align="center" style="padding: 0px 55px 0px 55px">
+                                        <p style="font-size: 16px;  border-radius: 5px;">
+                                            <b style="color: #002242;">Email : ${email}</b>
                                         </p>
-                                        <p style="text-align: center; font-size: 16px;  border-radius: 5px;">
+                                        <p style="font-size: 16px;  border-radius: 5px;">
                                             <b style="color: #002242;">Password : ${code}</b>
                                         </p>
                                     </td>
@@ -58,12 +65,12 @@
                                 <tr>
                                     <td align="left" style="padding: 0px 55px 0px 55px; color: #505050;">
                                         <p>
-                                            Please login using this password and change it immediately
+                                            Please login using this password and change it immediately.
                                         </p>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td align="left" style="padding: 10px 55px 0px 55px; color: #505050;">
+                                    <td align="left" style="padding: 0px 55px 0px 55px; color: #505050;">
                                         <p>Best Regards,</p>
                                         <p>Zenith Teams</p>
                                     </td>
