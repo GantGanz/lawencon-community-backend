@@ -2,70 +2,86 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<style type="text/css">
-        body {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            width: 100%;
-        }
-
-        .container-parent {
-            background-color: azure;
-            width: 500px;
-            text-align: center;
-            border-radius: 40px;
-            border: 1px solid gray;
-        }
-
-        .logo {
-			padding-top: 20px;
-            width: 70px;
-        }
-
-        .body-email {
-            text-align: left;
-            padding: 20px 20px;
-            border-top: 1px solid skyblue;
-        }
-
-        .title {
-            padding-top: 5px;
-            padding-bottom: 2px;
-            font-size: 25px;
-            font-weight: 500;
-        }
-
-        .footer {
-            height: 30px;
-            text-align: center;
-            padding-top: 8px;
-            font-size: 15px;
-            color: white;
-            background-color: #1089FF;
-            border-bottom-left-radius: 40px;
-            border-bottom-right-radius: 40px;
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
 </head>
 
-<body>
-    <div class="container-parent">
-        <div class="title">
-            <img class="logo" src="https://raw.githubusercontent.com/GantGanz/zenith-backend/main/lawencon-community/src/main/resources/email-template/assets/logo.png" alt="zenith-logo">
-            <p>Zenith Admin Registration</p>
-        </div>
-        <div class="body-email">
-            <h3>To: ${email}</h3>
-            <p>Your Password :</p>
-            <h1>${code}</h1>
-            <p>Please login using this password and change it immediately</p>
-            <p>Thank You</p>
-        </div>
-        <div class="footer">@Copyright - Zenith</div>
+<body style="margin: 0;">
+    <div style="
+        margin: 0;
+        padding: 20px 0 20px 0;
+        font-family: sans-serif;
+        background-color: #E9F3FF;
+      ">
+        <table align="center" cellpadding="0" cellspacing="0" width="95%">
+            <tbody>
+                <tr>
+                    <td align="center">
+                        <table align="center" cellpadding="0" cellspacing="0" width="600"
+                            style="border-collapse: separate; border-radius: 8px;" bgcolor="#FFFFFF">
+                            <tbody>
+                                <tr>
+                                    <td align="center"
+                                        style="padding: 10px; background-color: #ffff; border-bottom: 1px solid #f4f4f4;">
+                                        <img style="display: none" /><img
+                                            src="https://github.com/GantGanz/zenith-backend/blob/main/lawencon-community/src/main/resources/email-template/assets/logo.png"
+                                            style="width: 60px" class="CToWUd" data-bit="iit" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" style="padding: 10px 55px 0px 55px; color: #002242;">
+                                        <p style="font-size: 25px; font-weight:500">
+                                            Zenith Admin Registration
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style="padding: 10px 55px 0px 55px; color: #505050;">
+                                        <p>
+                                            Welcome to Zenith team. Here is
+                                            your verification Account :
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style="padding: 0px 150px 10px 150px">
+                                        <p style="text-align: center; font-size: 16px;  border-radius: 5px;">
+                                            <b style="color: #002242;">Email : ${code}</b>
+                                        </p>
+                                        <p style="text-align: center; font-size: 16px;  border-radius: 5px;">
+                                            <b style="color: #002242;">Password : ${code}</b>
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style="padding: 0px 55px 0px 55px; color: #505050;">
+                                        <p>
+                                            Please login using this password and change it immediately
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style="padding: 10px 55px 0px 55px; color: #505050;">
+                                        <p>Best Regards,</p>
+                                        <p>Zenith Teams</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center"
+                                        style="padding: 5px; border-top: #f4f4f4 1px solid; background-color: #1089FF;">
+                                        <p style="font-size: 12px; font-style: italic; color: white;">
+                                            Copyright 2022 | Zenith, All rights reserved.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </body>
 
