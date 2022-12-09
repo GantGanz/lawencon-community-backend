@@ -37,53 +37,12 @@ public class PostController {
 		final PostsRes res = postService.getAll(offset, limit);
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-	
-	@GetMapping("regular")
-	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.MMB +"')")
-	public ResponseEntity<PostsRes> getAllRegular() {
-		final PostsRes res = postService.getAllRegular();
-		return new ResponseEntity<>(res, HttpStatus.OK);
-	}
-	
-	@GetMapping("polling")
-	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.MMB +"')")
-	public ResponseEntity<PostsRes> getAllPolling() {
-		final PostsRes res = postService.getAllPolling();
-		return new ResponseEntity<>(res, HttpStatus.OK);
-	}
-	
-	@GetMapping("premium")
-	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.MMB +"')")
-	public ResponseEntity<PostsRes> getAllPremium() {
-		final PostsRes res = postService.getAllRegular();
-		return new ResponseEntity<>(res, HttpStatus.OK);
-	}
+
 	
 	@GetMapping("user")
 	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.MMB +"')")
 	public ResponseEntity<PostsRes> getAllById(@RequestParam("offset") final Integer offset, @RequestParam("limit") final Integer limit) {
 		final PostsRes res = postService.getAllById(offset, limit);
-		return new ResponseEntity<>(res, HttpStatus.OK);
-	}
-	
-	@GetMapping("regular/user")
-	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.MMB +"')")
-	public ResponseEntity<PostsRes> getAllRegularById() {
-		final PostsRes res = postService.getAllRegularById();
-		return new ResponseEntity<>(res, HttpStatus.OK);
-	}
-	
-	@GetMapping("polling/user")
-	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.MMB +"')")
-	public ResponseEntity<PostsRes> getAllPollingById() {
-		final PostsRes res = postService.getAllPollingById();
-		return new ResponseEntity<>(res, HttpStatus.OK);
-	}
-	
-	@GetMapping("premium/user")
-	@PreAuthorize("hasAuthority('"+ RoleStaticConstant.MMB +"')")
-	public ResponseEntity<PostsRes> getAllPremiumById() {
-		final PostsRes res = postService.getAllRegularById();
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
 	
@@ -149,5 +108,4 @@ public class PostController {
 		final Long res = postService.countBookmarked();
 		return new ResponseEntity<>(res, HttpStatus.OK);
 	}
-
 }
