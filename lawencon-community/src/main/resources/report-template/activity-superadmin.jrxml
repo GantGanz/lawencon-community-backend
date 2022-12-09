@@ -376,7 +376,7 @@
 				<reportElement x="444" y="0" width="110" height="30" uuid="628f70c3-dcd4-4fe3-9881-66aa0b740770">
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16" isBold="true" isUnderline="true"/>
 					<paragraph rightIndent="3"/>
 				</textElement>
