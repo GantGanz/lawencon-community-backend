@@ -156,7 +156,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="12" isBold="true"/>
 					</textElement>
-					<text><![CDATA[Total Revenue]]></text>
+					<text><![CDATA[Total Participant]]></text>
 				</staticText>
 				<staticText>
 					<reportElement mode="Opaque" x="40" y="0" width="90" height="20" forecolor="#000305" backcolor="#E6E6E6" uuid="0252e104-491f-40ee-ae9e-bd58baa2cb6e">
