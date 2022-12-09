@@ -177,7 +177,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="52">
+		<band height="20">
 			<frame>
 				<reportElement x="0" y="0" width="555" height="20" uuid="be297f78-111a-45db-9410-aaaf40a1efdc"/>
 				<textField textAdjust="StretchHeight">
@@ -286,7 +286,7 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="31">
+		<band height="48">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<textField pattern="IDR #,##0.###;¤(#,##0.###-)">
 				<reportElement x="444" y="0" width="110" height="30" uuid="628f70c3-dcd4-4fe3-9881-66aa0b740770">
@@ -311,7 +311,7 @@
 	<noData>
 		<band height="262">
 			<frame>
-				<reportElement mode="Opaque" x="-20" y="-9" width="595" height="92" backcolor="#FFFFFF" uuid="110ab30a-d0b4-4992-be40-ddf39bff0863"/>
+				<reportElement mode="Opaque" x="-20" y="-3" width="595" height="92" backcolor="#FFFFFF" uuid="110ab30a-d0b4-4992-be40-ddf39bff0863"/>
 				<box bottomPadding="0">
 					<pen lineWidth="1.0" lineStyle="Solid"/>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -361,7 +361,7 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="0" y="91" width="554" height="70" uuid="8553e139-4244-4ea9-a788-dbb2e1e9c94f"/>
+				<reportElement x="0" y="99" width="554" height="55" uuid="8553e139-4244-4ea9-a788-dbb2e1e9c94f"/>
 				<textField evaluationTime="Page">
 					<reportElement x="0" y="6" width="310" height="24" forecolor="#050000" backcolor="#050000" uuid="818e2f8d-7954-420d-9ded-9db59e69c241"/>
 					<textElement>
@@ -388,7 +388,7 @@
 				</textField>
 			</frame>
 			<frame>
-				<reportElement x="0" y="161" width="554" height="20" uuid="7edce7b8-31ef-4b15-a01f-ec0538db328c"/>
+				<reportElement x="0" y="170" width="554" height="20" uuid="7edce7b8-31ef-4b15-a01f-ec0538db328c"/>
 				<staticText>
 					<reportElement mode="Opaque" x="310" y="0" width="110" height="20" forecolor="#000305" backcolor="#E6E6E6" uuid="85269ab6-e0b9-4f89-b998-408edfc7055f">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee39f886-a415-4814-aba7-2f6771db4e59"/>
@@ -455,34 +455,6 @@
 					</textElement>
 					<text><![CDATA[No]]></text>
 				</staticText>
-			</frame>
-			<frame>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="238" width="555" height="24" uuid="5a1ee65c-0ca1-4bd4-a1a6-2060d9dae4aa">
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
-				<textField>
-					<reportElement x="1" y="6" width="180" height="13" uuid="08ca1b15-897a-4591-bcc1-506ed18214b8">
-						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
-					</reportElement>
-					<textElement markup="html">
-						<paragraph leftIndent="3"/>
-					</textElement>
-					<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy HH:mm:ss").format(new java.util.Date())]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement mode="Opaque" x="340" y="6" width="174" height="13" backcolor="#FFFFFF" uuid="11da4d4a-4fc7-4ca0-9ff8-a01cf588d4ee"/>
-					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Report">
-					<reportElement mode="Opaque" x="516" y="6" width="39" height="13" backcolor="#FFFFFF" uuid="5b146133-4d29-4d90-a561-2a1050db6b0e">
-						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
-					</reportElement>
-					<textElement textAlignment="Left">
-						<paragraph rightIndent="0"/>
-					</textElement>
-					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-				</textField>
 			</frame>
 		</band>
 	</noData>

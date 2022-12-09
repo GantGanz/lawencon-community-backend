@@ -198,7 +198,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="21">
+		<band height="20">
 			<textField textAdjust="StretchHeight">
 				<reportElement x="0" y="0" width="40" height="20" uuid="11ce7f73-68fb-4bad-b365-ea8c14181e7b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6201114d-a018-4276-9148-0c709c5595ea"/>
@@ -375,7 +375,7 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement x="0" y="110" width="554" height="70" uuid="2c983741-03a9-454d-a266-1bf3f3bfec52"/>
+				<reportElement x="0" y="109" width="554" height="70" uuid="2c983741-03a9-454d-a266-1bf3f3bfec52"/>
 				<textField>
 					<reportElement x="0" y="10" width="360" height="24" forecolor="#000000" uuid="71cf4c26-95cb-42d3-9a0d-83f8a1d5ea5a">
 						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
@@ -499,22 +499,6 @@
 					</textElement>
 					<text><![CDATA[Start Date]]></text>
 				</staticText>
-			</frame>
-			<frame>
-				<reportElement positionType="FixRelativeToBottom" x="0" y="316" width="555" height="20" uuid="176904e0-3547-45a4-9e77-8b92bf282315"/>
-				<textField>
-					<reportElement mode="Opaque" x="0" y="4" width="510" height="13" backcolor="#FFFFFF" uuid="f89149cd-af56-4657-a411-207b8b5092f1"/>
-					<textElement textAlignment="Right"/>
-					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
-				</textField>
-				<textField evaluationTime="Report">
-					<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#FFFFFF" uuid="cdd1b566-868a-47f9-8256-42c147caa1a7"/>
-					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="0" y="4" width="180" height="13" uuid="dd5757a0-ada1-42cf-a2c7-4de4258b4e52"/>
-					<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("EEEEE dd MMMMM yyyy HH:mm:ss").format(new java.util.Date())]]></textFieldExpression>
-				</textField>
 			</frame>
 		</band>
 	</noData>
