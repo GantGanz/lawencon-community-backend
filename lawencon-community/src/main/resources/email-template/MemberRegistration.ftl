@@ -25,7 +25,7 @@
                                 <tr>
                                     <td align="center"
                                         style="padding: 10px; background-color: #ffff; border-bottom: 1px solid #f4f4f4;">
-                                        <img style="display: none" /><img src="https://github.com/GantGanz/zenith-backend/blob/main/lawencon-community/src/main/resources/email-template/assets/logo.png" style="width: 60px"
+                                        <img style="display: none" /><img src="https://raw.githubusercontent.com/GantGanz/zenith-backend/main/lawencon-community/src/main/resources/email-template/assets/logo.png"
                                             class="CToWUd" data-bit="iit" />
                                     </td>
                                 </tr>
@@ -38,7 +38,7 @@
                                 </tr>
                                 <tr>
                                     <td align="center" style="padding: 5px 40px 5px 40px">
-                                        <img src="https://github.com/GantGanz/zenith-backend/blob/main/lawencon-community/src/main/resources/email-template/assets/email-icon.png" width="125" height="120"
+                                        <img src="https://raw.githubusercontent.com/GantGanz/zenith-backend/main/lawencon-community/src/main/resources/email-template/assets/email-icon.png"
                                             style="display: block; border: 0px;" />
                                     </td>
                                 </tr>
