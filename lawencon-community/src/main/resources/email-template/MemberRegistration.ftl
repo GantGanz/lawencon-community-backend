@@ -64,7 +64,7 @@
                                 <tr>
                                     <td align="left" style="padding: 0px 55px 0px 55px; color: #505050;">
                                         <p>
-                                            All you have to is copy the confirmation code and paste it to your form to
+                                            All you have to do is copy the confirmation code and paste it to your form to
                                             complete the email verification process.
                                         </p>
                                     </td>
