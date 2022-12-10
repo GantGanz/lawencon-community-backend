@@ -110,7 +110,6 @@ public class CommentService extends BaseCoreService {
 
 		final UpdateRes res = new UpdateRes();
 		res.setData(dataRes);
-		res.setMessage("Soft Delete success");
 		return res;
 	}
 

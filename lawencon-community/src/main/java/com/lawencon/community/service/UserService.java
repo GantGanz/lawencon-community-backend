@@ -130,7 +130,7 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		final String hashPassword = passwordEncoder.encode(plainPassword);
 		userInsert.setPass(hashPassword);
 
-		userInsert.setCompany(data.getCompany());
+		userInsert.setCompany("PT. Zenith");
 		userInsert.setIsPremium(false);
 
 		final String roleId = roleDao.getByRoleCode(RoleConstant.ADMIN.getRoleCode());
@@ -385,9 +385,6 @@ public class UserService extends BaseCoreService implements UserDetailsService {
 		}
 		if (data.getEmail() == null) {
 			throw new RuntimeException("Email cannot be empty");
-		}
-		if (data.getCompany() == null) {
-			throw new RuntimeException("Company cannot be empty");
 		}
 	}
 	

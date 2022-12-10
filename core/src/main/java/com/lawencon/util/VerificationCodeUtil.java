@@ -19,7 +19,7 @@ public class VerificationCodeUtil {
 	private Map<String, VerificationCodes> verificationCodes;
 
 	public void addVerificationCode(String email, String verificationCode) {
-		final LocalDateTime expiredDate = LocalDateTime.now().plusMinutes(1);
+		final LocalDateTime expiredDate = LocalDateTime.now().plusHours(1);
 		verificationCodes.put(email, new VerificationCodes(verificationCode, expiredDate));
 	}
 
