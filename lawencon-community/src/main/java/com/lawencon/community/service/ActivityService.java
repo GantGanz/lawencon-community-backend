@@ -183,10 +183,10 @@ public class ActivityService extends BaseCoreService {
 			activityData.setUpdatedAt(activity.getUpdatedAt());
 			activityData.setIsActive(activity.getIsActive());
 			
-			if(paymentActivityService.checkRejected(activity.getId())) {				
-				activityData.setPaymentStatus("Rejected");
-			}else if(paymentActivityService.checkApproved(activity.getId())) {
+			if(paymentActivityService.checkApproved(activity.getId())) {
 				activityData.setPaymentStatus("Approved");
+			}else if(paymentActivityService.checkRejected(activity.getId())) {				
+				activityData.setPaymentStatus("Rejected");
 			}else if(paymentActivityService.checkPaid(activity.getId())) {
 				activityData.setPaymentStatus("Pending");
 			}else {
@@ -237,10 +237,10 @@ public class ActivityService extends BaseCoreService {
 			activityData.setUpdatedAt(activity.getUpdatedAt());
 			activityData.setIsActive(activity.getIsActive());
 			
-			if(paymentActivityService.checkRejected(activity.getId())) {				
-				activityData.setPaymentStatus("Rejected");
-			}else if(paymentActivityService.checkApproved(activity.getId())) {
+			if(paymentActivityService.checkApproved(activity.getId())) {
 				activityData.setPaymentStatus("Approved");
+			} else if(paymentActivityService.checkRejected(activity.getId())) {				
+				activityData.setPaymentStatus("Rejected");
 			}else if(paymentActivityService.checkPaid(activity.getId())) {
 				activityData.setPaymentStatus("Pending");
 			}else {
