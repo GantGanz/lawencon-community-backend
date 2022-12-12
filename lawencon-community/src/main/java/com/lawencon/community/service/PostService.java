@@ -183,7 +183,6 @@ public class PostService extends BaseCoreService {
 
 		final UpdateRes res = new UpdateRes();
 		res.setData(dataRes);
-		res.setMessage("Update success");
 		return res;
 	}
 
