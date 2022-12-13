@@ -220,11 +220,11 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20">
+		<band height="106">
 			<frame>
-				<reportElement x="0" y="0" width="554" height="20" uuid="3b9f28bc-acce-480f-a4ef-af58b632e1c0"/>
+				<reportElement x="0" y="0" width="554" height="90" uuid="3b9f28bc-acce-480f-a4ef-af58b632e1c0"/>
 				<textField textAdjust="StretchHeight">
-					<reportElement x="266" y="0" width="60" height="20" uuid="e6bd496c-0942-453e-a191-ac711968f348">
+					<reportElement x="266" y="0" width="60" height="70" uuid="e6bd496c-0942-453e-a191-ac711968f348">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee39f886-a415-4814-aba7-2f6771db4e59"/>
 						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 					</reportElement>
@@ -234,14 +234,14 @@
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Top">
+					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="12"/>
 						<paragraph leftIndent="3"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{activityType}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="StretchHeight">
-					<reportElement x="326" y="0" width="92" height="20" uuid="10553f0d-bac4-4ff9-8e0c-7d47b0244e20">
+					<reportElement x="326" y="0" width="92" height="70" uuid="10553f0d-bac4-4ff9-8e0c-7d47b0244e20">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ed06c59a-7849-4355-b357-7114848b00ee"/>
 						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 					</reportElement>
@@ -251,14 +251,14 @@
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Top">
+					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="12"/>
 						<paragraph leftIndent="3"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="StretchHeight">
-					<reportElement x="418" y="0" width="72" height="20" uuid="71eb5802-7655-4adc-9ecb-c4c084b5c7e6">
+					<reportElement x="418" y="0" width="72" height="70" uuid="71eb5802-7655-4adc-9ecb-c4c084b5c7e6">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="00123f3e-b7b9-4f77-9d59-ee8760d52d5e"/>
 						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 					</reportElement>
@@ -268,14 +268,14 @@
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Top">
+					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="12"/>
 						<paragraph leftIndent="3"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{startDate}.format(java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy"))]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="StretchHeight">
-					<reportElement x="490" y="0" width="64" height="20" uuid="6a95bf8f-9249-4666-acf5-ef019bfb945e">
+					<reportElement x="490" y="0" width="64" height="70" uuid="6a95bf8f-9249-4666-acf5-ef019bfb945e">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="10f84506-bd64-4beb-9b10-e91da6b2c16e"/>
 					</reportElement>
 					<box>
@@ -284,13 +284,13 @@
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Top">
+					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{totalParticipants}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="StretchHeight">
-					<reportElement x="176" y="0" width="90" height="20" uuid="556233da-954d-4933-8383-983e6bceec51">
+					<reportElement x="176" y="0" width="90" height="70" uuid="556233da-954d-4933-8383-983e6bceec51">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6201114d-a018-4276-9148-0c709c5595ea"/>
 						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 					</reportElement>
@@ -300,14 +300,14 @@
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Top">
+					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="12"/>
 						<paragraph leftIndent="3"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{provider}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="StretchHeight">
-					<reportElement x="40" y="0" width="136" height="20" uuid="480c2e79-6e2c-417c-b51e-dc0cb3aecf9e">
+					<reportElement x="40" y="0" width="136" height="70" uuid="480c2e79-6e2c-417c-b51e-dc0cb3aecf9e">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6201114d-a018-4276-9148-0c709c5595ea"/>
 						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 					</reportElement>
@@ -317,14 +317,14 @@
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Left" verticalAlignment="Top">
+					<textElement textAlignment="Left" verticalAlignment="Middle">
 						<font size="12"/>
 						<paragraph leftIndent="3"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{memberName}]]></textFieldExpression>
 				</textField>
 				<textField textAdjust="StretchHeight">
-					<reportElement x="0" y="0" width="40" height="20" uuid="11ce7f73-68fb-4bad-b365-ea8c14181e7b">
+					<reportElement x="0" y="0" width="40" height="70" uuid="11ce7f73-68fb-4bad-b365-ea8c14181e7b">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6201114d-a018-4276-9148-0c709c5595ea"/>
 					</reportElement>
 					<box>
@@ -333,7 +333,7 @@
 						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					</box>
-					<textElement textAlignment="Center" verticalAlignment="Top" markup="html">
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
 						<font size="12"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
