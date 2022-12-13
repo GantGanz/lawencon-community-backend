@@ -198,9 +198,9 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="20">
+		<band height="68">
 			<textField textAdjust="StretchHeight">
-				<reportElement x="0" y="0" width="40" height="20" uuid="11ce7f73-68fb-4bad-b365-ea8c14181e7b">
+				<reportElement x="0" y="0" width="40" height="68" uuid="11ce7f73-68fb-4bad-b365-ea8c14181e7b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6201114d-a018-4276-9148-0c709c5595ea"/>
 				</reportElement>
 				<box>
@@ -215,7 +215,7 @@
 				<textFieldExpression><![CDATA[$F{no}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="40" y="0" width="90" height="20" uuid="e6bd496c-0942-453e-a191-ac711968f348">
+				<reportElement x="40" y="0" width="90" height="68" uuid="e6bd496c-0942-453e-a191-ac711968f348">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee39f886-a415-4814-aba7-2f6771db4e59"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
@@ -232,7 +232,7 @@
 				<textFieldExpression><![CDATA[$F{activityType}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="130" y="0" width="170" height="20" uuid="10553f0d-bac4-4ff9-8e0c-7d47b0244e20">
+				<reportElement x="130" y="0" width="170" height="68" uuid="10553f0d-bac4-4ff9-8e0c-7d47b0244e20">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ed06c59a-7849-4355-b357-7114848b00ee"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
@@ -249,7 +249,7 @@
 				<textFieldExpression><![CDATA[$F{title}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="300" y="0" width="120" height="20" uuid="71eb5802-7655-4adc-9ecb-c4c084b5c7e6">
+				<reportElement x="300" y="0" width="120" height="68" uuid="71eb5802-7655-4adc-9ecb-c4c084b5c7e6">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="00123f3e-b7b9-4f77-9d59-ee8760d52d5e"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
@@ -266,7 +266,7 @@
 				<textFieldExpression><![CDATA[$F{startDate}.format(java.time.format.DateTimeFormatter.ofPattern("dd MMM yyyy"))]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="420" y="0" width="134" height="20" uuid="6a95bf8f-9249-4666-acf5-ef019bfb945e">
+				<reportElement x="420" y="0" width="134" height="68" uuid="6a95bf8f-9249-4666-acf5-ef019bfb945e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="10f84506-bd64-4beb-9b10-e91da6b2c16e"/>
 					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
 				</reportElement>
