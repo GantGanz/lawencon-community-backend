@@ -489,13 +489,12 @@ public class ActivityDao extends AbstractJpaDao {
 
 	public Long countActivitySuperAdmin(final String startDate, final String endDate) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT COUNT(a.id) ").append("FROM t_payment_activity pa ")
-				.append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
-				.append("INNER JOIN t_activity_type at ON a.activity_type_id = at.id ")
-				.append("INNER JOIN t_user uc ON a.created_by = uc.id ")
-				.append("WHERE a.start_at >= DATE(:startDate) AND a.start_at <= DATE(:endDate) AND pa.is_approved = TRUE ")
-				.append("GROUP BY uc.fullname, a.provider, at.activity_type_name, a.title, a.start_at ")
-				.append("ORDER BY a.start_at DESC, at.activity_type_name , a.title ");
+		str.append("SELECT COUNT(*) ").append("FROM t_payment_activity pa ").append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
+		.append("INNER JOIN t_activity_type at ON a.activity_type_id = at.id ")
+		.append("INNER JOIN t_user uc ON a.created_by = uc.id ")
+		.append("WHERE a.start_at >= DATE(:startDate) AND a.start_at <= DATE(:endDate) AND pa.is_approved = TRUE ")
+		.append("GROUP BY uc.fullname, a.provider, at.activity_type_name, a.title, a.start_at ")
+		.append("ORDER BY a.start_at DESC, at.activity_type_name , a.title ");
 
 		Long total = null;
 		try {
