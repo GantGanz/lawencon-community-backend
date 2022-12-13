@@ -494,7 +494,8 @@ public class ActivityDao extends AbstractJpaDao {
 				.append("INNER JOIN t_activity_type at ON a.activity_type_id = at.id ")
 				.append("INNER JOIN t_user uc ON a.created_by = uc.id ")
 				.append("WHERE a.start_at >= DATE(:startDate) AND a.start_at <= DATE(:endDate) AND pa.is_approved = TRUE ")
-				.append("GROUP BY uc.fullname, a.provider, at.activity_type_name, a.title, a.start_at ");
+				.append("GROUP BY uc.fullname, a.provider, at.activity_type_name, a.title, a.start_at ")
+				.append("ORDER BY a.start_at DESC, at.activity_type_name , a.title ");
 
 		Long total = null;
 		try {
