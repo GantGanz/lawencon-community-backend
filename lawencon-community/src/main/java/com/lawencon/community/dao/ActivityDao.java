@@ -131,8 +131,8 @@ public class ActivityDao extends AbstractJpaDao {
 				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider  ")
 				.append("FROM t_activity a ").append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_user u ON u.id = a.created_by ")
-				.append("WHERE at.activity_type_code = :activityTypeCode ")
-				.append("AND a.created_by = :userId ").append("ORDER BY a.is_active DESC, a.created_at DESC");
+				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND a.created_by = :userId ")
+				.append("ORDER BY a.is_active DESC, a.created_at DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql, offset, limit)
@@ -185,8 +185,8 @@ public class ActivityDao extends AbstractJpaDao {
 				.append("a.created_at, a.updated_at, a.is_active, at.activity_type_code, a.provider  ")
 				.append("FROM t_activity a ").append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
 				.append("INNER JOIN t_user u ON u.id = a.created_by ")
-				.append("WHERE at.activity_type_code = :activityTypeCode ")
-				.append("AND a.created_by = :userId ").append("ORDER BY a.is_active DESC, a.created_at DESC");
+				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND a.created_by = :userId ")
+				.append("ORDER BY a.is_active DESC, a.created_at DESC");
 
 		final String sql = str.toString();
 		final List<?> result = createNativeQuery(sql, offset, limit)
@@ -364,7 +364,7 @@ public class ActivityDao extends AbstractJpaDao {
 		}
 		return total;
 	}
-	
+
 	public Long countActivity(final String activityTypeCode) {
 		final StringBuilder str = new StringBuilder();
 		str.append("SELECT COUNT(a.id) ").append("FROM t_activity a ")
@@ -385,15 +385,15 @@ public class ActivityDao extends AbstractJpaDao {
 		}
 		return total;
 	}
-	
+
 	public Long countJoinedActivity(final String userId, final String activityTypeCode) {
 		final StringBuilder str = new StringBuilder();
-		str.append("SELECT COUNT(a.id) ")
-		.append("FROM t_activity a ").append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
-		.append("INNER JOIN t_payment_activity pa ON pa.activity_id = a.id ")
-		.append("INNER JOIN t_user u ON u.id = pa.user_id ")
-		.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND pa.is_approved = TRUE ")
-		.append("AND u.id = :userId ");
+		str.append("SELECT COUNT(a.id) ").append("FROM t_activity a ")
+				.append("INNER JOIN t_activity_type at ON at.id = a.activity_type_id ")
+				.append("INNER JOIN t_payment_activity pa ON pa.activity_id = a.id ")
+				.append("INNER JOIN t_user u ON u.id = pa.user_id ")
+				.append("WHERE at.activity_type_code = :activityTypeCode ").append("AND pa.is_approved = TRUE ")
+				.append("AND u.id = :userId ");
 
 		Long total = null;
 		try {
@@ -457,8 +457,9 @@ public class ActivityDao extends AbstractJpaDao {
 		}
 		return data;
 	}
-	
-	public List<ReportData> getMemberActivityLimit(final String userId, final String startDate, final String endDate, final Integer offset, final Integer limit) {
+
+	public List<ReportData> getMemberActivityLimit(final String userId, final String startDate, final String endDate,
+			final Integer offset, final Integer limit) {
 		final StringBuilder query = new StringBuilder()
 				.append("SELECT ROW_NUMBER() OVER(), at.activity_type_name, a.title, a.start_at, COUNT(pa.user_id) ")
 				.append("FROM t_payment_activity pa ").append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
@@ -492,7 +493,8 @@ public class ActivityDao extends AbstractJpaDao {
 				.append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
 				.append("INNER JOIN t_activity_type at ON a.activity_type_id = at.id ")
 				.append("INNER JOIN t_user uc ON a.created_by = uc.id ")
-				.append("WHERE a.start_at >= DATE(:startDate) AND a.start_at <= DATE(:endDate) AND pa.is_approved = TRUE ");
+				.append("WHERE a.start_at >= DATE(:startDate) AND a.start_at <= DATE(:endDate) AND pa.is_approved = TRUE ")
+				.append("GROUP BY uc.fullname, a.provider, at.activity_type_name, a.title, a.start_at ");
 
 		Long total = null;
 		try {
@@ -535,8 +537,9 @@ public class ActivityDao extends AbstractJpaDao {
 		}
 		return data;
 	}
-	
-	public List<ReportData> getActivitySuperAdminLimit(final String startDate, final String endDate, final Integer offset, final Integer limit) {
+
+	public List<ReportData> getActivitySuperAdminLimit(final String startDate, final String endDate,
+			final Integer offset, final Integer limit) {
 		final StringBuilder query = new StringBuilder().append(
 				"SELECT ROW_NUMBER() OVER(), uc.fullname, a.provider, at.activity_type_name, a.title, a.start_at, COUNT(pa.user_id) ")
 				.append("FROM t_payment_activity pa ").append("INNER JOIN t_activity a ON pa.activity_id = a.id ")
