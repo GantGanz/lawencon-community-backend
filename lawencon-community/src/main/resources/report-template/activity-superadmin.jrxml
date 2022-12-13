@@ -220,9 +220,9 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="106">
+		<band height="70">
 			<frame>
-				<reportElement x="0" y="0" width="554" height="90" uuid="3b9f28bc-acce-480f-a4ef-af58b632e1c0"/>
+				<reportElement x="0" y="0" width="554" height="70" uuid="3b9f28bc-acce-480f-a4ef-af58b632e1c0"/>
 				<textField textAdjust="StretchHeight">
 					<reportElement x="266" y="0" width="60" height="70" uuid="e6bd496c-0942-453e-a191-ac711968f348">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee39f886-a415-4814-aba7-2f6771db4e59"/>
